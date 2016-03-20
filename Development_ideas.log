@@ -1,0 +1,12 @@
+/**
+ * @auther Yixing
+ * Development ideas for YahooFinanceTradingSystem
+ *
+ */
+
+********************************************************************************
+3/19/2016
+1. In stoct object/table, the stock description now is a String field which can be replaced with
+a complex object StockDesp including marketcap, volumn, etc
+
+2. categories of stock should be added, like equity, 
