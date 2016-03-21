@@ -1,0 +1,18 @@
+{
+    "name": "YFTS",
+    "version": "1.0",
+    "authors": [
+        " "
+    ],
+    "description": "Yahoo Finance Trading System",
+    "dependencies": {
+        "angular": "1.3.8",
+        "angular-messages": "1.3.8",
+        "pure": "0.5.0",
+        "requirejs": "2.1.15",
+        "spring-security-csrf-token-interceptor": "0.1.5",
+        "sass-bootstrap": "~3.0.0",
+    	"modernizr": "~2.6.2",
+    	"bootstrap": "~3.2.0"
+    }
+
