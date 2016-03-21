@@ -9,6 +9,7 @@
 
 3/19/2016
 
+By Yixing Cheng
 1. add a db user to local ORACLE
    username: yftsdba
    password: 123mercury
@@ -67,3 +68,68 @@
       CONSTRAINT yfts_trans_uid_fk FOREIGN KEY (user_id) REFERENCES yfts_user(user_id),
       CONSTRAINT yfts_trans_sid_fk FOREIGN KEY (stock_id) REFERENCES yfts_stock(stock_id)
      );
+
+
+3/20/2016
+
+By Ethan
+
+We gonna use bower to manager our front-end dependencies, if you haven't got bower on your windows machine, here is what you can do:
+
+And the link is: https://ruleoftech.com/2015/setting-up-bower-and-gulp-in-windows
+
+Install Git
+
+Bower needs Git to work so first install Git if you don’t have it. I chose Git for Windows which gives you BASH emulation used to run Git from the command line, graphical user interface for using Git and Shell integration.
+
+Just click through the installation.
+
+Install Node.js
+
+Bower depends on Node.js and NPM so you need to get Node.js. Just download the installation package from Node.js site and click through it.
+
+Install Bower
+
+After you have Node.js installed we can install Bower with npm. You might need to restart your Windows to get all the path variables setup so Npm can find them.
+
+Open up the Git Bash or Command Prompt and Bower is installed globally by running the following command.
+
+$ npm install -g bower
+Once you have Bower installed you then can install packages and dependencies using these commands:
+
+# Using a local or remote package
+bower install <package>
+ 
+# Using a specific version of a package
+bower install <package>#<version>
+ 
+# Search packages
+$ bower search <package>
+By default packages will be put in the bower_components directory which can be changed if you prefer. If you want your packages downloaded into js/libs you can achieve this by creating a .bowerrc file
+
+.bowerrc
+
+{
+    "directory": "js/libs"
+}
+You can also create a bower.json file which allows you to define the packages needed along with dependencies and then simply run bower install to download packages. In our example we setup a simple Backbone.js application which uses Bootstrap.
+
+bower.json
+
+{
+    "name": "Foobar",
+    "version": "0.1.0",
+    "dependencies": {
+          "jquery": "~2.0.3",
+          "underscore": "~1.5.0",
+          "bootstrap": "~3.3.2",
+          "backbone": "~1.1.2"
+    }
+}
+Our bower.json describes that we want some JavaScript libraries and as we have defined the version with ~ it can have bigger minor versions, e.g. jquery version can be between 2.0.3 < 2.1.0. Read more about semantic versioner for npm.
+
+Now after creating that file inside the app directory you can run the following command:
+
+$ bower install
+After that you should see all your JavaScript packages under bower_components folder.
+
