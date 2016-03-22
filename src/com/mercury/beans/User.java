@@ -3,10 +3,15 @@ package com.mercury.beans;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -48,6 +53,14 @@ public class User {
 	@Column(name="enable")
 	private int enable;
 	
+	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JoinTable(
+		name = "yfts_watchlist", 
+		joinColumns = {@JoinColumn(name="user_id") }, 
+		inverseJoinColumns = { @JoinColumn(name = "stock_id") }
+	)
+	private Set<Stock> watchedStocks = new HashSet<>();
+	
 	@OneToMany(mappedBy = "user")
 	private Set<UserStockTransaction> trans = new HashSet<>();
 	
@@ -64,9 +77,22 @@ public class User {
 		this.enable = enable;
 	}
 	
+	
 	public void addUserStockTransaction(UserStockTransaction tran){
 		this.trans.add(tran);
 	}
+	public void addWatchedStock(Stock stock){
+		this.watchedStocks.add(stock);
+	}
+	public void deleteWatchedStock(Stock stock){
+		if(this.watchedStocks.contains(stock)){
+			this.watchedStocks.remove(stock);
+		}
+	}
+	
+	
+	
+	
 	public int getUid() {
 		return uid;
 	}
@@ -132,6 +158,12 @@ public class User {
 	}
 	public void setTrans(Set<UserStockTransaction> trans) {
 		this.trans = trans;
+	}
+	public Set<Stock> getWatchedStocks() {
+		return watchedStocks;
+	}
+	public void setWatchedStocks(Set<Stock> watchedStocks) {
+		this.watchedStocks = watchedStocks;
 	}
 	
 }

@@ -5,8 +5,10 @@ import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -26,6 +28,9 @@ public class Stock {
 	
 	@Column(name="stockdesc")
 	private String stockDesc;
+	
+	@ManyToMany(fetch = FetchType.LAZY, mappedBy = "watchedStocks")
+	private Set<User> watchingUsers = new HashSet<>();
 	
 	@OneToMany(mappedBy = "stock")
 	private Set<UserStockTransaction> trans = new HashSet<>();
@@ -65,5 +70,12 @@ public class Stock {
 	public void setTrans(Set<UserStockTransaction> trans) {
 		this.trans = trans;
 	}
+	public Set<User> getWatchingUsers() {
+		return watchingUsers;
+	}
+	public void setWatchingUsers(Set<User> watchingUsers) {
+		this.watchingUsers = watchingUsers;
+	}
+	
 	
 }
