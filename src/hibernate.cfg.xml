@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC
+    "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+	<session-factory>
+		<property name="show_sql">true</property>
+		<property name="format_sql">false</property>
+		<property name="dialect">org.hibernate.dialect.OracleDialect</property>
+		<property name="connection.driver_class">
+            oracle.jdbc.driver.OracleDriver
+        </property>
+        <property name="connection.url">
+            jdbc:oracle:thin:@WIN-H4I56ASQ4T9:1521:XE
+        </property>
+        <property name="connection.username">yftsdba</property>
+        <property name="connection.password">123mercury</property>
+		
+		<mapping class="com.mercury.beans.Stock"/>	
+		<mapping class="com.mercury.beans.User"/>	
+		<mapping class="com.mercury.beans.UserStockTransaction"/>	
+	</session-factory>
+</hibernate-configuration>

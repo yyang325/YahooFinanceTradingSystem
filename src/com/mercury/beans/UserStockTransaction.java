@@ -17,7 +17,7 @@ import org.hibernate.annotations.GenericGenerator;
 
 @Entity
 @Table(name="yfts_trans")
-public class Transaction {
+public class UserStockTransaction {
 	@GenericGenerator(name="generator", strategy="increment")
 	@Id
 	@GeneratedValue(generator="generator")
@@ -37,10 +37,10 @@ public class Transaction {
 	private Date ts;
 	
 	@Column(name="price")
-	private int price;
+	private double price;
 	
 	@Column(name="quantity")
-	private int quantity;
+	private double quantity;
 
 	public int getTid() {
 		return tid;
@@ -74,23 +74,21 @@ public class Transaction {
 		this.ts = ts;
 	}
 
-	public int getPrice() {
+	public double getPrice() {
 		return price;
 	}
 
-	public void setPrice(int price) {
+	public void setPrice(double price) {
 		this.price = price;
 	}
 
-	public int getQuantity() {
+	public double getQuantity() {
 		return quantity;
 	}
 
-	public void setQuantity(int quantity) {
+	public void setQuantity(double quantity) {
 		this.quantity = quantity;
 	}
-	
-	
-	
+
 	
 }
