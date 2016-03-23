@@ -2,6 +2,12 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
+<link href="bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="bower_components/bootstrap/dist/css/bootstrap-theme.min.css" rel="stylesheet">
+
+<script type="text/javascript" src="bower_components/jquery/dist/jquery.min.js"></script>
+<script type="text/javascript" src="bower_components/requirejs/require.js"></script>
+<script type="text/javascript" src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 <title>Insert title here</title>
 </head>
 <body>
@@ -10,11 +16,11 @@
 		<table>
 			<tr>
 				<td>Username:</td>
-				<td><input type="text" name="userName" id="j_userName" /></td>
+				<td><input type="text" name="username" id="j_userName" /></td>
 			</tr>
 			<tr>
 				<td>Password:</td>
-				<td><input type="password" name="passWord" id="j_passWord" /></td>
+				<td><input type="password" name="password" id="j_passWord" /></td>
 			</tr>
 			<tr>
 				<td>Email:</td>
@@ -27,6 +33,10 @@
 			<tr>
 				<td>Lastname:</td>
 				<td><input type="text" name="lastName" id="j_lastName" /></td>
+			</tr>
+			<tr>
+				<td>Cash:</td>
+				<td><input type="number" name="cash" id="j_cash" min="0" /></td>
 			</tr>
 			<tr>
 				<td>Balance:</td>
