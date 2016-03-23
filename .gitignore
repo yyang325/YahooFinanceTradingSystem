@@ -1,4 +1,4 @@
 *.class
 *.jar
 /build/
-
+/WebContent/WEB-INF/lib/
