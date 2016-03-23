@@ -10,11 +10,11 @@
 		<table>
 			<tr>
 				<td>Username:</td>
-				<td><input type="text" name="userName" id="j_userName" /></td>
+				<td><input type="text" name="username" id="j_userName" /></td>
 			</tr>
 			<tr>
 				<td>Password:</td>
-				<td><input type="password" name="passWord" id="j_passWord" /></td>
+				<td><input type="password" name="password" id="j_passWord" /></td>
 			</tr>
 			<tr>
 				<td>Email:</td>
@@ -27,6 +27,10 @@
 			<tr>
 				<td>Lastname:</td>
 				<td><input type="text" name="lastName" id="j_lastName" /></td>
+			</tr>
+			<tr>
+				<td>Cash:</td>
+				<td><input type="number" name="cash" id="j_cash" min="0" /></td>
 			</tr>
 			<tr>
 				<td>Balance:</td>

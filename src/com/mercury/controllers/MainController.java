@@ -11,28 +11,26 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.mercury.beans.User;
 import com.mercury.dtos.UserInfo;
-//import com.mercury.service.MainService;
+import com.mercury.services.MainService;
 
+/**
+ * 
+ * @author Ethan
+ *
+ * Mainservice for test purpose
+ */
 @Controller
 @SessionAttributes
 public class MainController {
 	
-	//@Autowired
-	//private MainService ms;
-	
-	//public MainService getMs() {
-	//	return ms;
-	//}
-	//public void setMs(MainService ms) {
-	//	this.ms = ms;
-	//}
-	
+	@Autowired
+	private MainService ms;
 
 	@RequestMapping(value="/next", method=RequestMethod.POST)
 	public ModelAndView process(@ModelAttribute("user") 
 			User user, BindingResult result) {
-		//UserInfo userInfo = ms.process(user);
-		UserInfo userInfo = null;
+		UserInfo userInfo = ms.process(user);
+		//UserInfo userInfo = null;
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("next");
 		mav.addObject("userInfo", userInfo);
