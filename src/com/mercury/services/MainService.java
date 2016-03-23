@@ -2,7 +2,7 @@ package com.mercury.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+//import org.springframework.transaction.annotation.Transactional;
 
 import com.mercury.beans.User;
 import com.mercury.daos.UserDao;
@@ -13,10 +13,10 @@ public class MainService {
 	@Autowired
 	private UserDao ud;
 	
-	@Transactional
+	//@Transactional
 	public UserInfo process(User user) {
 		ud.save(user);
-		UserInfo userInfo = null;
+		UserInfo userInfo = new UserInfo();;
 		userInfo.setMessage("Hello " + user.getUsername() + ", welcome to YFTS!");
 		userInfo.setUsers(ud.queryAll());
 		return userInfo;
