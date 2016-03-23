@@ -9,14 +9,6 @@
 		http://www.springframework.org/schema/context/spring-context-3.0.xsd">
 
 	
-	<!-- TransactionManager? and they are using hibernate4 ethan-->
-	 <!--
-	<bean id="transactionManager"
-		class="org.springframework.orm.hibernate3.HibernateTransactionManager">
-		<property name="sessionFactory" ref="sessionFactory"></property>
-	</bean>
-	-->
-	
 	<!-- Define Session Factory -->
 	<bean id="sessionFactory"
 		class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
@@ -31,21 +23,8 @@
 		</property>
 	</bean>
 	
-	<!--  
-	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-		<property name="driverClassName">
-			<value>oracle.jdbc.driver.OracleDriver</value>
-		</property> 
-		<property name="url">
-			<value>jdbc:oracle:thin:@Ethan5558:1521:XE</value>
-		</property>
-		<property name="username" value="yftsdba"/>
-		<property name="password" value="123mercury"/>
-	</bean>
-	-->
-
-	<!-- JNDI --> 
 	
+	<!-- JNDI --> 
 	<bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
 		<property name="jndiName" value="java:comp/env/jdbc/myoracle" />
 	</bean>
