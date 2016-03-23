@@ -12,4 +12,9 @@ public class LoginController {
 	public String login() {
 		return "login";
 	}
+	
+	@RequestMapping(value="/main", method = RequestMethod.GET)
+	public String goMain() {
+		return "home";
+	}
 }

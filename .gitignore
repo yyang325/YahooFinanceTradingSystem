@@ -3,6 +3,7 @@
 =======
 *.class
 *.jar
+bower_components/
 /build/
 
 >>>>>>> refs/remotes/yyang325/dev
