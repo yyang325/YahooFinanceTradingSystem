@@ -1,4 +1,4 @@
-package com.mercury.dao.impl;
+package com.mercury.daos.impl;
 
 import java.util.List;
 
@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import com.mercury.beans.Stock;
 import com.mercury.beans.User;
-import com.mercury.dao.UserDao;
+import com.mercury.daos.UserDao;
 
 /**
  * 

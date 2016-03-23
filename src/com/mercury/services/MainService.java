@@ -5,8 +5,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.mercury.beans.User;
+import com.mercury.daos.UserDao;
 import com.mercury.dtos.UserInfo;
-import com.mercury.dao.UserDao;
 
 @Service
 public class MainService {

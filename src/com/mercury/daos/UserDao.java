@@ -1,4 +1,4 @@
-package com.mercury.dao;
+package com.mercury.daos;
 
 import java.util.List;
 
