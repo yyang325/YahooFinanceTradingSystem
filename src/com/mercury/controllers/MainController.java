@@ -38,7 +38,8 @@ public class MainController {
 	}
 	
 	@RequestMapping("/main")
-	public String mainPage() {		
+	public String mainPage() {
+		System.out.println("Hello");
 		return "main";
 	}
 

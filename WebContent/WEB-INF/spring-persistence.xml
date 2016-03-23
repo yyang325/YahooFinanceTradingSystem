@@ -30,6 +30,7 @@
 			</props>
 		</property>
 	</bean>
+	
 
 	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		<property name="driverClassName">
@@ -41,11 +42,12 @@
 		<property name="username" value="yftsdba"/>
 		<property name="password" value="123mercury"/>
 	</bean>
+	
 
-	<!-- JNDI -->
-	<!-- 
+	<!-- JNDI --> 
+	<!--  
 	<bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
 		<property name="jndiName" value="java:comp/env/jdbc/myoracle" />
 	</bean>
-	 -->
+	-->
 </beans>
