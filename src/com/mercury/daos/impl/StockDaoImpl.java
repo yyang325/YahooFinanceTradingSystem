@@ -2,6 +2,7 @@ package com.mercury.daos.impl;
 
 import java.util.List;
 
+import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.springframework.stereotype.Repository;
@@ -13,8 +14,8 @@ import com.mercury.daos.StockDao;
 public class StockDaoImpl implements StockDao {
 	private HibernateTemplate template;
 	@Autowired
-	public void setHibernateTemplate(HibernateTemplate template){
-		this.template = template;
+	public void setHibernateTemplate(SessionFactory sessionFactory){
+		this.template = new HibernateTemplate(sessionFactory);
 	}
 
 	@Override
@@ -49,7 +50,7 @@ public class StockDaoImpl implements StockDao {
 	@Override
 	public List<Stock> queryAllStocks() {
 		// TODO Auto-generated method stub
-		String hql = "from yfts_stock";
+		String hql = "from Stock";
 		@SuppressWarnings("unchecked")
 		List<Stock> list = template.find(hql);
 		return list;
