@@ -8,26 +8,6 @@
 		http://www.springframework.org/schema/context
 		http://www.springframework.org/schema/context/spring-context-3.0.xsd">
 
-	<!-- we gonna use annotation by ethan-->
-	<!-- Dao Injection -->
-	<!--
-	<bean id="mainDao" class="com.mercury.dao.impl.MainDaoImpl">
-		<property name="sessionFactory" ref="sessionFactory" />
-	</bean>
-	<bean id="stockDao" class="com.mercury.dao.impl.StockDaoImpl">
-		<property name="sessionFactory" ref="sessionFactory" />
-	</bean>
-	<bean id="userDao" class="com.mercury.dao.impl.UserDaoImpl">
-		<property name="sessionFactory" ref="sessionFactory" />
-	</bean>
-	<bean id="transDao" class="com.mercury.dao.impl.TransDaoImpl">
-		<property name="sessionFactory" ref="sessionFactory" />
-	</bean>
-	<bean id="ownDao" class="com.mercury.dao.impl.OwnInfoDaoImpl">
-		<property name="SessionFactory" ref="sessionFactory" />
-	</bean>
-	-->
-	
 	
 	<!-- TransactionManager? and they are using hibernate4 ethan-->
 	<!--
@@ -42,16 +22,6 @@
 		class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
 		<property name="dataSource" ref="dataSource" />
 		<property name="packagesToScan" value="com.mercury.beans"/>
-		<!--
-		<property name="annotatedClasses">
-			<list>
-				<value>com.mercury.beans.User</value>
-				<value>com.mercury.beans.Stock</value>
-				<value>com.mercury.beans.OwnershipInfo</value>
-				<value>com.mercury.beans.Transaction</value>
-			</list>
-		</property>
-		 -->
 		<property name="hibernateProperties">
 			<props>
 				<prop key="hibernate.dialect">org.hibernate.dialect.OracleDialect</prop>
