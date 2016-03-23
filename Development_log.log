@@ -133,3 +133,7 @@ Now after creating that file inside the app directory you can run the following 
 $ bower install
 After that you should see all your JavaScript packages under bower_components folder.
 
+
+**************************************************************************************************************
+
+

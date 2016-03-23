@@ -27,6 +27,7 @@ public class MainController {
 	//	this.ms = ms;
 	//}
 	
+
 	@RequestMapping(value="/next", method=RequestMethod.POST)
 	public ModelAndView process(@ModelAttribute("user") 
 			User user, BindingResult result) {
