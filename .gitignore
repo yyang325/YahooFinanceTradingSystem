@@ -1,9 +1,6 @@
-<<<<<<< HEAD
-/build/
-=======
 *.class
 *.jar
-bower_components/
+bower_components
+foobar
 /build/
 
->>>>>>> refs/remotes/yyang325/dev
