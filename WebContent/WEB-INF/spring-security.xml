@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:sec="http://www.springframework.org/schema/security"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/security
+		http://www.springframework.org/schema/security/spring-security-3.1.xsd">
+			
+	<sec:http auto-config="true"  use-expressions="true">
+    	<sec:intercept-url pattern="/home*" access="hasAnyRole('ROLE_ADMIN', 'ROLE_USER')"/>
+    	<sec:intercept-url pattern="/pending*" access="hasRole('ROLE_ADMIN')"/>
+    	<sec:intercept-url pattern="/stock*" access="hasRole('ROLE_ADMIN')"/>
+    	<sec:intercept-url pattern="/portfolio*" access="hasRole('ROLE_USER')"/>
+    	<sec:intercept-url pattern="/history*" access="hasRole('ROLE_USER')"/>
+    	<sec:intercept-url pattern="/login_auto*" access="isAnonymous()"/>
+    	<sec:form-login 
+        	login-page="/login"
+        	default-target-url="/home"
+        	authentication-failure-url="/login?login_error=1#login_up" 
+        />
+        <!-- authentication-success-handler-ref="loginSuccessfulAuthHandler" -->	
+      
+        <sec:logout logout-success-url="/login#login_up"  delete-cookies="JSESSIONID"/>
+        <sec:remember-me 
+        	token-validity-seconds="1209600"
+			data-source-ref="dataSource" />
+	</sec:http>
+	
+	
+	<sec:authentication-manager alias="authenticationManager">
+        <sec:authentication-provider>
+        	<sec:password-encoder hash="md5"/>  <!-- when user login again, encoder the password to match the encryption password in DB -->
+        	<sec:jdbc-user-service id="jdbcUserService" data-source-ref="dataSource"
+		   		users-by-username-query="
+		      		select username, password, enabled 
+		      		from yfts_user where username=?"
+				authorities-by-username-query="
+		      		select username, authority from yfts_user 
+		      		where username =?" />
+		</sec:authentication-provider>
+	</sec:authentication-manager>
+	
+	<!--  
+   <bean id="loginSuccessfulAuthHandler" class="com.mercury.security.LoginSuccessfulAuthenticationHandler">
+	    <property name="defaultTargetUrl" value="/home" />
+	    <property name="alwaysUseDefaultTargetUrl" value="true" />
+	</bean> 
+	-->
+	<!-- 
+	<bean id="SavedRequestAwareAuthenticationSuccessHandler"
+		class="org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler">
+		<property name="targetUrlParameter" value="/home" />
+  	</bean> 
+  	<bean id="tokenRepository" class="org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl">
+    	<property name="dataSource" ref="dataSource"/>
+    </bean> 
+    -->
+</beans>
