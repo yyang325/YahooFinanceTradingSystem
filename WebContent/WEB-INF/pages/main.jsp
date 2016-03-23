@@ -2,12 +2,12 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<link href="bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-<link href="bower_components/bootstrap/dist/css/bootstrap-theme.min.css" rel="stylesheet">
+<link href="bower_component/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="bower_component/bootstrap/dist/css/bootstrap-theme.min.css" rel="stylesheet">
 
-<script type="text/javascript" src="bower_components/jquery/dist/jquery.min.js"></script>
-<script type="text/javascript" src="bower_components/requirejs/require.js"></script>
-<script type="text/javascript" src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="bower_component/jquery/dist/jquery.min.js"></script>
+<script type="text/javascript" src="bower_component/requirejs/require.js"></script>
+<script type="text/javascript" src="bower_component/bootstrap/dist/js/bootstrap.min.js"></script>
 <title>Insert title here</title>
 </head>
 <body>

@@ -30,19 +30,6 @@
 			</props>
 		</property>
 	</bean>
-	
-	<!--  
-	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-		<property name="driverClassName">
-			<value>oracle.jdbc.driver.OracleDriver</value>
-		</property> 
-		<property name="url">
-			<value>jdbc:oracle:thin:@Ethan5558:1521:XE</value>
-		</property>
-		<property name="username" value="yftsdba"/>
-		<property name="password" value="123mercury"/>
-	</bean>
-	-->
 
 	<!-- JNDI --> 
 	
