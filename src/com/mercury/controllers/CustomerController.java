@@ -9,8 +9,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.mercury.services.UserService;
+
 //import com.mercury.service.StockService;
-//import com.mercury.service.UserService;
 
 /**
  * Customer controller is used to map customer related URLs 
@@ -22,18 +23,18 @@ import org.springframework.web.servlet.ModelAndView;
 @SessionAttributes
 public class CustomerController {
 	
-	//@Autowired
-	//UserService us;
+	@Autowired
+	UserService us;
 	//@Autowired
 	//StockService ss;
 	
-	//@RequestMapping(value="/portfolio", method = RequestMethod.GET)
-	//public ModelAndView portfolio(Principal principal) {
-	//	String username = principal.getName();
-	//	ModelAndView mav = new ModelAndView();
-	//	mav.setViewName("portfolio");
-	//	mav.addObject("balance", us.getBalance(username));
-	//	return mav;
-	//}
+	@RequestMapping(value="/portfolio", method = RequestMethod.GET)
+	public ModelAndView showPortfolio(Principal principal) {
+		String username = principal.getName();
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("portfolio");
+		mav.addObject("balance", us.getBalance(username));
+		return mav;
+	}
 	
 }

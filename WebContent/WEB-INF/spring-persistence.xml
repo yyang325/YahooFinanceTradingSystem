@@ -9,6 +9,12 @@
 		http://www.springframework.org/schema/context/spring-context-3.0.xsd">
 
 	
+	<!-- TransactionManager? and they are using hibernate4 ethan-->
+	<bean id="transactionManager"
+		class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	
 	<!-- Define Session Factory -->
 	<bean id="sessionFactory"
 		class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
@@ -22,7 +28,6 @@
 			</props>
 		</property>
 	</bean>
-	
 	
 	<!-- JNDI --> 
 	<bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
