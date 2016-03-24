@@ -5,9 +5,10 @@ import java.math.BigDecimal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 //import org.springframework.transaction.annotation.Transactional;
-import org.springframework.transaction.annotation.Transactional;
+//import org.springframework.transaction.annotation.Transactional;
 
 import com.mercury.beans.User;
+import com.mercury.dtos.UserInfo;
 import com.mercury.daos.UserDao;
 
 /**
@@ -70,10 +71,52 @@ public class UserService {
 	
 	//need a service to find all stocks that a user have
 	
-	
+	/**
+	 * get UserInfo DTO by username when a user login
+	 * @param username
+	 * @return
+	 */
 	//@Transactional
-	public BigDecimal getBalance(String username) {
-		return BigDecimal.valueOf(ud.findByUserName(username).getBalance());
+	public UserInfo getUserInfoDTO(String username) {
+		UserInfo userInfo = new UserInfo();
+		userInfo.setMessage("Hello "+ username);
+		userInfo.setUsers(ud.queryAll());
+		return userInfo;
+	}
+	
+	/**
+	 * get a user's balance
+	 * @param username
+	 * @return
+	 */
+	//@Transactional
+	public double getBalance(String username) {
+		return ud.findByUserName(username).getBalance();
+	}
+	
+	/**
+	 * get a user's cash
+	 * @param username
+	 * @return
+	 */
+	//@Transactional
+	public double getCash(String username) {
+		return ud.findByUserName(username).getCash();
+	}
+	
+	
+	/**
+	 * add credit to user's cash
+	 * @param username
+	 * @param addMoney
+	 */
+	//@Transactional
+	public void addCash(String username, double addMoney) {
+		User user =ud.findByUserName(username);
+		double newBalance =user.getBalance() + addMoney;
+		//need to modify here
+		user.setBalance(newBalance <= 2147483647 ? newBalance : 2147483647);
+		ud.update(user);
 	}
 	
 }
