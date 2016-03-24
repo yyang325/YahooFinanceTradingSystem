@@ -36,7 +36,6 @@ public class MainController {
 	@RequestMapping(value="/next", method=RequestMethod.POST)
 	public ModelAndView process(@ModelAttribute("user") 
 			User user, BindingResult result) {
-		System.out.println(user);
 		UserInfo userInfo = ms.process(user);
 		//UserInfo userInfo = null;
 		ModelAndView mav = new ModelAndView();
