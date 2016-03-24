@@ -1,5 +1,7 @@
 package com.mercury.controllers;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,8 +15,10 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.mercury.beans.User;
+import com.mercury.dtos.StockInfo;
 import com.mercury.dtos.UserInfo;
 import com.mercury.services.MainService;
+import com.mercury.services.StockService;
 import com.mercury.services.UserService;
 import com.mercury.util.CsvUtil;
 
@@ -32,6 +36,8 @@ public class MainController {
 	MainService ms;
 	@Autowired
 	UserService us;
+	@Autowired
+	StockService ss;
 	@Autowired
 	CsvUtil util;
 
@@ -86,6 +92,13 @@ public class MainController {
 //		User user = us.findUserByEmail(email);
 //		System.out.println(user);
 		return userinfo;
+	}
+	
+	@RequestMapping(value="rest/stocks", method=RequestMethod.GET)
+	@ResponseBody
+	public List<StockInfo> testStocks(HttpServletRequest request){
+		
+		return null;
 	}
 
 }
