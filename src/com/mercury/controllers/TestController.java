@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.mercury.beans.UserStockTransaction;
-import com.mercury.services.MainService;
 import com.mercury.services.TestService;
 import com.mercury.services.TestTransService;
 import com.mercury.beans.Stock;
@@ -24,8 +23,6 @@ public class TestController {
 	private TestService ts;
 	@Autowired
 	private TestTransService tts;
-	@Autowired
-	private MainService ms;
 	
 	@RequestMapping("/inputStock")
 	public String goMain(){

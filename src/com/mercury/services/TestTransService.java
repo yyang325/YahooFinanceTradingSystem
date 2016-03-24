@@ -16,39 +16,20 @@ public class TestTransService {
 	private UserStockTransactionDao ustd;
 	
 	public List<UserStockTransaction> saveAndQueryAll(UserStockTransaction tran){
-		List<UserStockTransaction> list = null;
 		ustd.save(tran);
-		list = ustd.queryAll();
-		return list;
+		return ustd.queryAll();
 	}
 	
 	public List<Stock> queryByUsername(String username){
-		System.out.println(username);
-		List<Stock> list = ustd.queryStockByUsername(username);
-		for(Stock s: list){
-			System.out.println(s.getSymbol());
-		}
-		return list;
+		return ustd.queryStockByUsername(username);
 	}
 	
 	public List<Stock> queryByEmail(String email){
-		System.out.println(email);
-		List<Stock> list = ustd.queryStockByEmail(email);
-		for(Stock s: list){
-			System.out.println(s.getSymbol());
-		}
-		return list;
+		return ustd.queryStockByEmail(email);
 	}
 	
-	
-	
 	public List<User> queryBySymbol(String symbol){
-		System.out.println(symbol);
-		List<User> users = ustd.queryUserBySymbol(symbol);
-		for(User u: users){
-			System.out.println(u.getUsername());
-		}
-		return users;
+		return ustd.queryUserBySymbol(symbol);
 	}
 	
 	
