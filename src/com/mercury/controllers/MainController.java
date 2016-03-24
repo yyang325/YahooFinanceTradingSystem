@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.mercury.beans.Stock;
 import com.mercury.beans.User;
 import com.mercury.dtos.StockInfo;
 import com.mercury.dtos.UserInfo;
@@ -97,8 +98,9 @@ public class MainController {
 	@RequestMapping(value="rest/stocks", method=RequestMethod.GET)
 	@ResponseBody
 	public List<StockInfo> testStocks(HttpServletRequest request){
-		
-		return null;
+		List<Stock> stocks = ss.getAllStock();
+		List<StockInfo> stockinfos = ss.getStockInfos(ss.getAllStock());
+		return stockinfos;
 	}
 
 }

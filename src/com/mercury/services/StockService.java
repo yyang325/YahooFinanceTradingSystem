@@ -9,7 +9,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+//import org.springframework.transaction.annotation.Transactional;
 
 import com.mercury.daos.UserStockTransactionDao;
 //import com.mercury.beans.OwnershipInfo;
@@ -156,8 +156,13 @@ public class StockService {
 			return si;	
 	}
 	
+	/**
+	 * get the stock info of all stocks in db
+	 * @param stocks -- a list of all stocks
+	 * @return  	 -- a list of stock information
+	 */
 	//get real time stockInfo
-	public List<StockInfo> getInfo(List<Stock> stocks) {
+	public List<StockInfo> getStockInfos(List<Stock> stocks) {
 		List<StockInfo> sf = new ArrayList<StockInfo>();
 		for (Stock s : stocks) {
 			StockInfo info = getStockInfo(s);

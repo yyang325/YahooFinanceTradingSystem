@@ -17,6 +17,7 @@
 			username: "", 
 			email: ""
 		};
+		$scope.stocks = null;
 		$scope.text="";
 		$scope.csv="";
 		$scope.findUser = function(){
@@ -47,6 +48,16 @@
 				console.log("Hello");
 				console.log(resp.data);
 				$scope.csv = resp.data.message;
+			})
+		};
+		$scope.showStockinfo = function(){
+			console.log("show stockinfo clicked!");
+			//console.log($scope.data.email);
+			$http.get("rest/stocks", { })
+			.then(function(resp) {
+				console.log("Hello");
+				//console.log(resp.data);
+				$scope.stocks = resp.data;
 			})
 		};
 	});
@@ -132,6 +143,27 @@
 			<td><p>{{csv}}</p></td>
 		</tr>
 	</table>
+	
+	<hr>
+	<h2>Test Stock Service</h2>
+	<div class="row">
+			<table class="table table-striped">
+				<tr>
+					<td><button id="submit3" class="round" ng-click="showStockinfo()">Show StockInfo</button></td>
+				</tr>
+				<tr>
+					<th>Name</th>
+					<th>Pricechange</th>
+					<th>Price</th>
+				</tr>
+				
+					<tr ng-repeat="stock in stocks">
+						<td>{{stock.stockName}}</td>
+						<td>{{stock.pchange}}</td>
+						<td>{{stock.price}}</td>
+					</tr>
+			</table>
+	</div>
 	
 </body>
 </html>
