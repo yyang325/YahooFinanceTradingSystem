@@ -14,17 +14,39 @@
 	var app = angular.module("mainApp", []);
 	app.controller("mainCtrl", function($scope, $http) {
 		$scope.data = {
-			username: ""	
+			username: "", 
+			email: ""
 		};
 		$scope.text="";
+		$scope.csv="";
 		$scope.findUser = function(){
 			console.log("clicked!");
 			console.log($scope.data.username);
 			$http.get("rest/finduser", {params: $scope.data})
-			.success(function(resp) {
+			.then(function(resp) {
 				console.log("Hello");
 				console.log(resp.data);
 				$scope.text = resp.data;
+			})
+		};
+		$scope.findEmail = function(){
+			console.log("clicked!");
+			console.log($scope.data.email);
+			$http.get("rest/finduseremail", {params: $scope.data})
+			.then(function(resp) {
+				console.log("Hello");
+				console.log(resp.data);
+				$scope.text = resp.data;
+			})
+		};
+		$scope.testcsv = function(){
+			console.log("clicked!");
+			//console.log($scope.data.email);
+			$http.get("rest/csv", { })
+			.then(function(resp) {
+				console.log("Hello");
+				console.log(resp.data);
+				$scope.csv = resp.data.message;
 			})
 		};
 	});
@@ -89,6 +111,27 @@
 			<td><p>{{text}}</p></td>
 		</tr>
 	</table>
-
+	
+	<table class=".table-bordered">
+		<tr>
+			<td><input type="text" name="email" id="email" ng-model="data.email"/></td>
+			<td><button id="submit1" class="round" ng-click="findEmail()">Find</button></td>
+		</tr>
+		<tr>
+			<td><p>{{text}}</p></td>
+		</tr>
+	</table>
+	
+	<hr>
+	<h2>Test CSV module</h2>
+	<table class=".table-bordered">
+		<tr>
+			<td><button id="submit2" class="round" ng-click="testcsv()">ReadCSV</button></td>
+		</tr>
+		<tr>
+			<td><p>{{csv}}</p></td>
+		</tr>
+	</table>
+	
 </body>
 </html>

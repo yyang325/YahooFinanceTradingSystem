@@ -16,6 +16,7 @@ import com.mercury.beans.User;
 import com.mercury.dtos.UserInfo;
 import com.mercury.services.MainService;
 import com.mercury.services.UserService;
+import com.mercury.util.CsvUtil;
 
 /**
  * 
@@ -28,9 +29,11 @@ import com.mercury.services.UserService;
 public class MainController {
 	
 	@Autowired
-	private MainService ms;
+	MainService ms;
 	@Autowired
-	private UserService us;
+	UserService us;
+	@Autowired
+	CsvUtil util;
 
 	@RequestMapping(value="/next", method=RequestMethod.POST)
 	public ModelAndView process(@ModelAttribute("user") 
@@ -51,13 +54,38 @@ public class MainController {
 	
 	@RequestMapping(value="rest/finduser", method=RequestMethod.GET)
 	@ResponseBody
-	public User findUser(HttpServletRequest request){
+	public User findUserByUserName(HttpServletRequest request){
 		System.out.println("Has been mapped");
 		String username = request.getParameter("username");
 		System.out.println(username);
 		User user = us.findUserByUserName(username);
 		System.out.println(user);
 		return user;
+	}
+	
+	@RequestMapping(value="rest/finduseremail", method=RequestMethod.GET)
+	@ResponseBody
+	public User findUserByEmail(HttpServletRequest request){
+		System.out.println("Has been mapped");
+		String email = request.getParameter("email");
+		System.out.println(email);
+		User user = us.findUserByEmail(email);
+		System.out.println(user);
+		return user;
+	}
+	
+	@RequestMapping(value="rest/csv", method=RequestMethod.GET)
+	@ResponseBody
+	public UserInfo testCSV(HttpServletRequest request){
+		UserInfo userinfo = new UserInfo();
+		userinfo.setUsers(null);
+		userinfo.setMessage(util.readCSV());
+//		System.out.println("Has been mapped");
+//		String email = request.getParameter("email");
+//		System.out.println(email);
+//		User user = us.findUserByEmail(email);
+//		System.out.println(user);
+		return userinfo;
 	}
 
 }
