@@ -26,8 +26,8 @@
 	<c:forEach var="tran" items="${trans}">
 		<tr>
 			<td>${tran.tid}</td>
-			<td>${tran.uid}</td>
-			<td>${tran.sid}</td>
+			<td>${tran.user.getUid()}</td>
+			<td>${tran.stock.getSid()}</td>
 			<td>${tran.ts}</td>
 			<td>${tran.price}</td>
 			<td>${tran.quantity}</td>
