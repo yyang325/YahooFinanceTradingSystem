@@ -13,8 +13,4 @@ public class LoginController {
 		return "login";
 	}
 	
-	@RequestMapping(value="/main", method = RequestMethod.GET)
-	public String goMain() {
-		return "home";
-	}
 }

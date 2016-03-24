@@ -1,0 +1,11 @@
+*.class
+*.jar
+bower_components
+bower.json
+text.txt
+foobar
+/build/
+<<<<<<< HEAD
+=======
+/WebContent/WEB-INF/lib/
+>>>>>>> refs/remotes/yyang325/dev
