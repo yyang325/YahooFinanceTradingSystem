@@ -8,50 +8,12 @@
 		http://www.springframework.org/schema/context
 		http://www.springframework.org/schema/context/spring-context-3.0.xsd">
 
-	<!-- we gonna use annotation by ethan-->
-	<!-- Dao Injection -->
-	<!--
-	<bean id="mainDao" class="com.mercury.dao.impl.MainDaoImpl">
-		<property name="sessionFactory" ref="sessionFactory" />
-	</bean>
-	<bean id="stockDao" class="com.mercury.dao.impl.StockDaoImpl">
-		<property name="sessionFactory" ref="sessionFactory" />
-	</bean>
-	<bean id="userDao" class="com.mercury.dao.impl.UserDaoImpl">
-		<property name="sessionFactory" ref="sessionFactory" />
-	</bean>
-	<bean id="transDao" class="com.mercury.dao.impl.TransDaoImpl">
-		<property name="sessionFactory" ref="sessionFactory" />
-	</bean>
-	<bean id="ownDao" class="com.mercury.dao.impl.OwnInfoDaoImpl">
-		<property name="SessionFactory" ref="sessionFactory" />
-	</bean>
-	-->
-	
-	
-	<!-- TransactionManager? and they are using hibernate4 ethan-->
-	<!--
-	<bean id="transactionManager"
-		class="org.springframework.orm.hibernate4.HibernateTransactionManager">
-		<property name="sessionFactory" ref="sessionFactory"></property>
-	</bean>
-	-->
 	
 	<!-- Define Session Factory -->
 	<bean id="sessionFactory"
 		class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
 		<property name="dataSource" ref="dataSource" />
 		<property name="packagesToScan" value="com.mercury.beans"/>
-		<!--
-		<property name="annotatedClasses">
-			<list>
-				<value>com.mercury.beans.User</value>
-				<value>com.mercury.beans.Stock</value>
-				<value>com.mercury.beans.OwnershipInfo</value>
-				<value>com.mercury.beans.Transaction</value>
-			</list>
-		</property>
-		 -->
 		<property name="hibernateProperties">
 			<props>
 				<prop key="hibernate.dialect">org.hibernate.dialect.OracleDialect</prop>
@@ -60,22 +22,11 @@
 			</props>
 		</property>
 	</bean>
-
-	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-		<property name="driverClassName">
-			<value>oracle.jdbc.driver.OracleDriver</value>
-		</property> 
-		<property name="url">
-			<value>jdbc:oracle:thin:@Ethan5558:1521:XE</value>
-		</property>
-		<property name="username" value="yftsdba"/>
-		<property name="password" value="123mercury"/>
-	</bean>
-
-	<!-- JNDI -->
-	<!-- 
+	
+	
+	<!-- JNDI --> 
 	<bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
 		<property name="jndiName" value="java:comp/env/jdbc/myoracle" />
 	</bean>
-	 -->
+	
 </beans>

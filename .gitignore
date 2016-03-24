@@ -1,7 +1,0 @@
-*.class
-*.jar
-bower_components
-bower.json
-text.txt
-foobar
-/build/

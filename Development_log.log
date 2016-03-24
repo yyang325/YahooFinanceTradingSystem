@@ -133,3 +133,18 @@ Now after creating that file inside the app directory you can run the following 
 $ bower install
 After that you should see all your JavaScript packages under bower_components folder.
 
+
+**************************************************************************************************************
+
+3/22/2016
+
+1. cglib-node.jar has to be added to make application work. 
+
+
+
+
+
+
+
+
+
