@@ -51,8 +51,8 @@ public class TestController {
 		ModelAndView mav = new ModelAndView();
 		User user1 = new User("Bob325", "asdfuinjj", "bob325@gmail.com", "Bob", "Bruce", 100000, 100000, "USER", 1);
 		Stock stock1 = new Stock("APPL", "Apple is amazing company.");
-		ms.process(user1);
-		ts.process(stock1);
+//		ms.process(user1);
+//		ts.process(stock1);
 		UserStockTransaction trans1 = new UserStockTransaction();
 		trans1.setUser(user1);
 		trans1.setStock(stock1);

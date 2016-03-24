@@ -15,7 +15,7 @@ public class TestTransService {
 	
 	public List<UserStockTransaction> saveAndQueryAll(UserStockTransaction tran){
 		List<UserStockTransaction> list = null;
-		
+		System.out.println(tran);
 		ustd.save(tran);
 		list = ustd.queryAll();
 		
