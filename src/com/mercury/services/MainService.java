@@ -16,7 +16,7 @@ public class MainService {
 	//@Transactional
 	public UserInfo process(User user) {
 		ud.save(user);
-		UserInfo userInfo = new UserInfo();;
+		UserInfo userInfo = new UserInfo();
 		userInfo.setMessage("Hello " + user.getUsername() + ", welcome to YFTS!");
 		userInfo.setUsers(ud.queryAll());
 		return userInfo;

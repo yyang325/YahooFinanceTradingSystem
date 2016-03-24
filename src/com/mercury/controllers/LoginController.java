@@ -6,6 +6,15 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+
+/**
+ * @version update 03/24/2016
+ * @author Weibo
+ * 
+ * Test Login controller
+*/
 
 import com.mercury.services.UserService;
 
@@ -21,5 +30,6 @@ public class LoginController {
 	public String login(ModelMap model) {
 		return "login";
 	}
+
 
 }

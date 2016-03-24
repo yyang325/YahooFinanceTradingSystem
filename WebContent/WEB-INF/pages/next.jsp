@@ -12,13 +12,17 @@
 	<h2><jsp:getProperty name="userInfo" property="message"/></h2>
 	<table border="1" style="width:200px">
 	<tr>
-		<th>Name</th>
-		<th>Age</th>
+		<th>Username</th>
+		<th>Fullname</th>
+		<th>Email</th>
+		<th>Enabled</th>
 	</tr>
 	<c:forEach var="user" items="${userInfo.users}">
 		<tr>
 			<td>${user.username}</td>
-			<td>${user.firstName}</td>
+			<td>${user.firstName} ${user.lastName}</td>
+			<td>${user.email}</td>
+			<td>${user.enable}</td>
 		</tr>
 	</c:forEach>
 	<%-- 

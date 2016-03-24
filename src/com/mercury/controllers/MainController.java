@@ -28,6 +28,12 @@ import com.mercury.util.CsvUtil;
  * @author Ethan
  *
  * Mainservice for test purpose
+ * 
+ * 
+ * @version update 03/24/2016
+ * @author Weibo
+ * 
+ * Modified RequestMapping for "main"
  */
 @Controller
 @SessionAttributes
@@ -55,7 +61,11 @@ public class MainController {
 	
 	@RequestMapping("/main")
 	public String mainPage() {
-		//System.out.println("Hello");
+		return "home";
+	}
+	
+	@RequestMapping("/main1")
+	public String mainPage2() {
 		return "main";
 	}
 	
