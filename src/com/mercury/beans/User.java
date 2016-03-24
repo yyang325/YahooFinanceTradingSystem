@@ -17,6 +17,14 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.GenericGenerator;
 
+/**
+ *
+ * @version update 03/24/2016
+ * @author Weibo
+ * 
+ * added toString method for testing
+ */
+
 @Entity
 @Table(name="yfts_user")
 public class User {
@@ -90,7 +98,12 @@ public class User {
 		}
 	}
 	
-	
+	@Override
+	public String toString() {
+		return uid + "\n" + username + "\n" + password + "\n" + email + "\n" 
+				+ firstName + "\n" + lastName + "\n" + cash + "\n" 
+					+ balance + "\n" + authority + "\n" + enable;
+	}
 	
 	
 	public int getUid() {

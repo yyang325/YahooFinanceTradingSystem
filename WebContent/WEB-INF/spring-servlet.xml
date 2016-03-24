@@ -19,8 +19,7 @@
     
     <!-- Transaction -->
 	<tx:annotation-driven/>
-   
-    
+	
     <!-- Spring MVC Annotation -->
     <mvc:annotation-driven />
     <mvc:resources mapping="/*" location="/" /> 
