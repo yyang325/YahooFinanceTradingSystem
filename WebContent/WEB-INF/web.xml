@@ -11,4 +11,33 @@
     <welcome-file>index.jsp</welcome-file>
   </welcome-file-list>
   
+  <!-- Listener class and params -->
+    <listener>
+		<listener-class>
+         	org.springframework.web.context.ContextLoaderListener
+       	</listener-class>
+	</listener>
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>
+			/WEB-INF/spring-*.xml
+		</param-value>
+	</context-param>
+	
+  	<!-- Spring MVC-->
+    <servlet>
+        <servlet-name>spring</servlet-name>
+        <servlet-class>
+            org.springframework.web.servlet.DispatcherServlet
+        </servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>spring</servlet-name>
+   		<url-pattern>/</url-pattern> 
+        <url-pattern>*.html</url-pattern>        
+        <url-pattern>/rest/</url-pattern>
+    </servlet-mapping>
+    
+  
 </web-app>

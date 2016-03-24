@@ -133,3 +133,36 @@ Now after creating that file inside the app directory you can run the following 
 $ bower install
 After that you should see all your JavaScript packages under bower_components folder.
 
+
+**************************************************************************************************************
+
+3/22/2016
+
+1. cglib-node.jar has to be added to make application work.
+
+2. 
+add a .bowerrc file under the project fold,
+write 
+{
+  "directory" : "WebContent/bower_component"
+}
+
+then run bower install again to add depenencies
+
+later in the front-end page,
+write things like:
+<link href="bower_component/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="bower_component/bootstrap/dist/css/bootstrap-theme.min.css" rel="stylesheet">
+
+<script type="text/javascript" src="bower_component/jquery/dist/jquery.min.js"></script>
+<script type="text/javascript" src="bower_component/requirejs/require.js"></script>
+<script type="text/javascript" src="bower_component/bootstrap/dist/js/bootstrap.min.js"></script> 
+
+3. Changed to JNDI connection.
+
+
+
+
+
+
+
