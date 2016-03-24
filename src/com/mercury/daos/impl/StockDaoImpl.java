@@ -39,22 +39,14 @@ public class StockDaoImpl implements StockDao {
 	@Override
 	public Stock findBySymbol(String symbol) {
 		// TODO Auto-generated method stub
-		String sql = "select * from yfts_stock where symbol = ?";
-		Object[] params = {symbol};
 		@SuppressWarnings("unchecked")
-		List<Stock> list = template.find(sql, params);
-		System.out.println(list.get(0));
-		return list.get(0);
+		List<Stock> stocks = template.find("FROM Stock s WHERE s.symbol = ?", symbol);
+		return stocks.get(0);
 	}
 	
 	@Override
 	public Stock findByStockId(int stock_id){
-		String sql = "select * from yfts_stock where stock_id = ?";
-		Object[] params = {stock_id};
-		@SuppressWarnings("unchecked")
-		List<Stock> list = template.find(sql, params);
-		System.out.println(list.get(0));
-		return list.get(0);
+		return template.get(Stock.class, stock_id);
 	}
 
 	@Override

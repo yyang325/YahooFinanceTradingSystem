@@ -14,6 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.mercury.beans.UserStockTransaction;
 import com.mercury.services.TestService;
 import com.mercury.services.TestTransService;
+import com.mercury.services.TestWatchListService;
 import com.mercury.beans.Stock;
 import com.mercury.beans.User;
 
@@ -23,6 +24,8 @@ public class TestController {
 	private TestService ts;
 	@Autowired
 	private TestTransService tts;
+	@Autowired
+	private TestWatchListService twls;
 	
 	@RequestMapping("/inputStock")
 	public String goMain(){
@@ -93,6 +96,16 @@ public class TestController {
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("users", tts.queryBySymbol(symbol));
 		mav.setViewName("testQueryStockByUsernameResult");
+		return mav;
+	}
+	
+	
+	/* Test adding stock to watch list */
+	@RequestMapping(value="/testWatchlist1", method=RequestMethod.POST)
+	public ModelAndView execute6(@RequestParam("stockId") int stockId, @RequestParam("userId") int userId){
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("stockList", twls.saveAndQueryAllWatchList(userId, stockId));
+		mav.setViewName("testWatchList");
 		return mav;
 	}
 }
