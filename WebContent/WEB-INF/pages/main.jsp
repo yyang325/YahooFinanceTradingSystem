@@ -47,8 +47,8 @@
 				<td><input type="text" name="authority" id="j_autority" /></td>
 			</tr>
 			<tr>
-				<td>Enabled:</td>
-				<td><input type="number" name="enabled" id="j_enabled" min="0"
+				<td>Enable:</td>
+				<td><input type="number" name="enable" id="j_enable" min="0"
 					max="1" /></td>
 			</tr>
 			<tr>
