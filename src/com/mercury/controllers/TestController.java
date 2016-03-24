@@ -55,8 +55,10 @@ public class TestController {
 	@RequestMapping(value="/testTran", method=RequestMethod.POST)
 	public ModelAndView execute2(@RequestParam("price") double price, @RequestParam("quantity") double quantity){
 		ModelAndView mav = new ModelAndView();
-		User user1 = new User("FrankLoveJava", "sdxcvui", "frank@gmail.com", "Frank", "Young", 23867, 23790, "USER", 1);
-		Stock stock1 = new Stock("GOOG", "Google is a great company.");
+		User user1 = new User("xiaoluguo", "sadf", "xiaoluguo@gmail.com", "xiaolu", "guo", 7673, 2790, "USER", 1);
+		Stock stock1 = new Stock("AMZ", "AMAZON is a great company.");
+		
+		/* mocked transaction */
 		UserStockTransaction trans1 = new UserStockTransaction();
 		trans1.setUser(user1);
 		trans1.setStock(stock1);
@@ -82,6 +84,17 @@ public class TestController {
 	public ModelAndView execute4(@RequestParam("email") String email){
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("stocks", tts.queryByEmail(email));
+		mav.setViewName("testQueryStockByUsernameResult");
+		return mav;
+	}
+	
+	
+	
+	/* Test query list of user by Stock's Symbol. */
+	@RequestMapping(value="/testTran5", method=RequestMethod.POST)
+	public ModelAndView execute5(@RequestParam("symbol") String symbol){
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("users", tts.queryBySymbol(symbol));
 		mav.setViewName("testQueryStockByUsernameResult");
 		return mav;
 	}

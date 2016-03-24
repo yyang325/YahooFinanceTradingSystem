@@ -13,6 +13,7 @@
 <body>
 
 <%@page import="com.mercury.beans.UserStockTransaction" %>
+<h1>Query Stock by User information</h1>
 <table border="1" style="width: 200px">
 	<tr>
 		<th>StockId</th>
@@ -25,6 +26,25 @@
 			<td>${stock.sid}</td>
 			<td>${stock.symbol}</td>
 			<td>${stock.stockDesc}</td>
+		</tr>
+	</c:forEach>
+	 
+</table>
+<hr>
+
+<h1>Query User by Stock information</h1>
+<table border="1" style="width: 200px">
+	<tr>
+		<th>User Id</th>
+		<th>User Username</th>
+		<th>User Email</th>
+	</tr>
+	
+	<c:forEach var="user" items="${users}">
+		<tr>
+			<td>${user.uid}</td>
+			<td>${user.username}</td>
+			<td>${user.email}</td>
 		</tr>
 	</c:forEach>
 	 

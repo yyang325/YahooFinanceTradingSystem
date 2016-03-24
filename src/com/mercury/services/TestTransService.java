@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.mercury.beans.Stock;
+import com.mercury.beans.User;
 import com.mercury.beans.UserStockTransaction;
 import com.mercury.daos.UserStockTransactionDao;
 
@@ -37,6 +38,17 @@ public class TestTransService {
 			System.out.println(s.getSymbol());
 		}
 		return list;
+	}
+	
+	
+	
+	public List<User> queryBySymbol(String symbol){
+		System.out.println(symbol);
+		List<User> users = ustd.queryUserBySymbol(symbol);
+		for(User u: users){
+			System.out.println(u.getUsername());
+		}
+		return users;
 	}
 	
 	

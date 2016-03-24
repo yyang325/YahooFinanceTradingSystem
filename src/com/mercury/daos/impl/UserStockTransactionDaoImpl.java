@@ -40,24 +40,26 @@ public class UserStockTransactionDaoImpl implements UserStockTransactionDao {
 	@Override
 	public List<User> queryUserBySymbol(String symbol) {
 		// TODO Auto-generated method stub
-		String sql = "select stock_id from yfts_stock where symbol = ?";
-		Object[] params = {symbol};
-		int stock_id = (int) template.find(sql, params).get(0);
+		System.out.println(symbol + " in query");
+		@SuppressWarnings("unchecked")
+		List<Stock> stocks = template.find("FROM Stock s WHERE s.symbol = ?", symbol);
+		int stock_id = (int) stocks.get(0).getSid();
+		System.out.println(stock_id);
 		return queryUserByStockId(stock_id);
 	}
 
 	@Override
 	public List<User> queryUserByStockId(int stockId) {
 		// TODO Auto-generated method stub
-		String sql = "select distinct user_id from yfts_trans where stock_id = ?";
-		Object[] params = {stockId};
+		
+		System.out.println("queryUserByStockId" + " " + stockId);
 		@SuppressWarnings("unchecked")
-		List<Integer> uidList = template.find(sql, params);
-		if(uidList.size() < 1) return null;
+		List<UserStockTransaction> trans = template.find("FROM UserStockTransaction t WHERE t.stock.sid = ?", stockId);
+		System.out.println(trans);
 		List<User> users = new ArrayList<>();
-		for(int uid : uidList){
-			User user = template.get(User.class, uid);
-			users.add(user);
+		for(UserStockTransaction tran: trans){
+			users.add(tran.getUser());
+			System.out.println(tran.getUser().getUsername());
 		}
 		return users;
 	}

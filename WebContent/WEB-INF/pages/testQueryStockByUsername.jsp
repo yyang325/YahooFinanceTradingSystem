@@ -38,6 +38,26 @@
 		</tr>
 	</table>
 </form>
+<hr>
+
+<h1>This is to test Query User by Stock Symbol</h1><hr>
+<form action="testTran5.html" method="post">
+	<table>
+		<tr>
+			<td>Symbol</td>
+			<td><input type="text" name="symbol" placeholder="Stock Symbol"></td>
+		</tr>
+		<tr>
+			<td></td>
+			<td>
+				<input type="reset" value="Clear">
+				<input type="submit" value="Submit">
+			</td>
+		</tr>
+	</table>
+</form>
+
+
 
 </body>
 </html>
