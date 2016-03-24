@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-//import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 //import org.springframework.transaction.annotation.Transactional;
 
 import com.mercury.beans.User;
@@ -27,7 +27,7 @@ public class UserService {
 	 * @param username
 	 * @return
 	 */
-	//@Transactional
+	@Transactional
 	public boolean isUserExist(String username) {
 		if(ud.findByUserName(username) == null){
 			return false;
@@ -40,7 +40,7 @@ public class UserService {
 	 * @param email
 	 * @return
 	 */
-	//@Transactional
+	@Transactional
 	public boolean isEmailExist(String email) {
 		if(ud.findByEmail(email) == null){
 			return false;
@@ -53,7 +53,7 @@ public class UserService {
 	 * @param username
 	 * @return
 	 */
-	//@Transactional
+	@Transactional
 	public User findUserByUserName(String username){
 		return ud.findByUserName(username);
 	}
@@ -64,7 +64,7 @@ public class UserService {
 	 * @param email
 	 * @return
 	 */
-	//@Transactional 
+	@Transactional 
 	public User findUserByEmail(String email) {
 		return ud.findByEmail(email);
 	}
@@ -76,7 +76,7 @@ public class UserService {
 	 * @param username
 	 * @return
 	 */
-	//@Transactional
+	@Transactional
 	public UserInfo getUserInfoDTO(String username) {
 		UserInfo userInfo = new UserInfo();
 		userInfo.setMessage("Hello "+ username);
@@ -89,7 +89,7 @@ public class UserService {
 	 * @param username
 	 * @return
 	 */
-	//@Transactional
+	@Transactional
 	public double getBalance(String username) {
 		return ud.findByUserName(username).getBalance();
 	}
@@ -99,7 +99,7 @@ public class UserService {
 	 * @param username
 	 * @return
 	 */
-	//@Transactional
+	@Transactional
 	public double getCash(String username) {
 		return ud.findByUserName(username).getCash();
 	}
@@ -110,7 +110,7 @@ public class UserService {
 	 * @param username
 	 * @param addMoney
 	 */
-	//@Transactional
+	@Transactional
 	public void addCash(String username, double addMoney) {
 		User user =ud.findByUserName(username);
 		double newBalance =user.getBalance() + addMoney;

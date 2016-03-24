@@ -6,11 +6,32 @@
 <link href="bower_component/bootstrap/dist/css/bootstrap-theme.min.css" rel="stylesheet">
 
 <script type="text/javascript" src="bower_component/jquery/dist/jquery.min.js"></script>
+<script type="text/javascript" src="bower_component/angular/angular.min.js"></script>
 <script type="text/javascript" src="bower_component/requirejs/require.js"></script>
 <script type="text/javascript" src="bower_component/bootstrap/dist/js/bootstrap.min.js"></script>
+
+<script>
+	var app = angular.module("mainApp", []);
+	app.controller("mainCtrl", function($scope, $http) {
+		$scope.data = {
+			username: ""	
+		};
+		$scope.text="";
+		$scope.findUser = function(){
+			console.log("clicked!");
+			console.log($scope.data.username);
+			$http.get("rest/finduser", {params: $scope.data})
+			.success(function(resp) {
+				console.log("Hello");
+				console.log(resp.data);
+				$scope.text = resp.data;
+			})
+		};
+	});
+</script>
 <title>Insert title here</title>
 </head>
-<body>
+<body ng-app="mainApp" ng-controller="mainCtrl">
 	<!-- Form -->
 	<form action="next.html" method="post" id="loginForm">
 		<table>
@@ -58,6 +79,16 @@
 			</tr>
 		</table>
 	</form>
+	<hr>
+	<table class=".table-bordered">
+		<tr>
+			<td><input type="text" name="username" id="username" ng-model="data.username"/></td>
+			<td><button id="submit" class="round" ng-click="findUser()">Find</button></td>
+		</tr>
+		<tr>
+			<td><p>{{text}}</p></td>
+		</tr>
+	</table>
 
 </body>
 </html>

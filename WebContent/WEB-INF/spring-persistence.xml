@@ -10,12 +10,11 @@
 
 	
 	<!-- TransactionManager? and they are using hibernate4 ethan-->
-	 <!--
+	
 	<bean id="transactionManager"
 		class="org.springframework.orm.hibernate3.HibernateTransactionManager">
 		<property name="sessionFactory" ref="sessionFactory"></property>
 	</bean>
-	-->
 	
 	<!-- Define Session Factory -->
 	<bean id="sessionFactory"
