@@ -46,6 +46,16 @@ public class StockDaoImpl implements StockDao {
 		System.out.println(list.get(0));
 		return list.get(0);
 	}
+	
+	@Override
+	public Stock findByStockId(int stock_id){
+		String sql = "select * from yfts_stock where stock_id = ?";
+		Object[] params = {stock_id};
+		@SuppressWarnings("unchecked")
+		List<Stock> list = template.find(sql, params);
+		System.out.println(list.get(0));
+		return list.get(0);
+	}
 
 	@Override
 	public List<Stock> queryAllStocks() {

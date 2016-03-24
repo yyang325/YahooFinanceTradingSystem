@@ -9,5 +9,6 @@ public interface StockDao {
 	public void delete(Stock stock);
 	public void update(Stock stock);
 	public Stock findBySymbol(String symbol);
+	public Stock findByStockId(int stock_id);
 	public List<Stock> queryAllStocks();
 }

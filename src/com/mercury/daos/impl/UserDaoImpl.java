@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.springframework.stereotype.Repository;
 
-import com.mercury.beans.Stock;
 import com.mercury.beans.User;
 import com.mercury.daos.UserDao;
 

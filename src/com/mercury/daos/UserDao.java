@@ -2,7 +2,6 @@ package com.mercury.daos;
 
 import java.util.List;
 
-import com.mercury.beans.Stock;
 import com.mercury.beans.User;
 
 public interface UserDao {
