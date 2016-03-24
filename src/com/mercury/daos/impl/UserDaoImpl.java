@@ -74,7 +74,7 @@ public class UserDaoImpl implements UserDao {
 	@SuppressWarnings("unchecked")
 	@Override
 	public User findByUserName(String userName) {
-		List<User> users = template.find("FROM User user WHERE user.userName = ?", userName);
+		List<User> users = template.find("FROM User user WHERE user.username = ?", userName);
 		if (users.size() == 0) return null;
 		return users.get(0);
 	}
