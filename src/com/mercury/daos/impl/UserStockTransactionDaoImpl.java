@@ -65,9 +65,11 @@ public class UserStockTransactionDaoImpl implements UserStockTransactionDao {
 	@Override
 	public List<Stock> queryStockByUsername(String username) {
 		// TODO Auto-generated method stub
+		System.out.println(username + " in query");
 		String sql = "select user_id from yfts_user where username = ?";
-		Object[] params = {username};
-		int user_id = (int) template.find(sql, params).get(0);
+		
+		int user_id = (int) template.find(sql, username).get(0);
+		System.out.println(user_id);
 		return queryStockByUserId(user_id);
 	}
 
@@ -83,6 +85,7 @@ public class UserStockTransactionDaoImpl implements UserStockTransactionDao {
 	@Override
 	public List<Stock> queryStockByUserId(int userId) {
 		// TODO Auto-generated method stub
+		System.out.println("queryStockByUserId" + " " + userId);
 		String sql = "select distinct stock_id from yfts_trans where user_id = ?";
 		Object[] params = {userId};
 		@SuppressWarnings("unchecked")

@@ -37,6 +37,12 @@ public class TestController {
 		return "inputTran";
 	}
 	
+	@RequestMapping("/testQueryStockByUsername")
+	public String goMain3(){
+		return "testQueryStockByUsername";
+	}
+	
+	/* Test Save a stock and query all stocks that been saved. */
 	@RequestMapping(value="/testStock", method=RequestMethod.POST)
 	public ModelAndView execute(@ModelAttribute("stock") Stock stock, BindingResult result){
 		ModelAndView mav = new ModelAndView();
@@ -45,14 +51,12 @@ public class TestController {
 		return mav;
 	}
 	
-	
+	/* Test Save a Transaction between user and stock and query all transactions */
 	@RequestMapping(value="/testTran", method=RequestMethod.POST)
 	public ModelAndView execute2(@RequestParam("price") double price, @RequestParam("quantity") double quantity){
 		ModelAndView mav = new ModelAndView();
-		User user1 = new User("Bob325", "asdfuinjj", "bob325@gmail.com", "Bob", "Bruce", 100000, 100000, "USER", 1);
-		Stock stock1 = new Stock("APPL", "Apple is amazing company.");
-//		ms.process(user1);
-//		ts.process(stock1);
+		User user1 = new User("FrankLoveJava", "sdxcvui", "frank@gmail.com", "Frank", "Young", 23867, 23790, "USER", 1);
+		Stock stock1 = new Stock("GOOG", "Google is a great company.");
 		UserStockTransaction trans1 = new UserStockTransaction();
 		trans1.setUser(user1);
 		trans1.setStock(stock1);
@@ -64,6 +68,12 @@ public class TestController {
 		return mav;
 	}
 	
-	
-	
+	/* Test query list of transaction by user's UserName */
+	@RequestMapping(value="/testTran3", method=RequestMethod.POST)
+	public ModelAndView execute3(@RequestParam("username") String username){
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("stocks", tts.queryByUsername(username));
+		mav.setViewName("testQueryStockByUsernameResult");
+		return mav;
+	}
 }
