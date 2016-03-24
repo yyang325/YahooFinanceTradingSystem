@@ -30,4 +30,14 @@ public class TestTransService {
 		return list;
 	}
 	
+	public List<Stock> queryByEmail(String email){
+		System.out.println(email);
+		List<Stock> list = ustd.queryStockByEmail(email);
+		for(Stock s: list){
+			System.out.println(s.getSymbol());
+		}
+		return list;
+	}
+	
+	
 }

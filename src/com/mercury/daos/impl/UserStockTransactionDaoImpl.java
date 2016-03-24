@@ -76,9 +76,8 @@ public class UserStockTransactionDaoImpl implements UserStockTransactionDao {
 	@Override
 	public List<Stock> queryStockByEmail(String email) {
 		// TODO Auto-generated method stub
-		String sql = "select user_id from yfts_user where email = ?";
-		Object[] params = {email};
-		int user_id = (int) template.find(sql, params).get(0);
+		List<User> users = template.find("FROM User user WHERE user.email = ?", email);
+		int user_id = (int) users.get(0).getUid();
 		return queryStockByUserId(user_id);
 	}
 

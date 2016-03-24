@@ -68,11 +68,20 @@ public class TestController {
 		return mav;
 	}
 	
-	/* Test query list of transaction by user's UserName */
+	/* Test query list of stock by user's UserName */
 	@RequestMapping(value="/testTran3", method=RequestMethod.POST)
 	public ModelAndView execute3(@RequestParam("username") String username){
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("stocks", tts.queryByUsername(username));
+		mav.setViewName("testQueryStockByUsernameResult");
+		return mav;
+	}
+	
+	/* Test query list of stock by user's User email. */
+	@RequestMapping(value="/testTran4", method=RequestMethod.POST)
+	public ModelAndView execute4(@RequestParam("email") String email){
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("stocks", tts.queryByEmail(email));
 		mav.setViewName("testQueryStockByUsernameResult");
 		return mav;
 	}
