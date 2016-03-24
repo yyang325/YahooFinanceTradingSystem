@@ -11,7 +11,6 @@ import org.springframework.stereotype.Repository;
 import com.mercury.beans.Stock;
 import com.mercury.beans.User;
 import com.mercury.beans.UserStockTransaction;
-import com.mercury.daos.UserDao;
 import com.mercury.daos.UserStockTransactionDao;
 
 @Repository
@@ -33,6 +32,7 @@ public class UserStockTransactionDaoImpl implements UserStockTransactionDao {
 	@Override
 	public List<UserStockTransaction> queryAll() {
 		// TODO Auto-generated method stub
+		System.out.println("query all transaction");
 		String hql = "from UserStockTransaction";
 		return template.find(hql);
 	}
@@ -54,7 +54,6 @@ public class UserStockTransactionDaoImpl implements UserStockTransactionDao {
 		@SuppressWarnings("unchecked")
 		List<Integer> uidList = template.find(sql, params);
 		if(uidList.size() < 1) return null;
-		
 		List<User> users = new ArrayList<>();
 		for(int uid : uidList){
 			User user = template.get(User.class, uid);
@@ -75,7 +74,10 @@ public class UserStockTransactionDaoImpl implements UserStockTransactionDao {
 	@Override
 	public List<Stock> queryStockByEmail(String email) {
 		// TODO Auto-generated method stub
-		return null;
+		String sql = "select user_id from yfts_user where email = ?";
+		Object[] params = {email};
+		int user_id = (int) template.find(sql, params).get(0);
+		return queryStockByUserId(user_id);
 	}
 
 	@Override
@@ -83,6 +85,7 @@ public class UserStockTransactionDaoImpl implements UserStockTransactionDao {
 		// TODO Auto-generated method stub
 		String sql = "select distinct stock_id from yfts_trans where user_id = ?";
 		Object[] params = {userId};
+		@SuppressWarnings("unchecked")
 		List<Integer> sidList = template.find(sql, params);
 		if(sidList.size() < 1) return null;
 		List<Stock> stocks = new ArrayList<>();
