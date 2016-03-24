@@ -22,7 +22,7 @@
 	
 	<c:forEach var="stock" items="${stocks}">
 		<tr>
-			<td>${stock.tid}</td>
+			<td>${stock.sid}</td>
 			<td>${stock.symbol}</td>
 			<td>${stock.stockDesc}</td>
 		</tr>

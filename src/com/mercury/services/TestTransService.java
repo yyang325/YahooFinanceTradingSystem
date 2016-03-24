@@ -23,7 +23,11 @@ public class TestTransService {
 	
 	public List<Stock> queryByUsername(String username){
 		System.out.println(username);
-		return ustd.queryStockByUsername(username);
+		List<Stock> list = ustd.queryStockByUsername(username);
+		for(Stock s: list){
+			System.out.println(s.getSymbol());
+		}
+		return list;
 	}
 	
 }

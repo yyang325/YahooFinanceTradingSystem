@@ -66,9 +66,9 @@ public class UserStockTransactionDaoImpl implements UserStockTransactionDao {
 	public List<Stock> queryStockByUsername(String username) {
 		// TODO Auto-generated method stub
 		System.out.println(username + " in query");
-		String sql = "select user_id from yfts_user where username = ?";
-		
-		int user_id = (int) template.find(sql, username).get(0);
+		@SuppressWarnings("unchecked")
+		List<User> users = template.find("FROM User user WHERE user.username = ?", username);
+		int user_id = (int) users.get(0).getUid();
 		System.out.println(user_id);
 		return queryStockByUserId(user_id);
 	}
@@ -86,15 +86,13 @@ public class UserStockTransactionDaoImpl implements UserStockTransactionDao {
 	public List<Stock> queryStockByUserId(int userId) {
 		// TODO Auto-generated method stub
 		System.out.println("queryStockByUserId" + " " + userId);
-		String sql = "select distinct stock_id from yfts_trans where user_id = ?";
-		Object[] params = {userId};
 		@SuppressWarnings("unchecked")
-		List<Integer> sidList = template.find(sql, params);
-		if(sidList.size() < 1) return null;
+		List<UserStockTransaction> trans = template.find("FROM UserStockTransaction t WHERE t.user.uid = ?", userId);
+		System.out.println(trans);
 		List<Stock> stocks = new ArrayList<>();
-		for(int sid : sidList){
-			Stock stock = template.get(Stock.class, sid);
-			stocks.add(stock);
+		for(UserStockTransaction tran: trans){
+			stocks.add(tran.getStock());
+			System.out.println(tran.getStock().getSymbol());
 		}
 		return stocks;
 	}
