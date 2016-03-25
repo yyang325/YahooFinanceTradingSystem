@@ -109,7 +109,12 @@ public class MainController {
 	@ResponseBody
 	public List<StockInfo> testStocks(HttpServletRequest request){
 		List<Stock> stocks = ss.getAllStock();
-		List<StockInfo> stockinfos = ss.getStockInfos(ss.getAllStock());
+		for(Stock s: stocks){
+			System.out.println(s.getSymbol() + " " + s.getStockDesc());
+			System.out.println(ss.getStockInfo(s).getStockName());
+		}
+		List<StockInfo> stockinfos =ss.getStockInfos(stocks);
+		//List<StockInfo> stockinfos = ss.getStockInfos(ss.getAllStock());
 		return stockinfos;
 	}
 

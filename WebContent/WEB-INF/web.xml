@@ -53,7 +53,7 @@
     </servlet-mapping>
     
     <!-- this filter will avoid LazyInitializationException -->
-   <filter>
+   <!-- <filter>
 	    <filter-name>openSessionInViewFilter</filter-name>
 	    <filter-class>org.springframework.orm.hibernate3.support.OpenSessionInViewFilter</filter-class>
 	</filter>
@@ -61,7 +61,6 @@
 	<filter-mapping>
 	    <filter-name>openSessionInViewFilter</filter-name>
 	    <url-pattern>/*</url-pattern>
-	</filter-mapping> 
+	</filter-mapping>  -->
   
-
 </web-app>
