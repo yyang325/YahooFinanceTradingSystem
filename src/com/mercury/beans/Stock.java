@@ -29,10 +29,10 @@ public class Stock {
 	@Column(name="stockdesc")
 	private String stockDesc;
 	
-	@ManyToMany(fetch = FetchType.LAZY, mappedBy = "watchedStocks")
+	@ManyToMany(fetch = FetchType.EAGER, mappedBy = "watchedStocks")
 	private Set<User> watchingUsers = new HashSet<>();
 	
-	@OneToMany(mappedBy = "stock")
+	@OneToMany(mappedBy = "stock", fetch = FetchType.EAGER)
 	private Set<UserStockTransaction> trans = new HashSet<>();
 	
 	public Stock(){}
