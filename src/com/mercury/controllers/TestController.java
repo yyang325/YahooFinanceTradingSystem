@@ -32,7 +32,7 @@ public class TestController {
 		return "inputStock";
 	}
 	
-	@RequestMapping("/inputTran")
+	@RequestMapping("/testTran")
 	public String goMain2(){
 		return "inputTran";
 	}
@@ -108,4 +108,21 @@ public class TestController {
 		mav.setViewName("testWatchList");
 		return mav;
 	}
+	
+	
+	/* Test query transaction history by user information (user id, username, email) */
+	@RequestMapping(value="/testHistoryTransaction", method=RequestMethod.POST)
+	public ModelAndView execute7(@RequestParam("history_userId") Integer userId, @RequestParam("history_username") String username, @RequestParam("history_email") String email){
+		ModelAndView mav = new ModelAndView();
+		if(userId != null && userId > 0){
+			mav.addObject("history", tts.queryHistoryByUserId((int) userId));
+		}else if(username != null && username.length() > 0){
+			mav.addObject("history", tts.queryHistoryByUsername(username));
+		}else if(email != null && email.length() > 0){
+			mav.addObject("history", tts.queryHistoryByEmail(email));
+		}
+		mav.setViewName("testTranResult");
+		return mav;
+	}
+	
 }
