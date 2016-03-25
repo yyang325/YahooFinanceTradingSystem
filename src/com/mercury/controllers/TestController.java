@@ -53,7 +53,7 @@ public class TestController {
 	
 	/* Test Save a Transaction between user and stock and query all transactions */
 	@RequestMapping(value="/testTran", method=RequestMethod.POST)
-	public ModelAndView execute2(@RequestParam("price") double price, @RequestParam("quantity") double quantity){
+	public ModelAndView execute2(@RequestParam("price") double price, @RequestParam("quantity") int quantity){
 		ModelAndView mav = new ModelAndView();
 		User user1 = new User("xiaoluguo", "sadf", "xiaoluguo@gmail.com", "xiaolu", "guo", 7673, 2790, "USER", 1);
 		Stock stock1 = new Stock("AMZ", "AMAZON is a great company.");

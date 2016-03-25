@@ -40,7 +40,7 @@ public class UserStockTransaction {
 	private double price;
 	
 	@Column(name="quantity")
-	private double quantity;
+	private int quantity;
 
 	public int getTid() {
 		return tid;
@@ -82,13 +82,12 @@ public class UserStockTransaction {
 		this.price = price;
 	}
 
-	public double getQuantity() {
+	public int getQuantity() {
 		return quantity;
 	}
 
-	public void setQuantity(double quantity) {
+	public void setQuantity(int quantity) {
 		this.quantity = quantity;
 	}
 
-	
 }
