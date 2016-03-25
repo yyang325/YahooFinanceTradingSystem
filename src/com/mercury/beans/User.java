@@ -61,7 +61,7 @@ public class User {
 	)
 	private Set<Stock> watchedStocks = new HashSet<>();
 	
-	@OneToMany(mappedBy = "user")
+	@OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
 	private Set<UserStockTransaction> trans = new HashSet<>();
 	
 	public User(){}
