@@ -7,9 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-//import com.mercury.beans.OwnershipInfo;
+
 import com.mercury.beans.Stock;
-import com.mercury.beans.Transaction;
 //import com.mercury.beans.Transaction;
 import com.mercury.beans.User;
 import com.mercury.beans.UserStockTransaction;
@@ -78,19 +77,20 @@ public class TransService {
 	public void addPending(UserStockTransaction trans){
 		User user = trans.getUser();
 		double cash = user.getCash();
-		int amount = (int) trans.getQuantity();
+		int amount = trans.getQuantity();
 		double price = trans.getPrice();
 		
 		cash = cash - price * amount;
 		// can the cash be negative value?
 		// if cash is greater or equal than 0, update user and save transaction to pending
 		// if cash is less than 0, abort the transaction
+		
 		if (cash >= 0) {
 			user.setCash(cash);
 			ud.update(user);
 			cu.appendCSV(trans);
 		} else{
-			//add code here
+			System.out.println("User don't have enough balance");
 		}
 		
 	}
@@ -124,9 +124,9 @@ public class TransService {
 		}
 		return newList;
 	}
-	
-	
-
+//	
+//	
+//
 	/**
 	 * Commit pending transaction in csv file, save it to database, update balance
 	 * @param index -- index of the pending transaction
@@ -182,11 +182,20 @@ public class TransService {
 	 */
 	public void commitPendings(List<Integer> indexs){
 		List<UserStockTransaction> allpendings = getAllPendings();
-		indexs.forEach(i-> {
+		for(int i: indexs){
 			commitPending(i);
-			allpendings.remove(i);
-		});
-		cu.rewriteCSV(allpendings);
+			//allpendings.remove(i);
+		}
+		List<UserStockTransaction> newList = new ArrayList<UserStockTransaction>();
+		//List<UserStockTransaction> restore = new ArrayList<UserStockTransaction>();
+		
+		for (int i=0; i<allpendings.size(); i++){
+			if (!indexs.contains(i) ){
+				newList.add(allpendings.get(i));
+			}
+		}
+		
+		cu.rewriteCSV(newList);
 	}
 	
 	/**
@@ -205,7 +214,7 @@ public class TransService {
 		
 		//credit back user's cash
 		double cash = user.getCash();
-		int amount = (int) tran.getQuantity();
+		int amount = tran.getQuantity();
 		double price = tran.getPrice();
 		cash = cash + price * amount;
 		
@@ -213,7 +222,6 @@ public class TransService {
 		user.setCash(cash);
 		ud.update(user);
 			
-		
 		list.remove(index);
 		cu.rewriteCSV(list);
 	}
@@ -223,8 +231,37 @@ public class TransService {
 	 * @param indexs
 	 */
 	//@Transactional
-	public void dropPendings(List<UserStockTransaction> indexs){
+	public void dropPendings(List<Integer> indexs){
+		List<UserStockTransaction> list = getAllPendings();
+		List<UserStockTransaction> newList = new ArrayList<UserStockTransaction>();
+		List<UserStockTransaction> restore = new ArrayList<UserStockTransaction>();
+		for (int i=0; i<list.size(); i++){
+			if (!indexs.contains(i) ){
+				newList.add(list.get(i));
+			}else{
+				restore.add(list.get(i));
+			}
+		}
 		
+		for(UserStockTransaction tran: restore){
+//			System.out.println("in the loop!");
+//			UserStockTransaction tran = list.get(i);
+//			System.out.println(tran);
+			User user = tran.getUser();
+			
+			//credit back user's cash
+			double cash = user.getCash();
+			int amount = tran.getQuantity();
+			double price = tran.getPrice();
+			cash = cash + price * amount;
+			
+			//if (balance < 0) balance = 0;
+			user.setCash(cash);
+			ud.update(user);
+			//list.remove(i);
+		}
+		
+		cu.rewriteCSV(newList);
 	}
 	
 }

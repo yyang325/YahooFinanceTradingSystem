@@ -60,6 +60,11 @@ public class CsvUtil {
 		    List<CSVRecord> l = parser.getRecords();
 			for (CSVRecord r:l){
 				sb.append(r.get(0));
+				sb.append(r.get(1));
+				sb.append(r.get(2));
+				sb.append(r.get(3));
+				sb.append(r.get(4));
+				sb.append("| ");
 			}
 			fr.close();
 			parser.close();
@@ -86,16 +91,23 @@ public class CsvUtil {
 			FileReader fr = new FileReader(f);
 			CSVParser parser = new CSVParser(fr, CSVFormat.DEFAULT);
 		    
-		    
 			List<CSVRecord> l = parser.getRecords();
 			for (CSVRecord r:l){
+//				System.out.println(r.get(0));
+//				System.out.println(r.get(1));
+//				System.out.println(r.get(2));
+//				System.out.println(r.get(3));
+//				System.out.println(r.get(4));
+//				System.out.println(r.get(5));
+//				System.out.println(r.get(6));
 				UserStockTransaction ts = new UserStockTransaction();
-//				ts.setUser(ud.findByUid(Integer.parseInt(r.get(0))));
-//				ts.setStock(sd.findBySid(Integer.parseInt(r.get(1))));
-//				ts.setAmount(Integer.parseInt(r.get(2)));
-//				ts.setPrice(new BigDecimal(r.get(3)));
-//				ts.setTs(Timestamp.valueOf(r.get(4)));
-//				list.add(ts);
+				ts.setUser(ud.findByUid(Integer.parseInt(r.get(0))));
+				ts.setStock(sd.findByStockId(Integer.parseInt(r.get(2))));
+				ts.setQuantity(Integer.parseInt(r.get(4)));
+				ts.setPrice(Double.parseDouble(r.get(5)));
+				ts.setTs(Timestamp.valueOf(r.get(6)));
+				System.out.println(ts);
+				list.add(ts);
 			}
 			fr.close();
 			parser.close();
@@ -103,6 +115,14 @@ public class CsvUtil {
 		}catch (Exception e){
 			e.printStackTrace();
 		}
+		
+//		System.out.println("after parse the CSV!");
+//		
+//		for(UserStockTransaction tx: list){
+//			System.out.println("traverse the list after parse");
+//			System.out.println(tx);
+//		}
+		
 		return list;
 	}
 	
@@ -115,9 +135,11 @@ public class CsvUtil {
 			
 			filePath = servletContext.getRealPath("WEB-INF/csv/pending.csv");
 			File f = new File(filePath);
+			//System.out.println(trans.getStock().getSymbol() + " " + trans.getUser().getUsername() + " " + trans.getPrice());
 			
 			FileWriter fw = new FileWriter(f, true);			
 			CSVPrinter cp = new CSVPrinter(fw, CSVFormat.DEFAULT);
+			System.out.println(trans.toString());
 			cp.printRecord((Object[]) trans.toString().split(","));
 			fw.flush();
 			fw.close();
@@ -139,6 +161,7 @@ public class CsvUtil {
 			
 			FileWriter fw = new FileWriter(f);			
 			CSVPrinter cp = new CSVPrinter(fw, CSVFormat.DEFAULT);
+			System.out.println(trans.toString());
 			cp.printRecord((Object[]) trans.toString().split(","));
 			fw.flush();
 			fw.close();

@@ -17,6 +17,12 @@
 			username: "", 
 			email: ""
 		};
+		$scope.trans = {
+				stock: "",
+				user: "",
+				price: 0,
+				quantity: 0,
+		}
 		$scope.stocks = null;
 		$scope.text="";
 		$scope.csv="";
@@ -58,6 +64,39 @@
 				console.log("Hello");
 				//console.log(resp.data);
 				$scope.stocks = resp.data;
+			})
+		};
+		
+		$scope.testTrans = function(){
+			console.log("show stockinfo clicked!");
+			//console.log($scope.data.email);
+			$http.get("rest/csvtrans", {params: $scope.trans })
+			.then(function(resp) {
+				console.log("Hello");
+				//console.log(resp.data);
+				$scope.stocks = resp.data;
+			})
+		};
+		
+		$scope.testDropAll = function(){
+			console.log("test Drop All clicked!");
+			//console.log($scope.data.email);
+			$http.get("rest/csvdropall", { })
+			.then(function(resp) {
+				console.log("Hello");
+				//console.log(resp.data);
+				//$scope.stocks = resp.data;
+			})
+		};
+		
+		$scope.testCommitAll = function(){
+			console.log("test Commit All clicked!");
+			//console.log($scope.data.email);
+			$http.get("rest/csvcommitall", { })
+			.then(function(resp) {
+				console.log("Hello");
+				//console.log(resp.data);
+				//$scope.stocks = resp.data;
 			})
 		};
 	});
@@ -162,6 +201,34 @@
 						<td>{{stock.pchange}}</td>
 						<td>{{stock.price}}</td>
 					</tr>
+			</table>
+	</div>
+	
+	<hr>
+	<div class="container">
+		<table class="table table-striped">
+				<tr>
+					<td>Stock</td>
+					<td><input type="text" name="stockname" id="stockname" ng-model="trans.stock"/></td>
+				</tr>
+				<tr>
+					<td>User</td>
+					<td><input type="text" name="username" id="username" ng-model="trans.user"/></td>
+				</tr>
+				<tr>
+					<td>Price</td>
+					<td><input type="number" name="stockprice" id="stockprice" ng-model="trans.price"/></td>
+				</tr>
+				<tr>
+					<td>Quantity</td>
+					<td><input type="number" name="stockquantity" id="stockquantity" ng-model="trans.quantity"/></td>
+				</tr>
+				<tr>
+					<td><button id="submit5" class="round" ng-click="testDropAll()">Test DropAll in CSV</button></td>
+					<td><button id="submit4" class="round" ng-click="testTrans()">Test Save in CSV</button></td>
+					<td><button id="submit6" class="round" ng-click="testCommitAll()">Test Commit in CSV</button></td>
+				</tr>
+				
 			</table>
 	</div>
 	
