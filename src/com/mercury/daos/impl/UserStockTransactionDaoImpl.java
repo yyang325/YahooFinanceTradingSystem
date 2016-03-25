@@ -89,4 +89,26 @@ public class UserStockTransactionDaoImpl implements UserStockTransactionDao {
 		return stocks;
 	}
 
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<UserStockTransaction> queryTransactionByUserId(int userId) {
+		// TODO Auto-generated method stub
+		return template.find("FROM UserStockTransaction t WHERE t.user.uid = ?", userId);
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<UserStockTransaction> queryTransactionByUsername(String username) {
+		// TODO Auto-generated method stub
+		return template.find("FROM UserStockTransaction t WHERE t.user.username = ?", username);
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<UserStockTransaction> queryTransactionByEmail(String email) {
+		// TODO Auto-generated method stub
+		return template.find("FROM UserStockTransaction t WHERE t.user.email = ?", email);
+	}
+	
+
 }

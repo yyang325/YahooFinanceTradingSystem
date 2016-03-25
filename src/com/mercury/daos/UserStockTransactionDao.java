@@ -14,4 +14,7 @@ public interface UserStockTransactionDao {
 	public List<Stock> queryStockByUsername(String username);
 	public List<Stock> queryStockByEmail(String email);
 	public List<Stock> queryStockByUserId(int userId);
+	public List<UserStockTransaction> queryTransactionByUserId(int userId);
+	public List<UserStockTransaction> queryTransactionByUsername(String username);
+	public List<UserStockTransaction> queryTransactionByEmail(String email);
 }

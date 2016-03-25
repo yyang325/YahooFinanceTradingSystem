@@ -61,7 +61,7 @@ public class User {
 	@Column(name="enable")
 	private int enable;
 	
-	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinTable(
 		name = "yfts_watchlist", 
 		joinColumns = {@JoinColumn(name="user_id") }, 
@@ -69,7 +69,7 @@ public class User {
 	)
 	private Set<Stock> watchedStocks = new HashSet<>();
 	
-	@OneToMany(mappedBy = "user")
+	@OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
 	private Set<UserStockTransaction> trans = new HashSet<>();
 	
 	public User(){}

@@ -56,7 +56,27 @@
 		</tr>
 	</table>
 </form>
-
+<hr>
+<h1>Test Adding and Query Watch List</h1>
+<form action="testWatchlist1.html" method="post">
+	<table>
+		<tr>
+			<td>UserId</td>
+			<td><input type="number" name="userId" placeholder="User Id"></td>
+		</tr>
+		<tr>
+			<td>StockId</td>
+			<td><input type="number" name="stockId" placeholder="Stock Id"></td>
+		</tr>
+		<tr>
+			<td></td>
+			<td>
+				<input type="reset" value="Clear">
+				<input type="submit" value="Submit">
+			</td>
+		</tr>
+	</table>
+</form>
 
 
 </body>

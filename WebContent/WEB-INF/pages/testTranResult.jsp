@@ -35,5 +35,31 @@
 	</c:forEach>
 	 
 </table>
+
+
+<hr>
+<h1>Result of transaction history query</h1>
+<table border="1" style="width: 200px">
+	<tr>
+		<th>TranId</th>
+		<th>UserId</th>
+		<th>StockId</th>
+		<th>TimeStamp</th>
+		<th>Price</th>
+		<th>Quantity</th>
+	</tr>
+	
+	<c:forEach var="tran" items="${history}">
+		<tr>
+			<td>${tran.tid}</td>
+			<td>${tran.user.getUid()}</td>
+			<td>${tran.stock.getSid()}</td>
+			<td>${tran.ts}</td>
+			<td>${tran.price}</td>
+			<td>${tran.quantity}</td>
+		</tr>
+	</c:forEach>
+	 
+</table>
 </body>
 </html>
