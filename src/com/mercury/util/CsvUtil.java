@@ -49,18 +49,10 @@ public class CsvUtil {
 	 */
 	public String readCSV(){
 		StringBuffer sb = new StringBuffer();
-		InputStream inputStream = null;
 		try{
-			System.out.println("In read CSV");
-			
 			String filePath = servletContext.getRealPath("WEB-INF/csv/pending.csv");
-			System.out.println(filePath);
-			
-			//inputStream = servletContext.getResourceAsStream("/WEB-INF/content/somecontent.txt");
 			
 			File f = new File(filePath);
-			
-			System.out.println(f.exists());
 
 			FileReader fr = new FileReader(f);
 			CSVParser parser = new CSVParser(fr, CSVFormat.DEFAULT);
@@ -139,7 +131,7 @@ public class CsvUtil {
 	 * this method is used to rewrite the csv file for all the pending transactions
 	 * @param trans
 	 */
-	public void rewriteCSV(UserStockTransaction trans){
+	public void rewriteCSV(List<UserStockTransaction> trans){
 		try{
 			
 			filePath = servletContext.getRealPath("WEB-INF/csv/pending.csv");

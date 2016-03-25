@@ -7,9 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.mercury.beans.OwnershipInfo;
+//import com.mercury.beans.OwnershipInfo;
 import com.mercury.beans.Stock;
 import com.mercury.beans.Transaction;
+//import com.mercury.beans.Transaction;
 import com.mercury.beans.User;
 import com.mercury.beans.UserStockTransaction;
 import com.mercury.daos.StockDao;
@@ -128,7 +129,7 @@ public class TransService {
 
 	/**
 	 * Commit pending transaction in csv file, save it to database, update balance
-	 * @param transIndex
+	 * @param index -- index of the pending transaction
 	 */
 	//@Transactional
 	public void commitPending(int index){
@@ -176,15 +177,54 @@ public class TransService {
 	}
 	
 	/**
-	 * 
-	 * @param transList
+	 * commit a list of pendings by their indicex
+	 * @param indexs
 	 */
-	@Transactional
-	public void commitPendings(List<Integer> transList){
-		for (int i: transList){
+	public void commitPendings(List<Integer> indexs){
+		List<UserStockTransaction> allpendings = getAllPendings();
+		indexs.forEach(i-> {
 			commitPending(i);
-		}
-		//dropPendings(transList, false);
+			allpendings.remove(i);
+		});
+		cu.rewriteCSV(allpendings);
+	}
+	
+	/**
+	 * drop a pending transaction and credit the user's cash
+	 * @param index -- index of the pending transaction
+	 * @param reimberse
+	 */
+	//Delete pending transaction from csv file
+	//@Transactional
+	public void dropPending(int index){
+		
+		List<UserStockTransaction> list = getAllPendings();
+		
+		UserStockTransaction tran = list.get(index);
+		User user = tran.getUser();
+		
+		//credit back user's cash
+		double cash = user.getCash();
+		int amount = (int) tran.getQuantity();
+		double price = tran.getPrice();
+		cash = cash + price * amount;
+		
+		//if (balance < 0) balance = 0;
+		user.setCash(cash);
+		ud.update(user);
+			
+		
+		list.remove(index);
+		cu.rewriteCSV(list);
+	}
+	
+	/**
+	 * Delete pending transactions and credit back to users
+	 * @param indexs
+	 */
+	//@Transactional
+	public void dropPendings(List<UserStockTransaction> indexs){
+		
 	}
 	
 }

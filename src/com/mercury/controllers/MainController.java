@@ -76,7 +76,7 @@ public class MainController {
 		String username = request.getParameter("username");
 		System.out.println(username);
 		User user = us.findUserByUserName(username);
-		System.out.println(user);
+		//System.out.println(user);
 		return user;
 	}
 	
@@ -87,7 +87,7 @@ public class MainController {
 		String email = request.getParameter("email");
 		System.out.println(email);
 		User user = us.findUserByEmail(email);
-		System.out.println(user);
+		//System.out.println(user);
 		return user;
 	}
 	
