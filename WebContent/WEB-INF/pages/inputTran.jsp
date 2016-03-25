@@ -27,5 +27,32 @@
 	</table>
 </form>
 
+
+<hr>
+<h1>This is to test transaction history</h1><hr>
+<form action="testHistoryTransaction.html" method="post">
+	<table>
+		<tr>
+			<td>User Id</td>
+			<td><input type="number" name="history_userId" placeholder="User Id"></td>
+		</tr>
+		<tr>
+			<td>Username</td>
+			<td><input type="text" name="history_username" placeholder="Username"></td>
+		</tr>
+		<tr>
+			<td>Email</td>
+			<td><input type="email" name="history_email" placeholder="Email"></td>
+		</tr>
+		<tr>
+			<td></td>
+			<td>
+				<input type="reset" value="Clear">
+				<input type="submit" value="Submit">
+			</td>
+		</tr>
+	</table>
+</form>
+
 </body>
 </html>

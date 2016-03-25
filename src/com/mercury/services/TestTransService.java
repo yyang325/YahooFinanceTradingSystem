@@ -32,5 +32,15 @@ public class TestTransService {
 		return ustd.queryUserBySymbol(symbol);
 	}
 	
+	public List<UserStockTransaction> queryHistoryByUserId(int userId){
+		return ustd.queryTransactionByUserId(userId);
+	}
 	
+	public List<UserStockTransaction> queryHistoryByUsername(String username){
+		return ustd.queryTransactionByUsername(username);
+	}
+	
+	public List<UserStockTransaction> queryHistoryByEmail(String email){
+		return ustd.queryTransactionByEmail(email);
+	}
 }

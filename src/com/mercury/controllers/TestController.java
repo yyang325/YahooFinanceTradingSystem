@@ -14,6 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.mercury.beans.UserStockTransaction;
 import com.mercury.services.TestService;
 import com.mercury.services.TestTransService;
+import com.mercury.services.TestWatchListService;
 import com.mercury.beans.Stock;
 import com.mercury.beans.User;
 
@@ -23,13 +24,15 @@ public class TestController {
 	private TestService ts;
 	@Autowired
 	private TestTransService tts;
+	@Autowired
+	private TestWatchListService twls;
 	
 	@RequestMapping("/inputStock")
 	public String goMain(){
 		return "inputStock";
 	}
 	
-	@RequestMapping("/inputTran")
+	@RequestMapping("/testTran")
 	public String goMain2(){
 		return "inputTran";
 	}
@@ -95,4 +98,31 @@ public class TestController {
 		mav.setViewName("testQueryStockByUsernameResult");
 		return mav;
 	}
+	
+	
+	/* Test adding stock to watch list */
+	@RequestMapping(value="/testWatchlist1", method=RequestMethod.POST)
+	public ModelAndView execute6(@RequestParam("stockId") int stockId, @RequestParam("userId") int userId){
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("stockList", twls.saveAndQueryAllWatchList(userId, stockId));
+		mav.setViewName("testWatchList");
+		return mav;
+	}
+	
+	
+	/* Test query transaction history by user information (user id, username, email) */
+	@RequestMapping(value="/testHistoryTransaction", method=RequestMethod.POST)
+	public ModelAndView execute7(@RequestParam("history_userId") Integer userId, @RequestParam("history_username") String username, @RequestParam("history_email") String email){
+		ModelAndView mav = new ModelAndView();
+		if(userId != null && userId > 0){
+			mav.addObject("history", tts.queryHistoryByUserId((int) userId));
+		}else if(username != null && username.length() > 0){
+			mav.addObject("history", tts.queryHistoryByUsername(username));
+		}else if(email != null && email.length() > 0){
+			mav.addObject("history", tts.queryHistoryByEmail(email));
+		}
+		mav.setViewName("testTranResult");
+		return mav;
+	}
+	
 }
