@@ -1,5 +1,6 @@
 package com.mercury.beans;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import javax.persistence.CascadeType;
@@ -88,6 +89,19 @@ public class UserStockTransaction {
 
 	public void setQuantity(int quantity) {
 		this.quantity = quantity;
+	}
+	
+	
+	//ethan modified here for CSV function
+	@Override
+	public String toString(){
+		return Integer.toString(getUser().getUid())+ "," + 
+					getUser().getUsername() + "," +
+				 Integer.toString(getStock().getSid()) + "," +
+					getStock().getSymbol() + "," +
+				 Integer.toString(quantity) + "," + 
+					((Double) price).toString()+","
+				+ (new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(ts));
 	}
 
 }
