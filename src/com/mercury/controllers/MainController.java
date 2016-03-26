@@ -21,6 +21,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.mercury.beans.Stock;
 import com.mercury.beans.User;
 import com.mercury.beans.UserStockTransaction;
+import com.mercury.dtos.OwnStock;
 import com.mercury.dtos.StockInfo;
 import com.mercury.dtos.UserInfo;
 import com.mercury.services.MainService;
@@ -166,6 +167,15 @@ public class MainController {
 		indexs.add(1);
 		indexs.add(2);
 		ts.commitPendings(indexs); 
+	}
+	
+	@RequestMapping(value="rest/showportfolio", method=RequestMethod.GET)
+	@ResponseBody
+	public List<OwnStock> testShowPortfolio(){
+		
+		List<OwnStock> list = us.getOwnedStocks("waldenlaker");
+	
+		return list;
 	}
 
 }
