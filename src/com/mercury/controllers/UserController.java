@@ -14,7 +14,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.mercury.beans.Stock;
 import com.mercury.dtos.OwnStock;
+import com.mercury.dtos.StockInfo;
 import com.mercury.services.StockService;
 import com.mercury.services.UserService;
 
@@ -69,6 +71,24 @@ public class UserController {
 		// if()
 		us.addCash(userName, amount);
 		return "success";
+	}
+	
+	/**
+	 * REST API: get username's watch list which contains stock detail info
+	 * @param principal
+	 * @return
+	 */
+	@RequestMapping(value="/getWatchList", method=RequestMethod.GET)
+	@ResponseBody
+	public List<StockInfo> getWatchList(Principal principal) {
+		if (principal == null || principal.getName() == null){
+			return null;
+		}
+		String userName = principal.getName();
+		System.out.println(userName);
+		List<StockInfo> watchedStocks = us.getWatchListInfo(userName);
+		
+		return watchedStocks;
 	}
 	
 }

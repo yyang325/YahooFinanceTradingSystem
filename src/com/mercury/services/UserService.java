@@ -1,7 +1,11 @@
 package com.mercury.services;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.math.BigDecimal;
-import java.sql.Date;
+import java.net.URL;
+import java.net.URLConnection;
+//import java.sql.Date;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -9,12 +13,14 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+//import org.springframework.transaction.annotation.Transactional;
 //import org.springframework.transaction.annotation.Transactional;
 
+import com.mercury.beans.Stock;
 import com.mercury.beans.User;
 import com.mercury.beans.UserStockTransaction;
 import com.mercury.dtos.OwnStock;
+import com.mercury.dtos.StockInfo;
 import com.mercury.dtos.UserInfo;
 import com.mercury.daos.UserDao;
 import com.mercury.daos.UserStockTransactionDao;
@@ -233,6 +239,75 @@ public class UserService {
 		//need to modify here
 		user.setBalance(newBalance <= 2147483647 ? newBalance : 2147483647);
 		ud.update(user);
+	}
+	
+	
+	/**
+	 * get user's stockInfo watch list
+	 * @param username
+	 * @return
+	 * @author Yi
+	 */
+	public List<StockInfo> getWatchListInfo(String username){
+		List<StockInfo> res = new ArrayList<>();
+		List<Stock> stocks = getAllStock(username);
+		for(Stock s: stocks){
+			res.add(getStockInfo(s));
+		}
+		return res;
+	}
+	
+	/**
+	 * get user's stock watch list
+	 * @param username
+	 * @return
+	 * @author Yi
+	 */
+	public List<Stock> getAllStock(String username){
+		User user = findUserByUserName(username);
+		List<Stock> list =  new ArrayList<Stock>();
+		list.addAll(user.getWatchedStocks());
+		return list;
+	}
+	
+	/**
+	 * get stock detail info
+	 * @param stock
+	 * @return
+	 * @author Yi
+	 */
+	public StockInfo getStockInfo(Stock stock) {
+		String yahoo_quote = "http://finance.yahoo.com/d/quotes.csv?s=" + stock.getSymbol() + "&f=snc1l1p2&e=.c";
+		String pchange = null;
+		String symbol = " ";
+		double price = 0;
+		double change = 0;
+		try {
+			URL url = new URL(yahoo_quote);
+			URLConnection urlconn = url.openConnection();
+			BufferedReader in = new BufferedReader(new InputStreamReader(urlconn.getInputStream()));
+			String content = in.readLine();
+			System.out.println(content);
+			content = content.replace((char)34, (char)32);//' ' replace '"'
+			String[] token_info = content.split(",");
+			if (token_info.length <4) return null;
+			if(!token_info[token_info.length-4].trim().equals("N/A")){
+				symbol = token_info[token_info.length-4].trim();
+				pchange = token_info[token_info.length-1].trim();
+				price = Double.parseDouble(token_info[token_info.length-2].trim());
+				change = Double.parseDouble(token_info[token_info.length-3].trim());
+				System.out.println("sysbol:"+symbol+"\nprice:"+price+"\nchange"+change+"pchange:"+pchange);
+			}
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		StockInfo si = new StockInfo();
+		si.setStockSymbol(stock.getSymbol());
+		si.setPchange(pchange);
+		si.setPrice(price);
+		si.setChange(change);
+		return si;	
 	}
 	
 }
