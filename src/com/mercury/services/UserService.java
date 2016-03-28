@@ -48,6 +48,14 @@ public class UserService {
 	}
 	
 	/**
+	 * save a user to db
+	 * @param user
+	 */
+	public void saveUser(User user){
+		ud.save(user);
+	}
+	
+	/**
 	 * this method return a list of stocks, quantity, average cost 
 	 * @param username
 	 * @return -- a list of OwnStock DTO
