@@ -6,7 +6,7 @@ import java.math.BigDecimal;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
-import java.util.Date;
+//import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,15 +14,14 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 //import org.springframework.transaction.annotation.Transactional;
-//import org.springframework.transaction.annotation.Transactional;
 
 import com.mercury.beans.Stock;
 import com.mercury.beans.User;
 import com.mercury.beans.UserStockTransaction;
 import com.mercury.dtos.OwnStock;
 import com.mercury.dtos.StockInfo;
-import com.mercury.dtos.TransactionInfo;
 import com.mercury.dtos.UserInfo;
+import com.mercury.daos.StockDao;
 import com.mercury.daos.UserDao;
 import com.mercury.daos.UserStockTransactionDao;
 
@@ -38,15 +37,14 @@ public class UserService {
 	private UserDao ud;
 	@Autowired
 	private UserStockTransactionDao td;
-//	@Autowired
-//	StockService ss;
+	@Autowired
+	private StockDao sd;
 	
 	/**
 	 * see if the username exist
 	 * @param username
 	 * @return
 	 */
-	//@Transactional
 	public boolean isUserExist(String username) {
 		if(ud.findByUserName(username) == null){
 			return false;
@@ -241,6 +239,26 @@ public class UserService {
 		user.setBalance(newBalance <= 2147483647 ? newBalance : 2147483647);
 		ud.update(user);
 	}
+	
+	
+	
+	public List<StockInfo> addWatchList(String username, String symbol){
+		User user = ud.findByUserName(username);
+		Stock stock = sd.findBySymbol(symbol);
+		user.addWatchedStock(stock);
+		ud.update(user);
+		return getWatchListInfo(user.getUsername());
+	}
+	
+	
+	public List<StockInfo> deleteWatchList(String username, String symbol){
+		User user = ud.findByUserName(username);
+		Stock stock = sd.findBySymbol(symbol);
+		user.deleteWatchedStock(stock);
+		ud.update(user);
+		return getWatchListInfo(user.getUsername());
+	}
+	
 	
 	
 	/**

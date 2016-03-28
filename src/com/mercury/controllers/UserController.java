@@ -7,6 +7,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -82,6 +83,7 @@ public class UserController {
 	 * REST API: get username's watch list which contains stock detail info
 	 * @param principal
 	 * @return
+	 * @author Yi
 	 */
 	@RequestMapping(value="/getWatchList", method=RequestMethod.GET)
 	@ResponseBody
@@ -98,9 +100,52 @@ public class UserController {
 	
 	
 	/**
+	 * REST API: Add watch list
+	 * @param principal
+	 * @return
+	 * @author Yi
+	 */
+	@RequestMapping(value="/addWatchList/{symbol}", method=RequestMethod.GET)
+	@ResponseBody
+	public List<StockInfo> addWatchList(Principal principal, @PathVariable String symbol) {
+		if (principal == null || principal.getName() == null){
+			return null;
+		}
+		String userName = principal.getName();
+		System.out.println(userName);
+		us.addWatchList(userName, symbol);
+		return us.getWatchListInfo(userName);
+	}
+	
+	
+	
+	/**
+	 * REST API: delete watch list
+	 * @param principal
+	 * @return
+	 * @author Yi
+	 */
+	@RequestMapping(value="/deleteWatchList/{symbol}", method=RequestMethod.GET)
+	@ResponseBody
+	public List<StockInfo> deleteWatchList(Principal principal, @PathVariable String symbol) {
+		if (principal == null || principal.getName() == null){
+			return null;
+		}
+		String userName = principal.getName();
+		System.out.println(userName);
+		us.deleteWatchList(userName, symbol);
+		return us.getWatchListInfo(userName);
+	}
+	
+	
+	
+	
+	
+	/**
 	 * REST API: get username's transaction history
 	 * @param principal
 	 * @return
+	 * @author Yi
 	 */
 	@RequestMapping(value="/getTranHistory", method=RequestMethod.GET)
 	@ResponseBody
@@ -114,5 +159,7 @@ public class UserController {
 		
 		return tranHistory;
 	}
+	
+	
 	
 }
