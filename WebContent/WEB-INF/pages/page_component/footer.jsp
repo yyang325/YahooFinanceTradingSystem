@@ -1,11 +1,5 @@
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="ISO-8859-1">
-<title>Insert title here</title>
-</head>
-<body>
-<footer id="tf-contact" class="container-fluid bg-4 text-center" style="text-align: center; top:0px;">
+
+	<footer id="tf-contact" class="container-fluid bg-4 text-center" style="text-align: center; top:0px;">
 		<div class="row">
 		<div class="contact-us col-md-4">
 			<span class="follow">Follow Us</span>
@@ -40,7 +34,12 @@
 			</div>	
 		</div>
 		
-</footer>
-
-</body>
-</html>
+	</footer>
+	
+	<!-- js librarys are down here
+	==================================================================================================================== -->
+	
+	<!-- require, jquery, angular -->
+	<script type="text/javascript" src="bower_component/jquery/dist/jquery.min.js"></script>
+	<script type="text/javascript" src="bower_component/angular/angular.min.js"></script>
+	<script type="text/javascript" src="bower_component/requirejs/require.js"></script>
