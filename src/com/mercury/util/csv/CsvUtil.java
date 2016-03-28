@@ -1,4 +1,4 @@
-package com.mercury.util;
+package com.mercury.util.csv;
 
 import java.io.File;
 import java.io.FileReader;

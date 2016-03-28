@@ -24,6 +24,7 @@
 				quantity: 0,
 		}
 		$scope.stocks = null;
+		$scope.ownstocks = null;
 		$scope.text="";
 		$scope.csv="";
 		$scope.findUser = function(){
@@ -99,6 +100,18 @@
 				//$scope.stocks = resp.data;
 			})
 		};
+		
+		$scope.showPortfolio = function(){
+			console.log("test show Portfolio clicked!");
+			//console.log($scope.data.email);
+			$http.get("rest/showportfolio", { })
+			.then(function(resp) {
+				console.log("Hello");
+				console.log(resp.data);
+				$scope.ownstocks = resp.data;
+			})
+		};
+		
 	});
 </script>
 <title>Insert title here</title>
@@ -229,6 +242,30 @@
 					<td><button id="submit6" class="round" ng-click="testCommitAll()">Test Commit in CSV</button></td>
 				</tr>
 				
+			</table>
+	</div>
+	
+	<hr>
+	<div class="container">
+		<table class="table table-striped">
+				<tr>
+					<td><button id="submit3" class="round" ng-click="showPortfolio()">Show Portfolio</button></td>
+				</tr>
+				<tr>
+					<th>Username</th>
+					<th>stockId</th>
+					<th>Symbol</th>
+					<th>Average Cost</th>
+					<th>quantity</th>
+				</tr>
+				
+				<tr ng-repeat="ownstock in ownstocks">
+					<td>{{ownstock.userName}}</td>
+					<td>{{ownstock.stockId}}</td>
+					<td>{{ownstock.stockSymbol}}</td>
+					<td>{{ownstock.avgCost}}</td>
+					<td>{{ownstock.quantity}}</td>
+				</tr>
 			</table>
 	</div>
 	
