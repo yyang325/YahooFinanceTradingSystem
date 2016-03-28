@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
+
 import com.mercury.beans.Stock;
 import com.mercury.beans.User;
 import com.mercury.beans.UserStockTransaction;
@@ -114,18 +115,18 @@ public class MainController {
 		return userinfo;
 	}
 	
-	@RequestMapping(value="rest/stocks", method=RequestMethod.GET)
-	@ResponseBody
-	public List<StockInfo> testStocks(HttpServletRequest request){
-		List<Stock> stocks = ss.getAllStock();
-		for(Stock s: stocks){
-			System.out.println(s.getSymbol() + " " + s.getStockDesc());
-			System.out.println(ss.getStockInfo(s).getStockName());
-		}
-		List<StockInfo> stockinfos =ss.getStockInfos(stocks);
-		//List<StockInfo> stockinfos = ss.getStockInfos(ss.getAllStock());
-		return stockinfos;
-	}
+//	@RequestMapping(value="rest/stocks", method=RequestMethod.GET)
+//	@ResponseBody
+//	public List<StockInfo> testStocks(HttpServletRequest request){
+//		List<Stock> stocks = ss.getAllStock();
+//		for(Stock s: stocks){
+//			System.out.println(s.getSymbol() + " " + s.getStockDesc());
+//			System.out.println(ss.getStockInfo(s).getStockName());
+//		}
+//		List<StockInfo> stockinfos =ss.getStockInfos(stocks);
+//		//List<StockInfo> stockinfos = ss.getStockInfos(ss.getAllStock());
+//		return stockinfos;
+//	}
 	
 	@RequestMapping(value="rest/csvtrans", method=RequestMethod.GET)
 	@ResponseBody

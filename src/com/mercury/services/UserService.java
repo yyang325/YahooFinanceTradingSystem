@@ -5,8 +5,8 @@ import java.io.InputStreamReader;
 import java.math.BigDecimal;
 import java.net.URL;
 import java.net.URLConnection;
-//import java.sql.Date;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -21,6 +21,7 @@ import com.mercury.beans.User;
 import com.mercury.beans.UserStockTransaction;
 import com.mercury.dtos.OwnStock;
 import com.mercury.dtos.StockInfo;
+import com.mercury.dtos.TransactionInfo;
 import com.mercury.dtos.UserInfo;
 import com.mercury.daos.UserDao;
 import com.mercury.daos.UserStockTransactionDao;
@@ -34,9 +35,9 @@ import com.mercury.daos.UserStockTransactionDao;
 public class UserService {
 	
 	@Autowired
-	UserDao ud;
+	private UserDao ud;
 	@Autowired
-	UserStockTransactionDao td;
+	private UserStockTransactionDao td;
 //	@Autowired
 //	StockService ss;
 	
@@ -249,9 +250,11 @@ public class UserService {
 	 * @author Yi
 	 */
 	public List<StockInfo> getWatchListInfo(String username){
+		System.out.println("In User Service get watch list, username: " + username);
 		List<StockInfo> res = new ArrayList<>();
 		List<Stock> stocks = getAllStock(username);
 		for(Stock s: stocks){
+			System.out.println(s.getSymbol());
 			res.add(getStockInfo(s));
 		}
 		return res;
@@ -265,6 +268,7 @@ public class UserService {
 	 */
 	public List<Stock> getAllStock(String username){
 		User user = findUserByUserName(username);
+		System.out.println("get all stock" + user.getUsername() + user.getWatchedStocks());
 		List<Stock> list =  new ArrayList<Stock>();
 		list.addAll(user.getWatchedStocks());
 		return list;
@@ -278,6 +282,7 @@ public class UserService {
 	 */
 	public StockInfo getStockInfo(Stock stock) {
 		String yahoo_quote = "http://finance.yahoo.com/d/quotes.csv?s=" + stock.getSymbol() + "&f=snc1l1p2&e=.c";
+		System.out.println(yahoo_quote);
 		String pchange = null;
 		String symbol = " ";
 		double price = 0;
@@ -309,5 +314,6 @@ public class UserService {
 		si.setChange(change);
 		return si;	
 	}
+	
 	
 }

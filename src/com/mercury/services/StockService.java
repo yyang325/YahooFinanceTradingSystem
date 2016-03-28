@@ -30,13 +30,13 @@ public class StockService {
 	@Autowired
 	UserStockTransactionDao td;
 	
-	public boolean realStock(Stock stock){
-		StockInfo stockInfo = getStockInfo(stock);
-		if(stockInfo != null && stockInfo.getStockName() != ""){
-			return true;
-		}
-		return false;
-	}
+//	public boolean realStock(Stock stock){
+//		StockInfo stockInfo = getStockInfo(stock);
+//		if(stockInfo != null && stockInfo.getStockName() != ""){
+//			return true;
+//		}
+//		return false;
+//	}
 	
 	/**
 	 * save a stock by stock object to database
@@ -149,26 +149,26 @@ public class StockService {
 			}
 			StockInfo si = new StockInfo();
 			//si.setStock(stock);
-			si.setStockName(name);
+//			si.setStockName(name);
 			si.setPchange(pchange);
 			si.setPrice(price);
 			si.setChange(change);
 			return si;	
 	}
-	
-	/**
-	 * get the stock info of all stocks in db
-	 * @param stocks -- a list of all stocks
-	 * @return  	 -- a list of stock information
-	 */
-	//get real time stockInfo
-	public List<StockInfo> getStockInfos(List<Stock> stocks) {
-		List<StockInfo> sf = new ArrayList<StockInfo>();
-		for (Stock s : stocks) {
-			StockInfo info = getStockInfo(s);
-			if (info != null && info.getStockName() != "") sf.add(info);
-		}
-		return sf;
-	}
+//	
+//	/**
+//	 * get the stock info of all stocks in db
+//	 * @param stocks -- a list of all stocks
+//	 * @return  	 -- a list of stock information
+//	 */
+//	//get real time stockInfo
+//	public List<StockInfo> getStockInfos(List<Stock> stocks) {
+//		List<StockInfo> sf = new ArrayList<StockInfo>();
+//		for (Stock s : stocks) {
+//			StockInfo info = getStockInfo(s);
+//			if (info != null && info.getStockName() != "") sf.add(info);
+//		}
+//		return sf;
+//	}
 	
 }

@@ -15,9 +15,12 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.mercury.beans.Stock;
+import com.mercury.daos.UserStockTransactionDao;
 import com.mercury.dtos.OwnStock;
 import com.mercury.dtos.StockInfo;
-import com.mercury.services.StockService;
+import com.mercury.dtos.TransactionInfo;
+import com.mercury.services.TransService;
+//import com.mercury.services.StockService;
 import com.mercury.services.UserService;
 
 /**
@@ -32,7 +35,9 @@ public class UserController {
 	@Autowired
 	UserService us;
 	@Autowired
-	StockService ss;
+	private TransService ts;
+//	@Autowired
+//	StockService ss;
 	
 	@RequestMapping(value="/portfolio", method = RequestMethod.GET)
 	public ModelAndView portfolio(Principal principal) {
@@ -85,10 +90,29 @@ public class UserController {
 			return null;
 		}
 		String userName = principal.getName();
-		System.out.println(userName);
+		System.out.println("In UserController, username:" + userName);
 		List<StockInfo> watchedStocks = us.getWatchListInfo(userName);
 		
 		return watchedStocks;
+	}
+	
+	
+	/**
+	 * REST API: get username's transaction history
+	 * @param principal
+	 * @return
+	 */
+	@RequestMapping(value="/getTranHistory", method=RequestMethod.GET)
+	@ResponseBody
+	public List<TransactionInfo> getTranHistory(Principal principal) {
+		if (principal == null || principal.getName() == null){
+			return null;
+		}
+		String userName = principal.getName();
+		System.out.println(userName);
+		List<TransactionInfo> tranHistory = ts.getTranHistory(userName);
+		
+		return tranHistory;
 	}
 	
 }
