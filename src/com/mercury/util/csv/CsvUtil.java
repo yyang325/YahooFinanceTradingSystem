@@ -49,18 +49,22 @@ public class CsvUtil {
 	 */
 	public String readCSV(){
 		StringBuffer sb = new StringBuffer();
+		
 		try{
-			String filePath = servletContext.getRealPath("WEB-INF/csv/pending.csv");
+			filePath = servletContext.getRealPath("WEB-INF/csv/pending.csv");
 			
 			File f = new File(filePath);
+			
+			System.out.println(f.exists());
 
 			FileReader fr = new FileReader(f);
 			CSVParser parser = new CSVParser(fr, CSVFormat.DEFAULT);
 		   
 		    List<CSVRecord> l = parser.getRecords();
 			for (CSVRecord r:l){
+				System.out.println(r);
 				sb.append(r.get(0));
-				sb.append(r.get(1));
+				//sb.append(r.get(1));
 				sb.append(r.get(2));
 				sb.append(r.get(3));
 				sb.append(r.get(4));
@@ -139,11 +143,12 @@ public class CsvUtil {
 			
 			FileWriter fw = new FileWriter(f, true);			
 			CSVPrinter cp = new CSVPrinter(fw, CSVFormat.DEFAULT);
+			System.out.println("Appending a transaction");
 			System.out.println(trans.toString());
 			cp.printRecord((Object[]) trans.toString().split(","));
 			fw.flush();
 			fw.close();
-			cp.close();			
+			cp.close();
 		}catch (Exception e){
 			e.printStackTrace();
 		}
@@ -162,7 +167,9 @@ public class CsvUtil {
 			FileWriter fw = new FileWriter(f);			
 			CSVPrinter cp = new CSVPrinter(fw, CSVFormat.DEFAULT);
 			System.out.println(trans.toString());
-			cp.printRecord((Object[]) trans.toString().split(","));
+			for(UserStockTransaction tx: trans){
+				cp.printRecord((Object[]) tx.toString().split(","));
+			}
 			fw.flush();
 			fw.close();
 			cp.close();			

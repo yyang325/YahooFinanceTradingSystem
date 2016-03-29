@@ -153,8 +153,8 @@ public class MainController {
 		
 		System.out.println("in testCsvDropAll contoller method");
 		List<Integer> indexs = new ArrayList<>();
+		indexs.add(0);
 		indexs.add(1);
-		indexs.add(2);
 		ts.dropPendings(indexs);
 	}
 	
@@ -164,8 +164,8 @@ public class MainController {
 		
 		System.out.println("in testCsvCommitAll contoller method");
 		List<Integer> indexs = new ArrayList<>();
+		indexs.add(0);
 		indexs.add(1);
-		indexs.add(2);
 		ts.commitPendings(indexs); 
 	}
 	
