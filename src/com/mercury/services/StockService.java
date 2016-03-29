@@ -30,19 +30,11 @@ public class StockService {
 	@Autowired
 	UserStockTransactionDao td;
 	
-//	public boolean realStock(Stock stock){
-//		StockInfo stockInfo = getStockInfo(stock);
-//		if(stockInfo != null && stockInfo.getStockName() != ""){
-//			return true;
-//		}
-//		return false;
-//	}
 	
 	/**
 	 * save a stock by stock object to database
 	 * @param stock
 	 */
-	//@Transactional
 	public void addStock(Stock stock){
 		stock.setSymbol(stock.getSymbol().toUpperCase());
 		sd.save(stock);
@@ -52,7 +44,6 @@ public class StockService {
 	 * delete a stock from db by stock object
 	 * @param stock
 	 */
-	//@Transactional
 	public void removeStock(Stock stock){
 		sd.delete(stock);
 	}
@@ -62,7 +53,6 @@ public class StockService {
 	 * @param id
 	 * @return -- a stock object
 	 */
-	//@Transactional
 	public Stock loadById(int id){
 		return sd.findByStockId(id);
 	}
@@ -72,7 +62,6 @@ public class StockService {
 	 * @param symbol
 	 * @return -- a stock object
 	 */
-	//@Transactional
 	public Stock getBySymbol(String symbol){
 		return sd.findBySymbol(symbol);
 	}
@@ -81,7 +70,6 @@ public class StockService {
 	 * query all stocks exist in db
 	 * @return
 	 */
-	//@Transactional
 	public List<Stock> getAllStock(){
 		return sd.queryAllStocks();
 	}
@@ -90,7 +78,6 @@ public class StockService {
 	 * get a list of stocks that a user owns by its username
 	 * @return
 	 */
-	//@Transactional
 	public List<Stock> getStocksForUser(String username){
 		return td.queryStockByUsername(username);
 	}
@@ -100,14 +87,8 @@ public class StockService {
 	 * @param stock
 	 * @return
 	 */
-	//@Transactional
 	public boolean hasStock(Stock stock){
 		Stock s = getBySymbol(stock.getSymbol().toUpperCase());
-//		if (s == null || s.size() == 0){
-//			return false;
-//		}else{
-//			return true;
-//		}
 		return s != null;
 	}
 	
