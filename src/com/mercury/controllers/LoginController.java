@@ -6,7 +6,10 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -31,6 +34,7 @@ import com.mercury.dtos.UserInfo;
 */
 
 import com.mercury.services.UserService;
+import com.mercury.util.mail.MailUtil;
 
 @Controller
 @SessionAttributes
@@ -41,7 +45,11 @@ public class LoginController {
 //	public UserDetailsManager userDetailsManager;
 	
 	@Autowired
-	private UserService us;
+	UserService us;
+	@Autowired
+	MailUtil mu;
+	@Autowired 
+	UserDetailsService userDetailsSvc;
 	
 	//for login
 	/**
@@ -115,12 +123,14 @@ public class LoginController {
 			User user, BindingResult result) throws Exception {
 		
 		//save the user to db
+		System.out.println(user.getUsername());
+		System.out.println(user.getPassword());
+		System.out.println(user.getEmail());
 		if (user != null){
-			us.saveUser(user);
+			us.saveNewUser(user);
 		}
 		
-		//UserInfo userInfo = mr.register(user);
-		//mr.sendMail(user.getUserName(), user.getEmail());
+		mu.sendMail(user.getUsername(), user.getEmail());
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("confirmation");
 		//mav.addObject("userInfo", userInfo);
@@ -128,34 +138,87 @@ public class LoginController {
 	}
 	
 	
-	/*
-	 * register user will get a link to active account, mapping to the MailRegister.java link
-	 * user click the link in the email
+	
+	/**
 	 * 1. change the enable to 1 on Database
 	 * 2. change the web page to the home of 
+	 * @param request
+	 * @return
 	 */
-//	@RequestMapping(value="/activateAccount", method = RequestMethod.GET)
-//	public ModelAndView activeMail(HttpServletRequest request) {
-//		String username = request.getParameter("username");
-//		User user = us.findUserByUserName(username);
-//		String checkcode = request.getParameter("checkcode");
+	@RequestMapping(value="/activateAccount", method = RequestMethod.GET)
+	public ModelAndView activeMail(HttpServletRequest request) {
+		
+		String username = request.getParameter("username");
+		User user = us.findUserByUserName(username);
+		String checkcode = request.getParameter("checkcode");
+		
+		ModelAndView mav = new ModelAndView();
+		System.out.println(mu.md5(username).equals(checkcode));
+		
+		if(mu.md5(username).equals(checkcode)){
+			int enabled = user.getEnable();
+			if(enabled==1){
+				mav.setViewName("linkoutoftime");
+				return mav;
+			}
+			
+			us.activateUser(username);
+			mav.setViewName("active_confirm");
+			mav.addObject("userName", username);
+			return mav;
+		}
+		
+		mav.setViewName("error");
+		mav.addObject("content","invalid link");
+		return mav;
+		
+	}
+	
+	/**
+	 * automatically log in user that clicked the activation link
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(value="login_auto", method = RequestMethod.POST)
+	public String loginAuto(HttpServletRequest request) {
+		String username = request.getParameter("j_username");
+		
+		//change user input password to MD5 match the database
+		String password = us.findUserByUserName(username).getPassword();
+		try {
+			UserDetails userDetails = userDetailsSvc.loadUserByUsername(username);
+			UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(userDetails, password, userDetails.getAuthorities());
+		    // redirect into secured main page if authentication successful
+		    if(auth.isAuthenticated()) {
+		    	SecurityContextHolder.getContext().setAuthentication(auth);
+		        return "redirect:/home";
+		    }
+		} catch (Exception e) {
+			e.getStackTrace();
+		}
+		return "redirect:/error";
+	}
+	
+	////////////////////////////////////////////////////////////////////////////////////////////////////
+	/*
+	* controller for the forgot password and recover account.
+	* trigger: receive the forgotpassword.jsp recover account button
+	* 1. send email
+	* 2. SPA: Please check your email to change password 
+	*/
+	
+//	@RequestMapping(value = "/recoveraccountemail*", method = RequestMethod.GET)
+//	public ModelAndView recoverSendEmail2(HttpServletRequest request) {
+//		String email = request.getParameter("email");
+//		System.out.println(email);
+//		mfp.sendForgotPasswordMail(email);
 //		ModelAndView mav = new ModelAndView();
-//		System.out.println(mr.md5(username).equals(checkcode));
-//		if(mr.md5(username).equals(checkcode)){
-//			int enabled = user.getEnabled();
-//			if(enabled==1){
-//				mav.setViewName("linkoutoftime");
-//				return mav;
-//			}
-//			mr.ActivateUser(username);
-//			mav.setViewName("active_confirm");
-//			mav.addObject("userName", username);
-//			return mav;
-//		}
-//		mav.setViewName("error");
-//		mav.addObject("content","invalid link");
+//		mav.setViewName("recoveraccountemail");
 //		return mav;
-//		
 //	}
+
+
+	
+	
 
 }
