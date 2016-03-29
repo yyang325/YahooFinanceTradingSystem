@@ -6,9 +6,18 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 
+<!-- require, jquery, angular -->
+<script type="text/javascript" src="bower_component/jquery/dist/jquery.min.js"></script>
+<script type="text/javascript" src="bower_component/angular/angular.min.js"></script>
+<script type="text/javascript" src="bower_component/angular-messages/angular-messages.min.js"></script>
+<script type="text/javascript" src="bower_component/requirejs/require.js"></script>
+<script type="text/javascript" src="bower_component/angular-resource/angular-resource.min.js"></script>
+<script type="text/javascript" src="bower_component/angular-route/angular-route.min.js"></script>
+
 <!-- Bootstrap -->
 <link href="bower_component/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
 <link href="bower_component/bootstrap/dist/css/bootstrap-theme.min.css" rel="stylesheet">
+<script type="text/javascript" src="bower_component/bootstrap/dist/js/bootstrap.min.js"></script>
 
 <!-- font-awesome -->
 <link rel="stylesheet" type="text/css" href="bower_component/fontawesome/css/font-awesome.min.css">

@@ -14,7 +14,6 @@
 <!--[if IE]><meta http-equiv="x-ua-compatible" content="IE=9" /><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-
 <title>Yahoo Finance Trading System</title>
 
 <!-- Favicons
@@ -27,10 +26,12 @@
 	href="img/apple-touch-icon-114x114.png">
 
 <!-- require, jquery, angular -->
-	<script type="text/javascript" src="bower_component/jquery/dist/jquery.min.js"></script>
-	<script type="text/javascript" src="bower_component/angular/angular.min.js"></script>
-	<script type="text/javascript" src="bower_component/angular-messages/angular-messages.min.js"></script>
-	<script type="text/javascript" src="bower_component/requirejs/require.js"></script>
+<script type="text/javascript" src="bower_component/jquery/dist/jquery.min.js"></script>
+<script type="text/javascript" src="bower_component/angular/angular.min.js"></script>
+<script type="text/javascript" src="bower_component/angular-messages/angular-messages.min.js"></script>
+<script type="text/javascript" src="bower_component/requirejs/require.js"></script>
+<script type="text/javascript" src="bower_component/angular-resource/angular-resource.min.js"></script>
+<script type="text/javascript" src="bower_component/angular-route/angular-route.min.js"></script>
 
 <!-- Bootstrap -->
 <link href="bower_component/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -1013,7 +1014,8 @@
 																<div class="row">
 																	<div class="col-lg-12">
 																		<div class="text-center">
-																			<a href="forgotpassword.jsp" tabindex="5"
+																			<!-- will be capture by LoginController -->
+																			<a href="forgotpassword" tabindex="5"
 																				class="forgot-password">Forgot Password?</a>
 																		</div>
 																	</div>

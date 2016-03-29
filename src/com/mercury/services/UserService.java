@@ -74,6 +74,17 @@ public class UserService {
 	}
 	
 	/**
+	 * update use with a new password
+	 * @param user
+	 * @param newPassword
+	 * @throws Exception
+	 */
+	public void updatePassword(User user, String newPassword) throws Exception{
+		user.setPassword(user.MD5Hashing(newPassword));
+		ud.update(user);
+	}
+	
+	/**
 	 * this method return a list of stocks, quantity, average cost 
 	 * @param username
 	 * @return -- a list of OwnStock DTO
