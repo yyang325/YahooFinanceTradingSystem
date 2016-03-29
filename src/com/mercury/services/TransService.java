@@ -5,8 +5,6 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 
 import com.mercury.beans.Stock;
 //import com.mercury.beans.Transaction;
@@ -14,6 +12,7 @@ import com.mercury.beans.User;
 import com.mercury.beans.UserStockTransaction;
 import com.mercury.daos.StockDao;
 import com.mercury.daos.UserStockTransactionDao;
+import com.mercury.dtos.TransactionInfo;
 import com.mercury.util.csv.CsvUtil;
 import com.mercury.daos.UserDao;
 
@@ -26,37 +25,22 @@ import com.mercury.daos.UserDao;
 public class TransService {
 	
 	@Autowired
-	UserDao ud;
+	private UserDao ud;
 	@Autowired
-	StockDao sd;
+	private StockDao sd;
 	@Autowired
-	UserStockTransactionDao td;
+	private UserStockTransactionDao td;
 	@Autowired
-	CsvUtil cu;
+	private CsvUtil cu;
 	
 	/**
-	 * save a transaction
+	 * save a transaction to database
 	 * @param trans
 	 */
-	//@Transactional
 	public void addTransaction(UserStockTransaction trans){
 		td.save(trans);
 	}
 
-	//@Transactional
-//	public void deleteTransaction(UserStockTransaction trans){
-//		td.deleteTransaction(trans);
-//	}
-	
-	/**
-	 * 
-	 * @param user
-	 * @return
-	 */
-	//@Transactional
-//	public List<UserStockTransaction> queryByUser(User user){
-//		return td.queryStockByUsername(user.getUsername());
-//	}
 	
 	/**
 	 * return all transactions
@@ -72,8 +56,6 @@ public class TransService {
 	 * add a pending transaction by appending it to the CSV file
 	 * @param trans
 	 */
-	
-	//@Transactional
 	public void addPending(UserStockTransaction trans){
 		User user = trans.getUser();
 		double cash = user.getCash();
@@ -95,22 +77,22 @@ public class TransService {
 		
 	}
 	
+	
 	/**
-	 * read all pending transactions from pending.csv fiel using CsvUtil
+	 * read all pending transactions from pending.csv file using CsvUtil
 	 * @return
 	 */
-	//@Transactional
 	public List<UserStockTransaction> getAllPendings(){
 		List<UserStockTransaction> list = cu.parseCSV();
 		return list;
 	}
+	
 	
 	/**
 	 * get all pending transactions for a user
 	 * @param user
 	 * @return
 	 */
-	//@Transactional
 	public List<UserStockTransaction> findPendingByUser(User user){
 		
 		List<UserStockTransaction> list = getAllPendings();
@@ -124,9 +106,9 @@ public class TransService {
 		}
 		return newList;
 	}
-//	
-//	
-//
+
+	
+	
 	/**
 	 * Commit pending transaction in csv file, save it to database, update balance
 	 * @param index -- index of the pending transaction
@@ -139,30 +121,6 @@ public class TransService {
 		UserStockTransaction tx = allpendings.get(index);
 		User user = tx.getUser();
 		
-		//we will do this in another service
-//		Stock stock = tx.getStock();
-//		List<OwnershipInfo> ownList = od.findByOwn(user, stock);
-//		
-//		//Calculate the quantity after transaction
-//		int amount = tx.getAmount();
-//		if (ownList == null || ownList.size() == 0){			
-//			if (amount > 0){
-//				OwnershipInfo ois = new OwnershipInfo(user, stock, amount < 0 ? 0 : amount);
-//				user.addOwns(ois);
-//			}
-//		}else {
-//			amount = ownList.get(0).getQuantity() + amount;
-//			if (amount > 0){
-//				for (OwnershipInfo ois: user.getOwns()){
-//					if (ois.getOwn().getStock().getSid() == stock.getSid()){
-//						ois.setQuantity(amount);
-//					}
-//				}
-//			}else{
-//				user.removeOwns(ownList.get(0));
-//				od.delete(ownList.get(0));
-//			}
-//		}
 		//Calculate and update balance after transaction
 		double cash = user.getCash();
 		cash = cash - 5;
@@ -184,10 +142,8 @@ public class TransService {
 		List<UserStockTransaction> allpendings = getAllPendings();
 		for(int i: indexs){
 			commitPending(i);
-			//allpendings.remove(i);
 		}
 		List<UserStockTransaction> newList = new ArrayList<UserStockTransaction>();
-		//List<UserStockTransaction> restore = new ArrayList<UserStockTransaction>();
 		
 		for (int i=0; i<allpendings.size(); i++){
 			if (!indexs.contains(i) ){
@@ -204,7 +160,6 @@ public class TransService {
 	 * @param reimberse
 	 */
 	//Delete pending transaction from csv file
-	//@Transactional
 	public void dropPending(int index){
 		
 		List<UserStockTransaction> list = getAllPendings();
@@ -230,7 +185,6 @@ public class TransService {
 	 * Delete pending transactions and credit back to users
 	 * @param indexs
 	 */
-	//@Transactional
 	public void dropPendings(List<Integer> indexs){
 		List<UserStockTransaction> list = getAllPendings();
 		List<UserStockTransaction> newList = new ArrayList<UserStockTransaction>();
@@ -244,9 +198,6 @@ public class TransService {
 		}
 		
 		for(UserStockTransaction tran: restore){
-//			System.out.println("in the loop!");
-//			UserStockTransaction tran = list.get(i);
-//			System.out.println(tran);
 			User user = tran.getUser();
 			
 			//credit back user's cash
@@ -263,5 +214,53 @@ public class TransService {
 		
 		cu.rewriteCSV(newList);
 	}
+	
+	
+	/**
+	 * get user transaction history
+	 * @param stock
+	 * @return
+	 * @author Yi
+	 */
+	public List<TransactionInfo> getTranHistory(String username){
+		List<TransactionInfo> tranHistory = new ArrayList<>();
+		User user = ud.findByUserName(username);
+		System.out.println(user);
+		
+		/* get committed transaction history */
+		List<UserStockTransaction> trans = td.queryTransactionByUsername(username);
+		for(UserStockTransaction t: trans){
+			String type = (t.getQuantity() >= 0) ? "BUY" : "SELL";
+			tranHistory.add(
+				new TransactionInfo(t.getUser().getUsername(),
+									t.getStock().getSymbol(),
+									t.getPrice(), 
+									t.getQuantity(),
+									t.getTs(),
+									type,
+									"COMMITTED")
+			);
+		}
+		
+		/* get pending transaction history */
+		List<UserStockTransaction> pendingTrans = findPendingByUser(user);
+		System.out.println(pendingTrans);
+		for(UserStockTransaction t: pendingTrans){
+			String type = (t.getQuantity() >= 0) ? "BUY" : "SELL";
+			tranHistory.add(
+				new TransactionInfo(t.getUser().getUsername(),
+									t.getStock().getSymbol(),
+									t.getPrice(),
+									t.getQuantity(),
+									t.getTs(),
+									type,
+									"PENDING")
+			);
+		}
+		
+		return tranHistory;
+	}
+	
+	
 	
 }

@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -13,8 +14,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.mercury.beans.Stock;
+import com.mercury.daos.UserStockTransactionDao;
 import com.mercury.dtos.OwnStock;
-import com.mercury.services.StockService;
+import com.mercury.dtos.StockInfo;
+import com.mercury.dtos.TransactionInfo;
+import com.mercury.services.TransService;
+//import com.mercury.services.StockService;
 import com.mercury.services.UserService;
 
 /**
@@ -29,7 +35,9 @@ public class UserController {
 	@Autowired
 	UserService us;
 	@Autowired
-	StockService ss;
+	private TransService ts;
+//	@Autowired
+//	StockService ss;
 	
 	@RequestMapping(value="/portfolio", method = RequestMethod.GET)
 	public ModelAndView portfolio(Principal principal) {
@@ -69,5 +77,88 @@ public class UserController {
 		us.addCash(userName, amount);
 		return "success";
 	}
+	
+	/**
+	 * REST API: get username's watch list which contains stock detail info
+	 * @param principal
+	 * @return
+	 * @author Yi
+	 */
+	@RequestMapping(value="/getWatchList", method=RequestMethod.GET)
+	@ResponseBody
+	public List<StockInfo> getWatchList(Principal principal) {
+		if (principal == null || principal.getName() == null){
+			return null;
+		}
+		String userName = principal.getName();
+		System.out.println("In UserController, username:" + userName);
+		List<StockInfo> watchedStocks = us.getWatchListInfo(userName);
+		
+		return watchedStocks;
+	}
+	
+	
+	/**
+	 * REST API: Add watch list
+	 * @param principal
+	 * @return
+	 * @author Yi
+	 */
+	@RequestMapping(value="/addWatchList/{symbol}", method=RequestMethod.GET)
+	@ResponseBody
+	public List<StockInfo> addWatchList(Principal principal, @PathVariable String symbol) {
+		if (principal == null || principal.getName() == null){
+			return null;
+		}
+		String userName = principal.getName();
+		System.out.println(userName);
+		us.addWatchList(userName, symbol);
+		return us.getWatchListInfo(userName);
+	}
+	
+	
+	
+	/**
+	 * REST API: delete watch list
+	 * @param principal
+	 * @return
+	 * @author Yi
+	 */
+	@RequestMapping(value="/deleteWatchList/{symbol}", method=RequestMethod.GET)
+	@ResponseBody
+	public List<StockInfo> deleteWatchList(Principal principal, @PathVariable String symbol) {
+		if (principal == null || principal.getName() == null){
+			return null;
+		}
+		String userName = principal.getName();
+		System.out.println(userName);
+		us.deleteWatchList(userName, symbol);
+		return us.getWatchListInfo(userName);
+	}
+	
+	
+	
+	
+	
+	/**
+	 * REST API: get username's transaction history
+	 * @param principal
+	 * @return
+	 * @author Yi
+	 */
+	@RequestMapping(value="/getTranHistory", method=RequestMethod.GET)
+	@ResponseBody
+	public List<TransactionInfo> getTranHistory(Principal principal) {
+		if (principal == null || principal.getName() == null){
+			return null;
+		}
+		String userName = principal.getName();
+		System.out.println(userName);
+		List<TransactionInfo> tranHistory = ts.getTranHistory(userName);
+		
+		return tranHistory;
+	}
+	
+	
 	
 }
