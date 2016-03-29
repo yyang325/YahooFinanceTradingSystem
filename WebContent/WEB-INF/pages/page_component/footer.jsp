@@ -42,4 +42,6 @@
 	<!-- require, jquery, angular -->
 	<script type="text/javascript" src="bower_component/jquery/dist/jquery.min.js"></script>
 	<script type="text/javascript" src="bower_component/angular/angular.min.js"></script>
+	<script type="text/javascript" src="bower_component/angular-messages/angular-messages.min.js"></script>
 	<script type="text/javascript" src="bower_component/requirejs/require.js"></script>
+

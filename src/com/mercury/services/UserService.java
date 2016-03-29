@@ -5,6 +5,8 @@ import java.io.InputStreamReader;
 import java.math.BigDecimal;
 import java.net.URL;
 import java.net.URLConnection;
+import java.sql.Date;
+import java.sql.SQLException;
 import java.util.ArrayList;
 //import java.util.Date;
 import java.util.HashMap;
@@ -53,11 +55,28 @@ public class UserService {
 	}
 	
 	/**
-	 * save a user to db
+	 * save a new user to db
 	 * @param user
 	 */
-	public void saveUser(User user){
+	public void saveNewUser(User user) throws Exception{
+		user.setAuthority("USER");
+		user.setBalance(0);
+		user.setCash(0);
+		System.out.println(user.getPassword());
+		user.setPassword(user.MD5Hashing(user.getPassword()));
+		//user account is not activated yet
+		user.setEnable(0);
 		ud.save(user);
+	}
+	
+	/**
+	 * activate a user's account 
+	 * @param username
+	 */
+	public void activateUser(String username){
+		User user = ud.findByUserName(username);
+		user.setEnable(1);
+		ud.update(user);
 	}
 	
 	/**

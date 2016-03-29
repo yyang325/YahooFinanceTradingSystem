@@ -26,7 +26,11 @@
 <link rel="apple-touch-icon" sizes="114x114"
 	href="img/apple-touch-icon-114x114.png">
 
-
+<!-- require, jquery, angular -->
+	<script type="text/javascript" src="bower_component/jquery/dist/jquery.min.js"></script>
+	<script type="text/javascript" src="bower_component/angular/angular.min.js"></script>
+	<script type="text/javascript" src="bower_component/angular-messages/angular-messages.min.js"></script>
+	<script type="text/javascript" src="bower_component/requirejs/require.js"></script>
 
 <!-- Bootstrap -->
 <link href="bower_component/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -36,7 +40,8 @@
 <!-- font-awesome -->
 <link rel="stylesheet" type="text/css" href="bower_component/fontawesome/css/font-awesome.min.css">
 
-
+<!-- a customerized js -->
+<script src="js/app2.js"></script>
 
 <!-- modernizr -->
 <!-- need attention here -->
@@ -45,10 +50,10 @@
 <!-- owl Slider -->
 <!-- need attention here -->
 <link href="bower_component/owl/owl-carousel/owl.carousel.css" rel="stylesheet" media="screen">
-<link href="css/owl.theme.css" rel="stylesheet" media="screen">
+<link href="bower_component/owl/owl-carousel/owl.theme.css" rel="stylesheet" media="screen">
 
 <!-- animate -->
-<link rel="stylesheet" href="bower_componentcss/animate-css/animate.min.css" type="text/css">
+<link rel="stylesheet" href="bower_component/animate-css/animate.min.css" type="text/css">
 
 
 <script>
@@ -614,54 +619,11 @@
 															<p>The username or password supplied is incorrect</p>
 														</div>
 														
-														<!-- Login Form -->
-														<form id="login-form" name="login-form"
-															class="form-validate"
-															action="<c:url value='j_spring_security_check'/>"
-															method="POST" style="display: block;">
-															<div class="form-group">
-																<label for="uname" style="color: black;">
-																	Username:</label> <input type="text" name="j_username"
-																	id="j_username" tabindex="1" class="form-control"
-																	placeholder="Username">
-															</div>
-															<div class="form-group" style="color: black;">
-																<label for="uname"> Password:</label> <input
-																	type="password" name="j_password" id="j_password"
-																	tabindex="2" class="form-control"
-																	placeholder="Password">
-															</div>
-															<div class="form-group text-center">
-																<input type="checkbox" tabindex="3" class=""
-																	name="_spring_security_remember_me" id="remember-me">
-																<label for="remember" style="color: black;">
-																	Remember Me</label>
-															</div>
-															<div class="form-group">
-																<div class="row">
-																	<div class="col-sm-6 col-sm-offset-3"
-																		style="padding-top: 10px; color: #f05f40;">
-																		<input type="submit" name="submit1" id="signin"
-																			tabindex="4" class="form-control btn btn-login"
-																			value="Log In">
-																	</div>
-																</div>
-															</div>
-															<div class="form-group">
-																<div class="row">
-																	<div class="col-lg-12">
-																		<div class="text-center">
-																			<a href="forgotpassword.jsp" tabindex="5"
-																				class="forgot-password">Forgot Password?</a>
-																		</div>
-																	</div>
-																</div>
-															</div>
-														</form>
+														
 
 
-														<form id="register-form" name="registerform"
-															action="confirmation" method="post"
+														<!-- <form id="register-form" name="registerform"
+															action="confirmsignup" method="post"
 															style="display: none;" novalidate
 															ng-submit="registration.submit(registerform.$valid)">
 															<div class="form-group"
@@ -685,7 +647,7 @@
 																	<p ng-message="usernameValid" style="color: #f05f40;">Username
 																		Exist!</p>
 																</div>
-																<!-- <div style="display: none;color:#f05f40;" id="usernameExist">Username Exist!</div> -->
+																<div style="display: none;color:#f05f40;" id="usernameExist">Username Exist!</div>
 															</div>
 															<div class="form-group"
 																ng-class="{ 'has-error': registerform.lastName.$touched && registerform.lastName.$invalid }">
@@ -740,7 +702,7 @@
 																	<p ng-message="emailValid" style="color: #f05f40;">Email
 																		Exists!</p>
 																</div>
-																<!-- <div style="display: none;color:#f05f40;" id="emailExist">Email Exist!</div>  -->
+																<div style="display: none;color:#f05f40;" id="emailExist">Email Exist!</div> 
 															</div>
 															<div class="form-group"
 																ng-class="{ 'has-error': registerform.passWord.$touched && registerform.passWord.$invalid }">
@@ -795,7 +757,7 @@
 																</div>
 															</div>
 															<br>
-														</form>
+														</form> -->
 													</div>
 												</div>
 											</div>
@@ -809,6 +771,255 @@
 			</div>
 		</div>
 	</div>
+	
+	<!-- <div ng-app="validation">
+			<form id="register-form" name="registerform"
+															action="confirmsignup" method="post"
+															style="display: block;" novalidate
+															ng-submit="registration.submit(registerform.$valid)">
+															<div class="form-group"
+																ng-class="{ 'has-error': registerform.userName.$touched && registerform.userName.$invalid }">
+																<label for="uname" style="color: black;">
+																	Username:</label> <input type="text" name="userName"
+																	id="j_userName" tabindex="1" class="form-control"
+																	placeholder="Enter your username" ng-model="userName"
+																	ng-minlength="3" ng-maxlength="10" username-valid
+																	required>
+																<div class="help-block"
+																	ng-messages="registerform.userName.$error"
+																	ng-messages-multiple
+																	ng-if="registerform.userName.$dirty">
+																	<p ng-message="minlength" style="color: #f05f40;">Your
+																		username is too short.</p>
+																	<p ng-message="maxlength" style="color: #f05f40;">Your
+																		username is too long.</p>
+																	<p ng-message="required" style="color: #f05f40;">Your
+																		username is required.</p>
+																	<p ng-message="usernameValid" style="color: #f05f40;">Username
+																		Exist!</p>
+																</div>
+																<div style="display: none;color:#f05f40;" id="usernameExist">Username Exist!</div>
+															</div>
+															<div class="form-group"
+																ng-class="{ 'has-error': registerform.lastName.$touched && registerform.lastName.$invalid }">
+																<label for="ulname" style="color: black;">
+																	Lastname:</label> <input type="text" name="lastName"
+																	id="j_lastName" tabindex="1" class="form-control"
+																	placeholder="Enter your lastname" ng-model="lastName"
+																	ng-pattern="/^[a-zA-Z]+$/" required>
+																<div class="help-block"
+																	ng-messages="registerform.lastName.$error"
+																	ng-messages-multiple
+																	ng-if="registerform.lastName.$dirty">
+																	<p ng-message="required" style="color: #f05f40;">Your
+																		lastname is required.</p>
+																	<p ng-message="pattern" style="color: #f05f40;">This
+																		field only accept alphabet.</p>
+																</div>
+															</div>
+															<div class="form-group"
+																ng-class="{ 'has-error': registerform.firstName.$touched && registerform.firstName.$invalid }">
+																<label for="ufname" style="color: black;">
+																	Firstname:</label> <input type="text" name="firstName"
+																	id="j_firstName" tabindex="1" class="form-control"
+																	placeholder="Enter your firstname" ng-model="firstName"
+																	ng-pattern="/^[a-zA-Z]+$/" required>
+																<div class="help-block"
+																	ng-messages="registerform.firstName.$error"
+																	ng-messages-multiple
+																	ng-if="registerform.firstName.$dirty">
+																	<p ng-message="required" style="color: #f05f40;">Your
+																		firstname is required.</p>
+																	<p ng-message="pattern" style="color: #f05f40;">This
+																		field only accept alphabet.</p>
+																</div>
+
+															</div>
+															<div class="form-group"
+																ng-class="{ 'has-error': registerform.email.$touched && registerform.email.$invalid }">
+																<label for="uemail" style="color: black;">
+																	Email:</label> <input type="email" name="email" id="j_email"
+																	tabindex="1" class="form-control"
+																	placeholder="Enter your email address" ng-model="email"
+																	email-valid required>
+																<div class="help-block"
+																	ng-messages="registerform.email.$error"
+																	ng-messages-multiple ng-if="registerform.email.$dirty">
+																	<p ng-message="required" style="color: #f05f40;">This
+																		field is required</p>
+																	<p ng-message="email" style="color: #f05f40;">This
+																		needs to be a valid email</p>
+												
+																	<p ng-message="emailValid" style="color: #f05f40;">Email
+																		Exists!</p>
+																</div>
+																<div style="display: none;color:#f05f40;" id="emailExist">Email Exist!</div> 
+															</div>
+															<div class="form-group"
+																ng-class="{ 'has-error': registerform.passWord.$touched && registerform.passWord.$invalid }">
+																<label for="upassword" style="color: black;">
+																	Password:</label> <input type="password" name="passWord"
+																	id="j_passWord" tabindex="2" class="form-control"
+																	placeholder="Enter your password" ng-model="passWord"
+																	ng-pattern="/^[a-zA-Z0-9]+$/" ng-minlength="6"
+																	ng-maxlength="20" required>
+																<div class="help-block"
+																	ng-messages="registerform.passWord.$error"
+																	ng-messages-multiple
+																	ng-if="registerform.passWord.$dirty">
+																	<p ng-message="required" style="color: #f05f40;">This
+																		field is required</p>
+																	<p ng-message="minlength" style="color: #f05f40;">This
+																		field is too short. Minimum: 6.</p>
+																	<p ng-message="maxlength" style="color: #f05f40;">This
+																		field is too long</p>
+																	<p ng-message="pattern" style="color: #f05f40;">This
+																		field only accept alphabet and numbers</p>
+																</div>
+															</div>
+															<div class="form-group">
+																<label for="upassword" style="color: black;">
+																	Confirm your password:</label> <input type="password"
+																	name="confirmPassword" id="confirm-password"
+																	tabindex="2" class="form-control"
+																	placeholder="Confirm your password"
+																	ng-model="confirmPassword" compare-to="passWord"
+																	required>
+																<div class="help-block"
+																	ng-messages="registerform.confirmPassword.$error"
+																	ng-messages-multiple
+																	ng-if="registerform.confirmPassword.$dirty">
+																	<p ng-message="compareTo" style="color: #f05f40;">Must
+																		match the previous entry</p>
+																	<p ng-message="required" style="color: #f05f40;">This
+																		field is required</p>
+																</div>
+
+															</div>
+															<div class="form-group">
+																<div class="row">
+																	<div class="col-sm-6 col-sm-offset-3"
+																		style="padding-top: 10px;">
+																		<input ng-disabled="registerform.$invalid"
+																			type="submit" name="submit2" id="register"
+																			tabindex="4" class="form-control btn btn-register"
+																			value="Register Now">
+																	</div>
+																</div>
+															</div>
+															<br>
+		</form>
+	</div> -->
+	
+	<div ng-app="validation">
+		<form id="register-form" name="registerform" action="confirmsignup" method="post"
+							style="display: block;" >
+				<div class="form-group">
+					<label for="uname" style="color: black;">
+						Username:</label> <input type="text" name="username"
+						id="j_userName" tabindex="1" class="form-control"
+						placeholder="Enter your username" ng-model="userName">
+				</div>
+				
+				<div class="form-group">
+					<label for="ulname" style="color: black;">
+						Lastname:</label> <input type="text" name="lastName"
+						id="j_lastName" tabindex="1" class="form-control"
+						placeholder="Enter your lastname" ng-model="lastName"
+						>
+				</div>	
+				
+				<div class="form-group">
+					<label for="ufname" style="color: black;">
+						Firstname:</label> <input type="text" name="firstName"
+						id="j_firstName" tabindex="1" class="form-control"
+						placeholder="Enter your firstname" ng-model="firstName"
+						>
+				</div>
+				
+				<div class="form-group">
+					<label for="uemail" style="color: black;">
+						Email:</label> <input type="email" name="email" id="j_email"
+						tabindex="1" class="form-control"
+						placeholder="Enter your email address" ng-model="email"
+						>
+				</div>
+				
+				<div class="form-group">
+					<label for="upassword" style="color: black;">
+						Password:</label> <input type="password" name="password"
+						id="j_passWord" tabindex="2" class="form-control"
+						placeholder="Enter your password" ng-model="passWord"
+						ng-pattern="/^[a-zA-Z0-9]+$/">
+				</div>
+				
+				<div class="form-group">
+					<label for="upassword" style="color: black;">
+						Confirm your password:</label> <input type="password"
+						name="confirmPassword" id="confirm-password"
+						tabindex="2" class="form-control"
+						placeholder="Confirm your password"
+						ng-model="confirmPassword">
+				</div>
+				
+				<div class="form-group">
+					<div class="row">
+						<div class="col-sm-6 col-sm-offset-3"
+							style="padding-top: 10px;">
+							<input
+								type="submit" name="submit2" id="register"
+								tabindex="4" class="form-control btn btn-register"
+								value="Register Now">
+						</div>
+					</div>
+				</div>										
+		</form>
+	</div>
+	
+	<!-- Login Form -->
+														<form id="login-form" name="login-form"
+															class="form-validate"
+															action="<c:url value='j_spring_security_check'/>"
+															method="POST" style="display: block;">
+															<div class="form-group">
+																<label for="uname" style="color: black;">
+																	Username:</label> <input type="text" name="j_username"
+																	id="j_username" tabindex="1" class="form-control"
+																	placeholder="Username">
+															</div>
+															<div class="form-group" style="color: black;">
+																<label for="uname"> Password:</label> <input
+																	type="password" name="j_password" id="j_password"
+																	tabindex="2" class="form-control"
+																	placeholder="Password">
+															</div>
+															<div class="form-group text-center">
+																<input type="checkbox" tabindex="3" class=""
+																	name="_spring_security_remember_me" id="remember-me">
+																<label for="remember" style="color: black;">
+																	Remember Me</label>
+															</div>
+															<div class="form-group">
+																<div class="row">
+																	<div class="col-sm-6 col-sm-offset-3"
+																		style="padding-top: 10px; color: #f05f40;">
+																		<input type="submit" name="submit1" id="signin"
+																			tabindex="4" class="form-control btn btn-login"
+																			value="Log In">
+																	</div>
+																</div>
+															</div>
+															<div class="form-group">
+																<div class="row">
+																	<div class="col-lg-12">
+																		<div class="text-center">
+																			<a href="forgotpassword.jsp" tabindex="5"
+																				class="forgot-password">Forgot Password?</a>
+																		</div>
+																	</div>
+																</div>
+															</div>
+														</form>
 	
 	
 	<!-- back to top button -->
