@@ -30,7 +30,7 @@
 
 </head>
 
-<body id="page-top">
+<body id="page-top" ng-app="mainApp" ng-controller="mainCtrl">
 
     <nav id="mainNav" class="navbar navbar-default navbar-fixed-top">
         <div class="container-fluid">
@@ -55,7 +55,7 @@
                         <a class="page-scroll" href="#services">Services</a>
                     </li>
                     <li>
-                        <a class="page-scroll" href="#portfolio">Portfolio</a>
+                        <a class="page-scroll" href="#login">Login</a>
                     </li>
                     <li>
                         <a class="page-scroll" href="#contact">Contact</a>
@@ -150,10 +150,10 @@
 												style="height: 60px; text-align: center; font-size: 18px; color: #666; font-weight: bold;">
 												<div class="row">
 													<div class="col-xs-6">
-														<a href="#login-form" id="login-form-link" class="active">Login</a>
+														<a href="#login-form" id="login-form-link" ng-click="switchForm(true)">Login</a>
 													</div>
 													<div class="col-xs-6">
-														<a href="#register-form" id="register-form-link">Register</a>
+														<a href="#register-form" id="register-form-link" ng-click="switchForm(false)">Register</a>
 													</div>
 												</div>
 												<hr>
@@ -166,7 +166,7 @@
 														<form id="login-form" name="login-form"
 															class="form-validate"
 															action="<c:url value='j_spring_security_check'/>"
-															method="POST" style="display: block;">
+															method="POST" ng-show="showLogin">
 															<div class="form-group">
 																<label for="uname" style="color: black;">
 																	Username:</label> <input type="text" name="j_username"
@@ -209,134 +209,49 @@
 
 														<!-- Register Form -->
 														<form id="register-form" name="registerform"
-															action="confirmation" method="post"
-															style="display: none;" novalidate
-															ng-submit="registration.submit(registerform.$valid)">
-															<div class="form-group"
-																ng-class="{ 'has-error': registerform.userName.$touched && registerform.userName.$invalid }">
+															action="confirmsignup" method="post" ng-show="!showLogin">
+															<div class="form-group">
 																<label for="uname" style="color: black;">
-																	Username:</label> <input type="text" name="userName"
+																	Username:</label> <input type="text" name="username"
 																	id="j_userName" tabindex="1" class="form-control"
-																	placeholder="Enter your username" ng-model="userName"
-																	ng-minlength="3" ng-maxlength="10" username-valid
-																	required>
-																<div class="help-block"
-																	ng-messages="registerform.userName.$error"
-																	ng-messages-multiple
-																	ng-if="registerform.userName.$dirty">
-																	<p ng-message="minlength" style="color: #f05f40;">Your
-																		username is too short.</p>
-																	<p ng-message="maxlength" style="color: #f05f40;">Your
-																		username is too long.</p>
-																	<p ng-message="required" style="color: #f05f40;">Your
-																		username is required.</p>
-																	<p ng-message="usernameValid" style="color: #f05f40;">Username
-																		Exist!</p>
-																</div>
-																<!-- <div style="display: none;color:#f05f40;" id="usernameExist">Username Exist!</div> -->
+																	placeholder="Enter your username">
 															</div>
-															<div class="form-group"
-																ng-class="{ 'has-error': registerform.lastName.$touched && registerform.lastName.$invalid }">
+															<div class="form-group">
 																<label for="ulname" style="color: black;">
 																	Lastname:</label> <input type="text" name="lastName"
 																	id="j_lastName" tabindex="1" class="form-control"
-																	placeholder="Enter your lastname" ng-model="lastName"
-																	ng-pattern="/^[a-zA-Z]+$/" required>
-																<div class="help-block"
-																	ng-messages="registerform.lastName.$error"
-																	ng-messages-multiple
-																	ng-if="registerform.lastName.$dirty">
-																	<p ng-message="required" style="color: #f05f40;">Your
-																		lastname is required.</p>
-																	<p ng-message="pattern" style="color: #f05f40;">This
-																		field only accept alphabet.</p>
-																</div>
+																	placeholder="Enter your lastname">
 															</div>
-															<div class="form-group"
-																ng-class="{ 'has-error': registerform.firstName.$touched && registerform.firstName.$invalid }">
+															<div class="form-group">
 																<label for="ufname" style="color: black;">
 																	Firstname:</label> <input type="text" name="firstName"
 																	id="j_firstName" tabindex="1" class="form-control"
-																	placeholder="Enter your firstname" ng-model="firstName"
-																	ng-pattern="/^[a-zA-Z]+$/" required>
-																<div class="help-block"
-																	ng-messages="registerform.firstName.$error"
-																	ng-messages-multiple
-																	ng-if="registerform.firstName.$dirty">
-																	<p ng-message="required" style="color: #f05f40;">Your
-																		firstname is required.</p>
-																	<p ng-message="pattern" style="color: #f05f40;">This
-																		field only accept alphabet.</p>
-																</div>
-
+																	placeholder="Enter your firstname">
 															</div>
-															<div class="form-group"
-																ng-class="{ 'has-error': registerform.email.$touched && registerform.email.$invalid }">
+															<div class="form-group">
 																<label for="uemail" style="color: black;">
 																	Email:</label> <input type="email" name="email" id="j_email"
 																	tabindex="1" class="form-control"
-																	placeholder="Enter your email address" ng-model="email"
-																	email-valid required>
-																<div class="help-block"
-																	ng-messages="registerform.email.$error"
-																	ng-messages-multiple ng-if="registerform.email.$dirty">
-																	<p ng-message="required" style="color: #f05f40;">This
-																		field is required</p>
-																	<p ng-message="email" style="color: #f05f40;">This
-																		needs to be a valid email</p>
-												
-																	<p ng-message="emailValid" style="color: #f05f40;">Email
-																		Exists!</p>
-																</div>
-																<!-- <div style="display: none;color:#f05f40;" id="emailExist">Email Exist!</div>  -->
+																	placeholder="Enter your email address">
 															</div>
-															<div class="form-group"
-																ng-class="{ 'has-error': registerform.passWord.$touched && registerform.passWord.$invalid }">
+															<div class="form-group">
 																<label for="upassword" style="color: black;">
-																	Password:</label> <input type="password" name="passWord"
+																	Password:</label> <input type="password" name="password"
 																	id="j_passWord" tabindex="2" class="form-control"
-																	placeholder="Enter your password" ng-model="passWord"
-																	ng-pattern="/^[a-zA-Z0-9]+$/" ng-minlength="6"
-																	ng-maxlength="20" required>
-																<div class="help-block"
-																	ng-messages="registerform.passWord.$error"
-																	ng-messages-multiple
-																	ng-if="registerform.passWord.$dirty">
-																	<p ng-message="required" style="color: #f05f40;">This
-																		field is required</p>
-																	<p ng-message="minlength" style="color: #f05f40;">This
-																		field is too short. Minimum: 6.</p>
-																	<p ng-message="maxlength" style="color: #f05f40;">This
-																		field is too long</p>
-																	<p ng-message="pattern" style="color: #f05f40;">This
-																		field only accept alphabet and numbers</p>
-																</div>
+																	placeholder="Enter your password">
 															</div>
 															<div class="form-group">
 																<label for="upassword" style="color: black;">
 																	Confirm your password:</label> <input type="password"
 																	name="confirmPassword" id="confirm-password"
 																	tabindex="2" class="form-control"
-																	placeholder="Confirm your password"
-																	ng-model="confirmPassword" compare-to="passWord"
-																	required>
-																<div class="help-block"
-																	ng-messages="registerform.confirmPassword.$error"
-																	ng-messages-multiple
-																	ng-if="registerform.confirmPassword.$dirty">
-																	<p ng-message="compareTo" style="color: #f05f40;">Must
-																		match the previous entry</p>
-																	<p ng-message="required" style="color: #f05f40;">This
-																		field is required</p>
-																</div>
-
+																	placeholder="Confirm your password">
 															</div>
 															<div class="form-group">
 																<div class="row">
 																	<div class="col-sm-6 col-sm-offset-3"
 																		style="padding-top: 10px;">
-																		<input ng-disabled="registerform.$invalid"
-																			type="submit" name="submit2" id="register"
+																		<input type="submit" name="submit2" id="register"
 																			tabindex="4" class="form-control btn btn-register"
 																			value="Register Now">
 																	</div>
@@ -389,6 +304,9 @@
 
     <!-- jQuery -->
     <script src="bower_component/js/jquery.js"></script>
+    
+    <!-- AngularJS -->
+    <script src="bower_component/angular/angular.min.js"></script>
 
     <!-- Bootstrap Core JavaScript -->
     <script src="bower_component/js/bootstrap.min.js"></script>
@@ -400,6 +318,15 @@
 
     <!-- Custom Theme JavaScript -->
     <script src="bower_component/js/creative.js"></script>
+    <script type="text/javascript">
+    	var app = angular.module("mainApp", []);
+    	app.controller("mainCtrl", function($scope){
+    		$scope.showLogin = true;
+    		$scope.switchForm = function(bool){
+    			$scope.showLogin = bool;
+    		};
+    	});
+    </script>
 
 </body>
 
