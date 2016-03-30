@@ -60,8 +60,8 @@ public class UserService {
 	 */
 	public void saveNewUser(User user) throws Exception{
 		user.setAuthority("USER");
-		user.setBalance(0);
-		user.setCash(0);
+		user.setBalance(0.0);
+		user.setCash(100000.0);
 		System.out.println(user.getPassword());
 		user.setPassword(user.MD5Hashing(user.getPassword()));
 		//user account is not activated yet
@@ -76,6 +76,17 @@ public class UserService {
 	public void activateUser(String username){
 		User user = ud.findByUserName(username);
 		user.setEnable(1);
+		ud.update(user);
+	}
+	
+	/**
+	 * update use with a new password
+	 * @param user
+	 * @param newPassword
+	 * @throws Exception
+	 */
+	public void updatePassword(User user, String newPassword) throws Exception{
+		user.setPassword(user.MD5Hashing(newPassword));
 		ud.update(user);
 	}
 	
