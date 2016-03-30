@@ -1,3 +1,5 @@
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@taglib uri="http://www.springframework.org/security/tags" prefix="sec"%>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -25,47 +27,69 @@
   </head>
 
   <body>
-
-    <!-- Fixed navbar -->
-    <nav class="navbar navbar-default navbar-fixed-top">
-      <div class="container">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="#">YFTS</a>
-        </div>
-        <div id="navbar" class="collapse navbar-collapse">
-          <ul class="nav navbar-nav">
-            <li class="active"><a href="#">Home</a></li>
-            <li><a href="#about">Watch List</a></li>
-            <li><a href="#portfolio">Portfolio</a></li>
-            <li><a href="#history">History</a></li>
-          </ul>
-
-          <ul class="nav navbar-nav navbar-right">
-            <li><a href="#logout"><span class="glyphicon glyphicon-log-out" aria-hidden="true"></span></a></li>
-          </ul>
-        </div><!--/.nav-collapse -->
-      </div>
-    </nav>
+  
+  	<c:import url="page_component/header.jsp"/>
 
     <!-- Begin page content -->
     <div class="container">
-      <div class="page-header">
-        <h1>Sticky footer with fixed navbar</h1>
-      </div>
-      <p class="lead">Pin a fixed-height footer to the bottom of the viewport in desktop browsers with this custom HTML and CSS. A fixed navbar has been added with <code>padding-top: 60px;</code> on the <code>body > .container</code>.</p>
-    </div>
+      <div class="row-fluid">
+        <div class="col-md-12">
+          <div class="page-header">
+            <h2>Watch List</h2>
+          </div>
+          <div class="row-fluid">
+            <!-- search field -->
+            <div class="col-md-4">
+              <!-- Search text and button -->
+              <div class="row-fluid">
+                <div class="col-md-12">
+                  <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Stock Symbol">
+                    <span class="input-group-btn">
+                      <button class="btn btn-default" type="button">Search</button>
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <hr>
+              <!-- Search List -->
+              <div class="row-fluid">
+                <div class="col-md-12">
+                  <div class="list-group">
+                    <a href="#" class="list-group-item">
+                      <h4 class="list-group-item-heading">[Company Symbol]</h4>
+                      <p class="list-group-item-text">[Company Description]</p>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
 
-    <footer class="footer">
-      <div class="container">
-        <p class="text-muted">Place sticky footer content here.</p>
+            <!-- watched stock list -->
+            <div class="col-md-8">
+              <table class="table table-bordered table-striped">
+                <tr>
+                  <th>Stock Symbol</th>
+                  <th>Company Name</th>
+                  <th>Change</th>
+                  <th>Price</th>
+                  <th></th>
+                </tr>
+                <tr>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+              </table>
+            </div>
+          </div>
+        </div>
       </div>
-    </footer>
+    </div>
+    
+    <c:import url="page_component/footer.jsp"/>
 
 
     <!-- Bootstrap core JavaScript
