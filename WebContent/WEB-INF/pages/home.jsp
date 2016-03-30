@@ -29,66 +29,64 @@
   <body>
   
   	<c:import url="page_component/header.jsp"/>
-
-    <!-- Begin page content -->
-    <div class="container">
-      <div class="row-fluid">
-        <div class="col-md-12">
-          <div class="page-header">
-            <h2>Watch List</h2>
-          </div>
-          <div class="row-fluid">
-            <!-- search field -->
-            <div class="col-md-4">
-              <!-- Search text and button -->
-              <div class="row-fluid">
-                <div class="col-md-12">
-                  <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Stock Symbol">
-                    <span class="input-group-btn">
-                      <button class="btn btn-default" type="button">Search</button>
-                    </span>
-                  </div>
-                </div>
-              </div>
-              <hr>
-              <!-- Search List -->
-              <div class="row-fluid">
-                <div class="col-md-12">
-                  <div class="list-group">
-                    <a href="#" class="list-group-item">
-                      <h4 class="list-group-item-heading">[Company Symbol]</h4>
-                      <p class="list-group-item-text">[Company Description]</p>
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- watched stock list -->
-            <div class="col-md-8">
-              <table class="table table-bordered table-striped">
-                <tr>
-                  <th>Stock Symbol</th>
-                  <th>Company Name</th>
-                  <th>Change</th>
-                  <th>Price</th>
-                  <th></th>
-                </tr>
-                <tr>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                </tr>
-              </table>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    
+	    <!-- Begin page content -->
+	    <div class="container" id="watchlist_section">
+	      <div class="row-fluid">
+	        <div class="col-md-12">
+	          <div class="page-header">
+	            <h2>Watch List</h2>
+	          </div>
+	          <div class="row-fluid">
+	            <!-- search field -->
+	            <div class="col-md-4">
+	              <!-- Search text and button -->
+	              <div class="row-fluid">
+	                <div class="col-md-12">
+	                  <div class="input-group">
+	                    <input type="text" class="form-control" placeholder="Stock Symbol">
+	                    <span class="input-group-btn">
+	                      <button class="btn btn-default" type="button">Search</button>
+	                    </span>
+	                  </div>
+	                </div>
+	              </div>
+	              <hr>
+	              <!-- Search List -->
+	              <div class="row-fluid">
+	                <div class="col-md-12">
+	                  <div class="list-group">
+	                    <a href="#" class="list-group-item">
+	                      <h4 class="list-group-item-heading">[Company Symbol]</h4>
+	                      <p class="list-group-item-text">[Company Description]</p>
+	                    </a>
+	                  </div>
+	                </div>
+	              </div>
+	            </div>
+	
+	            <!-- watched stock list -->
+	            <div class="col-md-8">
+	              <table class="table table-bordered table-striped">
+	                <tr>
+	                  <th>Stock Symbol</th>
+	                  <th>Company Name</th>
+	                  <th>Change</th>
+	                  <th>Price</th>
+	                  <th></th>
+	                </tr>
+	                <tr>
+	                  <td></td>
+	                  <td></td>
+	                  <td></td>
+	                  <td></td>
+	                  <td></td>
+	                </tr>
+	              </table>
+	            </div>
+	          </div>
+	        </div>
+	      </div>
+	    </div>
     <c:import url="page_component/footer.jsp"/>
 
 
