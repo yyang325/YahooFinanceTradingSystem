@@ -334,8 +334,8 @@ public class UserService {
 				pchange = token_info[token_info.length-1].trim();
 				price = Double.parseDouble(token_info[token_info.length-2].trim());
 				change = Double.parseDouble(token_info[token_info.length-3].trim());
-				symbol = token_info[token_info.length-5].trim();
-				companyName = token_info[token_info.length-4].trim();
+				symbol = token_info[0].trim();
+				companyName = token_info[1].trim();
 			}
 		}catch (Exception e) {
 			e.printStackTrace();
@@ -349,6 +349,5 @@ public class UserService {
 		si.setCompanyName(companyName);
 		return si;	
 	}
-	
-	
+
 }

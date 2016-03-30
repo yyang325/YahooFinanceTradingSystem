@@ -38,7 +38,10 @@
     	var app = angular.module("mainApp", []);
     	app.controller("watchlistCtrl", function($scope, $interval, $http){
     		$scope.stocks = [];
-    		$interval(function(){
+    		$scope.stockPool = [];
+    		
+    		var updateWatchlist = function(){
+    			console.log("updating watch list");
     			$http({
     				method: 'GET',
     				url: 'getWatchList'
@@ -47,7 +50,27 @@
     				console.log("response:", response);
     				console.log($scope.stocks);
     			});
-    		}, 3000);
+    		};
+    		
+    		var updateAllStock = function(){
+    			console.log("checking all stock");
+    			$http({
+    				method: 'GET',
+    				url: 'getAllStocks'
+    			}).then(function(response){
+    				$scope.stockPool = response.data;
+    				console.log("response:", response);
+    				console.log($scope.stockPool);
+    			});
+    		};
+    		
+    		/* updating stock detail data in user watch list */
+    		updateWatchlist();
+    		$interval(updateWatchlist(), 1000);
+    		
+    		/* updating all stock infomation that exist in db */
+    		updateAllStock();
+    		$interval(updateAllStock(), 60000);
     	});
     </script>
     
@@ -70,7 +93,7 @@
 	              <div class="row-fluid">
 	                <div class="col-md-12">
 	                  <div class="input-group">
-	                    <input type="text" class="form-control" placeholder="Stock Symbol">
+	                    <input type="text" class="form-control" placeholder="Stock Symbol" ng-model="searchText">
 	                    <span class="input-group-btn">
 	                      <button class="btn btn-default" type="button">Search</button>
 	                    </span>
@@ -81,12 +104,18 @@
 	              <!-- Search List -->
 	              <div class="row-fluid">
 	                <div class="col-md-12">
-	                  <div class="list-group">
-	                    <a href="#" class="list-group-item">
-	                      <h4 class="list-group-item-heading">[Company Symbol]</h4>
-	                      <p class="list-group-item-text">[Company Description]</p>
-	                    </a>
-	                  </div>
+<!-- 	                  <div class="list-group" ng-repeat="searchStock in stockPool | filter:searchText"> -->
+<!-- 	                    <a href="#" class="list-group-item"> -->
+<!-- 	                      <h4 class="list-group-item-heading"></h4> -->
+<!-- 	                      <p class="list-group-item-text"></p> -->
+<!-- 	                    </a> -->
+<!-- 	                  </div> -->
+						<table class="table">
+							<tr ng-repeat="searchStock in stockPool | filter:searchText">
+								<td>{{ searchStock.companyName }}</td>
+								<td>{{ searchStock.stockSymbol }}</td>
+							</tr>
+						</table>
 	                </div>
 	              </div>
 	            </div>
