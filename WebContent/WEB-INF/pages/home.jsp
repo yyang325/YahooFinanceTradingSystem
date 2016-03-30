@@ -70,18 +70,21 @@
 	            <div class="col-md-8">
 	              <table class="table table-bordered table-striped">
 	                <tr>
-	                  <th>Stock Symbol</th>
-	                  <th>Company Name</th>
-	                  <th>Change</th>
-	                  <th>Price</th>
-	                  <th></th>
+	                  <th class="col-md-3">Stock Symbol</th>
+	                  <th class="col-md-3">Company Name</th>
+	                  <th class="col-md-2">Change</th>
+	                  <th class="col-md-2">Price</th>
+	                  <th class="col-md-2">Operation</th>
 	                </tr>
-	                <tr ng-repeat="stock in stocks">
-	                  <td>{{ stock.symbol }}</td>
-	                  <td>Company Name</td>
+	                <tr ng-repeat="stock in stocks | orderBy: 'stockSymbol'">
+	                  <td>{{ stock.stockSymbol }}</td>
+	                  <td>{{ stock.companyName }}</td>
 	                  <td>{{ stock.change }}</td>
 	                  <td>{{ stock.price }}</td>
-	                  <td></td>
+	                  <td>
+	                  	<button type="button" class="btn btn-primary-outline btn-sm">Buy</button>
+	                  	<button type="button" class="btn btn-primary-outline btn-sm">Sell</button>
+	                  </td>
 	                </tr>
 	              </table>
 	            </div>

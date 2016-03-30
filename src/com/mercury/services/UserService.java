@@ -287,7 +287,6 @@ public class UserService {
 	 * @author Yi
 	 */
 	public List<StockInfo> getWatchListInfo(String username){
-		System.out.println("In User Service get watch list, username: " + username);
 		List<StockInfo> res = new ArrayList<>();
 		List<Stock> stocks = getAllStock(username);
 		for(Stock s: stocks){
@@ -305,7 +304,6 @@ public class UserService {
 	 */
 	public List<Stock> getAllStock(String username){
 		User user = findUserByUserName(username);
-		System.out.println("get all stock" + user.getUsername() + user.getWatchedStocks());
 		List<Stock> list =  new ArrayList<Stock>();
 		list.addAll(user.getWatchedStocks());
 		return list;
@@ -319,9 +317,9 @@ public class UserService {
 	 */
 	public StockInfo getStockInfo(Stock stock) {
 		String yahoo_quote = "http://finance.yahoo.com/d/quotes.csv?s=" + stock.getSymbol() + "&f=snc1l1p2&e=.c";
-		System.out.println(yahoo_quote);
 		String pchange = null;
 		String symbol = " ";
+		String companyName = " ";
 		double price = 0;
 		double change = 0;
 		try {
@@ -329,16 +327,15 @@ public class UserService {
 			URLConnection urlconn = url.openConnection();
 			BufferedReader in = new BufferedReader(new InputStreamReader(urlconn.getInputStream()));
 			String content = in.readLine();
-			System.out.println(content);
 			content = content.replace((char)34, (char)32);//' ' replace '"'
 			String[] token_info = content.split(",");
 			if (token_info.length <4) return null;
 			if(!token_info[token_info.length-4].trim().equals("N/A")){
-				symbol = token_info[token_info.length-4].trim();
 				pchange = token_info[token_info.length-1].trim();
 				price = Double.parseDouble(token_info[token_info.length-2].trim());
 				change = Double.parseDouble(token_info[token_info.length-3].trim());
-				System.out.println("sysbol:"+symbol+"\nprice:"+price+"\nchange"+change+"pchange:"+pchange);
+				symbol = token_info[token_info.length-5].trim();
+				companyName = token_info[token_info.length-4].trim();
 			}
 		}catch (Exception e) {
 			e.printStackTrace();
@@ -349,6 +346,7 @@ public class UserService {
 		si.setPchange(pchange);
 		si.setPrice(price);
 		si.setChange(change);
+		si.setCompanyName(companyName);
 		return si;	
 	}
 	
