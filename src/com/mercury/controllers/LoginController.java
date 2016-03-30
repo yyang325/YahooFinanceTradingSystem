@@ -3,10 +3,13 @@ package com.mercury.controllers;
 import java.security.Principal;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.authentication.RememberMeAuthenticationToken;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -199,6 +202,18 @@ public class LoginController {
 		return "redirect:/error";
 	}
 	
+	/**
+	 * 
+	 * @return
+	 */
+	@RequestMapping(value="forgotpassword", method = RequestMethod.GET)
+	public ModelAndView forgotPassword() {
+		System.out.println("in forgot Password");
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("forgotpassword");
+		return mav;
+	}
+	
 	////////////////////////////////////////////////////////////////////////////////////////////////////
 	/*
 	* controller for the forgot password and recover account.
@@ -207,18 +222,101 @@ public class LoginController {
 	* 2. SPA: Please check your email to change password 
 	*/
 	
-//	@RequestMapping(value = "/recoveraccountemail*", method = RequestMethod.GET)
-//	public ModelAndView recoverSendEmail2(HttpServletRequest request) {
-//		String email = request.getParameter("email");
-//		System.out.println(email);
-//		mfp.sendForgotPasswordMail(email);
-//		ModelAndView mav = new ModelAndView();
-//		mav.setViewName("recoveraccountemail");
-//		return mav;
-//	}
-
+	/**
+	 * send a reset password email to the email address entered
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(value = "/recoveraccountemail*", method = RequestMethod.GET)
+	public ModelAndView recoverSendEmail(HttpServletRequest request) {
+		System.out.println("in recover email");
+		String email = request.getParameter("email");
+		System.out.println(email);
+		mu.sendForgotPasswordMail(email);
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("recoveraccountemail");
+		return mav;
+	}
 
 	
+	/**
+	 * capture the link in the reset password email and go the changepassword page
+	 * @param request
+	 * @return
+	 * @throws Exception
+	 */
+	 @RequestMapping(value="/changepassword*", method=RequestMethod.GET)
+	 public ModelAndView changePassword(HttpServletRequest request) throws Exception {
+		 String email = request.getParameter("email");
+		 System.out.println(email);
+		 
+		 // String newPassword = request.getParameter("newpasswordconfirm");
+		 User user = us.findUserByEmail(email);
+		 //UserInfo userInfo = mfp.updateUserPassword(user, newPassword);
+		 ModelAndView mav = new ModelAndView();
+		 mav.setViewName("changepassword");
+		 //mav.addObject("userInfo", userInfo);
+		 mav.addObject("username", user.getUsername());
+		 mav.addObject("email", user.getEmail());
+		 return mav;
+	 }
 	
+	
+	@RequestMapping(value="/change2*", method=RequestMethod.POST)
+	public ModelAndView change2(String userName, String password) throws Exception {
+		
+		System.out.println("hello+++"+userName);
+		System.out.println("Password++++"+password);
+		User user = us.findUserByUserName(userName);
+		us.updatePassword(user, password);
+		//UserInfo userInfo = mfp.updateUserPassword(user, password);
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("changepwsuccess");
+		mav.addObject("userName",userName);
+		return mav;
+	}
+	
+	
+	/********************************************************************************************************/
+	/**  http://websystique.com/spring-security/spring-security-4-remember-me-example-with-hibernate/    ****/
+	/**
+	 * Check if user is login by remember me cookie, refer
+	 * org.springframework.security.authentication.
+	 * AuthenticationTrustResolverImpl
+	 */
+	@SuppressWarnings("unused")
+	private boolean isRememberMeAuthenticated() {
+
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		if (authentication == null) {
+			return false;
+		}
+
+		return RememberMeAuthenticationToken.class.isAssignableFrom(authentication.getClass());
+	}
+
+	/**
+	 * save targetURL in session
+	 */
+	@SuppressWarnings("unused")
+	private void setRememberMeTargetUrlToSession(HttpServletRequest request) {
+		HttpSession session = request.getSession(false);
+		if (session != null) {
+			session.setAttribute("targetUrl", "/admin/update");
+		}
+	}
+
+	/**
+	 * get targetURL from session
+	 */
+	@SuppressWarnings("unused")
+	private String getRememberMeTargetUrlFromSession(HttpServletRequest request) {
+		String targetUrl = "";
+		HttpSession session = request.getSession(false);
+		if (session != null) {
+			targetUrl = session.getAttribute("targetUrl") == null ? "" : session.getAttribute("targetUrl").toString();
+		}
+		return targetUrl;
+	}
 
 }

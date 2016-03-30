@@ -1,5 +1,6 @@
 package com.mercury.beans;
 
+import java.io.Serializable;
 import java.security.MessageDigest;
 import java.util.HashSet;
 import java.util.Set;
@@ -16,6 +17,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
 import org.hibernate.annotations.GenericGenerator;
 
 /**
@@ -28,7 +30,12 @@ import org.hibernate.annotations.GenericGenerator;
 
 @Entity
 @Table(name="yfts_user")
-public class User {
+public class User implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8128164586418919785L;
+
 	@GenericGenerator(name="generator", strategy="increment")
 	@Id
 	@GeneratedValue(generator="generator")
@@ -62,6 +69,7 @@ public class User {
 	@Column(name="enable")
 	private int enable;
 	
+	@JsonIgnore
 	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinTable(
 		name = "yfts_watchlist", 
@@ -70,6 +78,7 @@ public class User {
 	)
 	private Set<Stock> watchedStocks = new HashSet<>();
 	
+	@JsonIgnore
 	@OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
 	private Set<UserStockTransaction> trans = new HashSet<>();
 	
