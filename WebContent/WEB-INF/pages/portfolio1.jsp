@@ -400,20 +400,24 @@ need attention here -->
 						</section>
 					</div>
 
-					<div class="col-lg-4">
+					<div class="col-lg-4" ng-controller="ModalCtrl">
 						<section class="panel panel-info">
 							<header class="panel-heading" align="center">
 								<p style="font-size: 20px">Balance:</p>
+								
 							</header>
 							<div class="panel-body">
-								<div ng-controller="ModalCtrl" style="text-align: center">
+								<div class="row">
+									<div  style="text-align: center" class="col-lg-6">
 									<span><c:out value="${cash}" /></span>
 									<div id="addSuccess"
 										ng-show="addSuccess&&!sellSuccess&&!sellSuccess">Add
 										Credit Success!</div>
-									<br>
-									<button id="addBalance" class="btn btn-primary btn-sm"
-										ng-click="openAdd()">Add Balance</button>
+									</div>
+									<div class="col-lg-6">
+										<button id="addBalance" class="btn btn-primary btn-sm"
+											ng-click="openAdd()">Add Balance</button>
+									</div>
 								</div>
 							</div>
 						</section>
