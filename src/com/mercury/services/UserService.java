@@ -60,8 +60,8 @@ public class UserService {
 	 */
 	public void saveNewUser(User user) throws Exception{
 		user.setAuthority("USER");
-		user.setBalance(0);
-		user.setCash(0);
+		user.setBalance(0.0);
+		user.setCash(100000.0);
 		System.out.println(user.getPassword());
 		user.setPassword(user.MD5Hashing(user.getPassword()));
 		//user account is not activated yet

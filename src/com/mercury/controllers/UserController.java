@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.mercury.beans.Stock;
+import com.mercury.beans.User;
 import com.mercury.daos.UserStockTransactionDao;
 import com.mercury.dtos.OwnStock;
 import com.mercury.dtos.StockInfo;
@@ -35,15 +36,32 @@ public class UserController {
 	@Autowired
 	UserService us;
 	@Autowired
-	private TransService ts;
+	TransService ts;
 //	@Autowired
 //	StockService ss;
+	
+	
+	@RequestMapping(value="/validUser", method = RequestMethod.GET)
+	@ResponseBody
+	public User getValidUser(Principal principal){
+		//System.out.println("In valid user");
+		String userName = null;		
+		if (principal == null || principal.getName() == null){
+			return null;
+		}
+		userName = principal.getName();
+		return us.findUserByUserName(userName);
+	}
 	
 	@RequestMapping(value="/portfolio", method = RequestMethod.GET)
 	public ModelAndView portfolio(Principal principal) {
 		String username = principal.getName();
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("portfolio");
+		mav.setViewName("portfolio1");
+		mav.addObject("username", username);
+		System.out.println(username);
+		System.out.println(us.getCash(username));
+		mav.addObject("balance", us.getBalance(username));
 		mav.addObject("cash", us.getCash(username));
 		return mav;
 	}
@@ -135,8 +153,6 @@ public class UserController {
 		us.deleteWatchList(userName, symbol);
 		return us.getWatchListInfo(userName);
 	}
-	
-	
 	
 	
 	
