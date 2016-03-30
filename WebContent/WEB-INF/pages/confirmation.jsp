@@ -1,31 +1,40 @@
-<!DOCTYPE html>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+	pageEncoding="ISO-8859-1"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Confirmation</title>
-
-<!-- for header and footer -->
- <link href="css/landing-page.css" rel="stylesheet"> 
-<link href="css/stylesheet.css" rel="stylesheet">
-<script src="js/header.js"></script>
-
-<!-- Bootstrap -->
-<link href="bower_component/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-<link href="bower_component/bootstrap/dist/css/bootstrap-theme.min.css" rel="stylesheet">
-
-<!-- font-awesome -->
-<link rel="stylesheet" type="text/css" href="bower_component/fontawesome/css/font-awesome.min.css">
-
-<!-- owl Slider -->
-<!-- need attention here -->
-<link href="bower_component/owl/owl-carousel/owl.carousel.css" rel="stylesheet" media="screen">
-
+<title>Confirmation page</title>
 
 </head>
 <body>
-	<c:import url="page_component/header.jsp"/>	
-	
+	<nav id="tf-menu" class="navbar navbar-default navbar-fixed-top">
+		<div class="container">
+			<!-- Brand and toggle get grouped for better mobile display -->
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed"
+					data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+					<span class="sr-only">Toggle navigation</span> <span
+						class="icon-bar"></span> <span class="icon-bar"></span> <span
+						class="icon-bar"></span>
+				</button>
+
+				<a class="navbar-brand" href="#tf-home">YFTS</a>
+			</div>
+
+			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+
+				<sec:authorize>
+					<ul class="nav navbar-nav navbar-right col-md-2">
+						<li style="float: right;"><a href="login.html"> <span
+								class="glyphicon glyphicon-log-in"></span> Sign in
+						</a></li>
+					</ul>
+				</sec:authorize>
+			</div>
+		</div>
+	</nav>
 	<div class="confirmation">
 		<div class="container">
 			<div class="row">
@@ -38,11 +47,8 @@
 					</div>
 				</div>
 			</div>
-
 		</div>
 	</div>
 
-	<c:import url="page_component/footer.jsp"></c:import>
-	
 </body>
 </html>

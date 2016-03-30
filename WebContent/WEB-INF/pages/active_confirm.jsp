@@ -1,19 +1,20 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Confirmation page</title>
-<!-- require, jquery, angular -->
-	<script type="text/javascript" src="bower_component/jquery/dist/jquery.min.js"></script>
-	<script type="text/javascript" src="bower_component/angular/angular.min.js"></script>
-	<script type="text/javascript" src="bower_component/angular-messages/angular-messages.min.js"></script>
-	<script type="text/javascript" src="bower_component/requirejs/require.js"></script>
-
-<!-- Bootstrap -->
-<link href="bower_component/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-<link href="bower_component/bootstrap/dist/css/bootstrap-theme.min.css" rel="stylesheet">
-<script type="text/javascript" src="bower_component/bootstrap/dist/js/bootstrap.min.js"></script>
-
+<!-- for header and footer -->
+<link rel="stylesheet" href="bower_component/css/bootstrap.min.css">
+<link href="bower_component/css/extra/bootstrap-theme.css" rel="stylesheet">
+<link href="bower_component/css/extra/elegant-icons-style.css" rel="stylesheet" />
+<link href="bower_component/css/extra/font-awesome.min.css" rel="stylesheet" />    
+<link href="bower_component/css/extra/style.css" rel="stylesheet">
+<script src="bower_component/js/angular.min.js"></script>
+<script src="bower_component/js/jquery.min.js"></script>
+<script src="bower_component/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="bower_component/css/bootstrap.min.css">
 <style type="text/css">
 #time, p, a {
 	text-align:center;
@@ -23,7 +24,6 @@
 }
 
 </style>
-
 <script type="text/javascript">
 	angular.module("mainApp",[]).controller("mainCtrl",function($scope,$timeout){
 		$scope.submit=function(){
@@ -41,8 +41,7 @@
 	    }
 	    var mytimeout = $timeout($scope.onTimeout,1000);
 	});
-</script>
-
+	</script>
 </head>
 <body style="background-color:grey;"ng-app="mainApp" ng-controller="mainCtrl">
 	<section id="main-content" style="margin-top:100px;">

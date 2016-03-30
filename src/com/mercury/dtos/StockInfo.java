@@ -5,6 +5,7 @@ public class StockInfo {
 	private double price;
 	private double change;
 	private String stockSymbol;
+	private String companyName;
 	private String pchange;
 	public int getQuantity() {
 		return quantity;
@@ -36,6 +37,11 @@ public class StockInfo {
 	public void setPchange(String pchange) {
 		this.pchange = pchange;
 	}
-	
+	public String getCompanyName() {
+		return companyName;
+	}
+	public void setCompanyName(String companyName) {
+		this.companyName = companyName;
+	}
 	
 }
