@@ -12,26 +12,26 @@
     <title>Home Page</title>
 
     <!-- Bootstrap core CSS -->
-    <link href="bower_component/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="bower_component/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-    <link href="bower_component/assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
+<!--     <lisnk href="bower_component/assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet"> -->
 
     <!-- Custom styles for this template -->
     <link href="bower_component/sticky-footer-navbar.css" rel="stylesheet">
 
     <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
     <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
-    <script src="bower_component/assets/js/ie-emulation-modes-warning.js"></script>
+<!--     <script src="bower_component/assets/js/ie-emulation-modes-warning.js"></script> -->
     
     <!-- Bootstrap core JavaScript
     ================================================== -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
-    <script>window.jQuery || document.write('<script src="bower_component/assets/js/vendor/jquery.min.js"><\/script>')</script>
-    <script src="bower_component/dist/js/bootstrap.min.js"></script>
+    <script src="bower_component/jquery/dist/jquery.min.js"></script>
+<!--     <script>window.jQuery || document.write('<script src="bower_component/assets/js/vendor/jquery.min.js"><\/script>')</script> -->
+    <script src="bower_component/bootstrap/dist/js/bootstrap.min.js"></script>
     <script src="bower_component/angular/angular.min.js"></script>
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-    <script src="bower_component/assets/js/ie10-viewport-bug-workaround.js"></script>
+<!--     <script src="bower_component/assets/js/ie10-viewport-bug-workaround.js"></script> -->
     
     <!-- Customize Javascript -->
     <script>
