@@ -35,6 +35,7 @@
 <script type="text/javascript" src="bower_component/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
 <!-- <script src="js/ui-bootstrap-tpls-0.13.4.min.js"></script> -->
 
+<link href="bower_component/sticky-footer-navbar.css" rel="stylesheet">
 
 <!-- Chart.js -->
 <!-- <script src="bower_component/Chart.js/Chart.js"></script>
@@ -81,11 +82,11 @@ need attention here -->
  <link href='https://fonts.googleapis.com/css?family=Sonsie+One' rel='stylesheet' type='text/css'>
  <link href='https://fonts.googleapis.com/css?family=Indie+Flower|Montserrat' rel='stylesheet' type='text/css'>
 
-
+<!-- 
 <link href="css/extra/bootstrap-theme.css" rel="stylesheet">
 <link href="css/extra/elegant-icons-style.css" rel="stylesheet" />
 <link href="css/extra/font-awesome.min.css" rel="stylesheet" />    
-<link href="css/extra/style.css" rel="stylesheet"> 
+<link href="css/extra/style.css" rel="stylesheet">  -->
 
 <!--  -->
 <!-- <script src="js/angular.min.js"></script>
@@ -182,6 +183,7 @@ need attention here -->
 		var _user = null;
 		var _stockInfo = null;
 		var _message = null;
+		var _vals = null;
 		return {
 			getStock : function() {
 				return _stock;
@@ -206,6 +208,12 @@ need attention here -->
 			},
 			setMessage : function(message){
 				_message = message;
+			},
+			getVals : function(){
+				return _vals;
+			},
+			setVals : function(vals){
+				_vals = vals;
 			}
 		};
 		$scope.message = shared.getMessage();
@@ -215,7 +223,7 @@ need attention here -->
 	app.controller("mainController", ["$scope", "$http", "$interval", "$rootScope","shared", 
 	                                  function($scope, $http, $interval, $rootScope, shared) {
 		$scope.user;
-		console.log("in main controller");
+		//console.log("in main controller");
 		$http.get("validUser")
 		.success(function(data) {
 			console.log(data);
@@ -245,7 +253,7 @@ need attention here -->
 	
 	
 	 app.controller("ModalCtrl", ["$scope", "$modal", "$log", "shared", function ($scope, $modal, $log, shared) {
-		console.log("in open Add");
+		//console.log("in open Add");
 		$scope.item;
 		$scope.message = shared.getMessage();
 		$scope.animationsEnabled = true;
@@ -315,12 +323,14 @@ need attention here -->
 	app.controller("BarCtrl", ["$scope", "shared", "$interval", 
 	                           function($scope, shared, $interval) {
 		$scope.series = ['Buy',''];
+		
 		$interval(function(){
-			console.log("In BarCtrl");
+			//console.log("In BarCtrl");
 			$scope.labels=[];
 			$scope.data=[[]];
 			$scope.stockInfo = shared.getStockInfo();
 			if($scope.stockInfo!=null){
+				
 				for(var i = 0;i<$scope.stockInfo.length;i++){
 					var val = $scope.stockInfo[i].quantity;
 					//console.log($scope.stockInfo[i].quantity);
@@ -330,25 +340,30 @@ need attention here -->
 				} 
 			}
 		}, 2000);
+			
 	}]);
 	
 	app.controller("PieCtrl", ["$scope", "shared", "$interval",
 	                           function ($scope,shared,$interval) {
 		$scope.user;
 		
+		
 		$interval(function() {
 			$scope.user = shared.getUser();
-			console.log($scope.user);
+			//console.log($scope.user);
 			$scope.labels=[];
 			
 			$scope.data=[];
-			$scope.data.push($scope.user.cash);
+			
 			$scope.stockInfo = shared.getStockInfo();
-			if($scope.stockInfo!=null){
+			if($scope.stockInfo != null && $scope.stockInfo.length != 0){
+				//console.log("stockinfo is not null");
 				var vals = $scope.user.cash;
 				for(var i = 0;i<$scope.stockInfo.length;i++){
 					vals = $scope.stockInfo[i].quantity*$scope.stockInfo[i].avgCost + vals;
+					console.log($scope.stockInfo[i].stockSymbol);
 				}
+				$scope.data.push($scope.user.cash);
 				$scope.labels.push("Cash" + "("+Math.round($scope.user.cash/vals*100*10)/10+"%)");
 				for(var i = 0;i<$scope.stockInfo.length;i++){
 					var val = $scope.stockInfo[i].quantity*$scope.stockInfo[i].avgCost;
@@ -357,6 +372,8 @@ need attention here -->
 				} 
 			}
 		}, 2000);
+			
+		
 	}]);
 	
 </script>
@@ -364,148 +381,152 @@ need attention here -->
 </head>
 <body ng-app="mainApp">
 	<%-- <c:import url="page_component/header.jsp"/> --%>
-	
-	<section id="main-content">
-		<section class="wrapper" ng-controller="mainController">
-			<!-- page starts -->
-			<div class="row">
-				<div class="col-lg-4">
-					<section class="panel panel-info">
-						<header class="panel-heading" align="center">
-                              <p style="font-size:20px">Welcome: </p>
-                        </header>
-                        <div class="panel-body">
-                        	<div style="text-align:center">
-                        		<span><c:out value="${username}"/></span>
-                        	</div>
-                        </div>
-					</section>
-				</div>
-				
-				<div class="col-lg-4">
-					<section class="panel panel-info">
-						<header class="panel-heading" align="center">
-                              <p style="font-size:20px">Balance: </p>
-                        </header>
-                        <div class="panel-body" >
-                        	<div ng-controller="ModalCtrl"  style="text-align:center">
-                        		<span><c:out value="${cash}"/></span>
-                        		<div id="addSuccess" ng-show="addSuccess&&!sellSuccess&&!sellSuccess">Add Credit Success!</div>	
-								<br>
-								<button id="addBalance" class="btn btn-primary btn-sm"
+	<c:import url="page_component/header.jsp"/>
+	<div class="container">
+		<section id="main-content">
+			<section class="wrapper" ng-controller="mainController">
+				<!-- page starts -->
+				<div class="row">
+					<div class="col-lg-4">
+						<section class="panel panel-info">
+							<header class="panel-heading" align="center">
+								<p style="font-size: 20px">Welcome:</p>
+							</header>
+							<div class="panel-body">
+								<div style="text-align: center">
+									<span><c:out value="${username}" /></span>
+								</div>
+							</div>
+						</section>
+					</div>
+
+					<div class="col-lg-4">
+						<section class="panel panel-info">
+							<header class="panel-heading" align="center">
+								<p style="font-size: 20px">Balance:</p>
+							</header>
+							<div class="panel-body">
+								<div ng-controller="ModalCtrl" style="text-align: center">
+									<span><c:out value="${cash}" /></span>
+									<div id="addSuccess"
+										ng-show="addSuccess&&!sellSuccess&&!sellSuccess">Add
+										Credit Success!</div>
+									<br>
+									<button id="addBalance" class="btn btn-primary btn-sm"
 										ng-click="openAdd()">Add Balance</button>
-                        	</div>
-                        </div>
-					</section>
+								</div>
+							</div>
+						</section>
+					</div>
+
+					<div class="col-lg-4">
+						<section class="panel panel-info">
+							<header class="panel-heading" align="center">
+								<p style="font-size: 20px">Account Asset:</p>
+							</header>
+							<div class="panel-body">
+								<div style="text-align: center">
+									<span><c:out value="${balance}" /></span>
+								</div>
+							</div>
+						</section>
+					</div>
+
 				</div>
-				
-				<div class="col-lg-4">
-					<section class="panel panel-info">
-						<header class="panel-heading" align="center">
-                              <p style="font-size:20px">Account Asset: </p>
-                        </header>
-                        <div class="panel-body">
-                        	<div style="text-align:center">
-                        		<span><c:out value="${balance}"/></span>
-                        	</div>
-                        </div>
-					</section>
-				</div>
-					
-			</div>
-			
-			<div class="col-lg-12" >
-				<section class="panel panel-info">
-					<header class="panel-heading" align="center">
-                              <p style="font-size:20px">Open Positions</p>
-                    </header>
-                    <div class="panel-body">
-                    	<form action="portfolio" id="listUserStocks" method="post">
-                    		<table class="table table-striped table-bordered table-advance table-hover">
-                    			<tbody>
-                    				<tr class="success" >
-		                                 <!-- <th><i class="icon_star"></i> Stock Id</th> -->
-		                                 <th>Action</th>
-		                                 <th>Symbol</th>
-		                                <!--  <th>Stock Name</th> -->
-		                                 <th>Quantity</th>
-		                                 <th>Average Cost</th>
-		                                 <!-- <th>Change</th>
-		                                 <th>Change%</th> -->
-                                 
-                              		</tr>
-                              		<tr ng-repeat="stock in ownStocks">
-										<sec:authorize access="hasAnyRole('ADMIN', 'USER')">
-											<td>
-												<div class="btn-group">
-													<!--   <a class="btn btn-primary" href="#" ng-click="pass(stock); openBuy()">Buy</a> -->
-													<a class="btn btn-success" href="#"
-														ng-click="pass(stock); openSell()">Sell</a>
-												</div>
-											</td>
-										</sec:authorize>
-										<td>{{stock.stockSymbol}}</td>
-										<td>{{stock.quantity}}</td>
-										<td>{{stock.avgCost}}</td>
-										<%-- <td ng-if="stock.change>0" highlighter="stock.price">&#36{{stock.price| number:2}}</td>
-										<td ng-if="stock.change<0" highlighter2="stock.price" >  &#36{{stock.price| number:2}}</td>
-										<td  ng-if="stock.change==0" style="color:black">&#36{{stock.price| number:2}}</td> --%>
-									</tr>
-                              		
-                              		
-                    			</tbody>
-                    		</table>
-                    	
-                    	</form>
-                    
-                    </div>
-				</section>
-			
-			</div>
-			
-			<!-- chart section -->
-			<div class="row">
+
 				<div class="col-lg-12">
 					<section class="panel panel-info">
-						<header class="panel-heading" style="font-size:20px;" align="center">
-                        	Asset Analysis
-                      	</header>
-                      	<div class="panel-body">
-                      		<div class="tab-pane" id="chartjs">
-                      			<div class="row">
-                      				<div class="col-lg-6">
-                	      					<header class="panel-heading" align="center">
-                                      			Stock Quantity Bar Chart
-                                  			</header>
-                                  			<div class="panel-body text-center" ng-controller="BarCtrl">
-												<canvas id="bar" class="chart chart-bar"
-												 		chart-data="data" chart-labels="labels" chart-series="series">
-												</canvas>
-                                  			</div>
-                
-                      				</div>
-                      				 <div class="col-lg-6">
-                      					<section class="panel">
-                                  			<header class="panel-heading" align="center">
-                                      			Stock Value Doughnut Chart
-                                  			</header>
-                                  			<div class="panel-body text-center" ng-controller="PieCtrl">
-												<canvas id="doughnut" class="chart chart-doughnut" chart-data="data" chart-labels="labels" chart-legend="true">
-												</canvas> 
-                                  			</div>
-                              			</section>
-                      				</div>
-                      			</div>
-                      		</div>
-                      	</div>
+						<header class="panel-heading" align="center">
+							<p style="font-size: 20px">Open Positions</p>
+						</header>
+						<div class="panel-body">
+							<form action="portfolio" id="listUserStocks" method="post">
+								<table
+									class="table table-striped table-bordered table-advance table-hover">
+									<tbody>
+										<tr class="success">
+											<!-- <th><i class="icon_star"></i> Stock Id</th> -->
+											
+											<th>Symbol</th>
+											<!--  <th>Stock Name</th> -->
+											<th>Quantity</th>
+											<th>Average Cost</th>
+											<th>Action</th>
+											<!-- <th>Change</th>
+		                                 <th>Change%</th> -->
+
+										</tr>
+										<tr ng-repeat="stock in ownStocks">
+											
+											<td>{{stock.stockSymbol}}</td>
+											<td>{{stock.quantity}}</td>
+											<td>{{stock.avgCost}}</td>
+											<sec:authorize access="hasAnyRole('ADMIN', 'USER')">
+												<td>
+													<div class="btn-group">
+														<!--   <a class="btn btn-primary" href="#" ng-click="pass(stock); openBuy()">Buy</a> -->
+														<a class="btn btn-success" href="#"
+															ng-click="pass(stock); openSell()">Sell</a>
+													</div>
+												</td>
+											</sec:authorize>
+											<%-- <td ng-if="stock.change>0" highlighter="stock.price">&#36{{stock.price| number:2}}</td>
+										<td ng-if="stock.change<0" highlighter2="stock.price" >  &#36{{stock.price| number:2}}</td>
+										<td  ng-if="stock.change==0" style="color:black">&#36{{stock.price| number:2}}</td> --%>
+										</tr>
+
+
+									</tbody>
+								</table>
+
+							</form>
+
+						</div>
 					</section>
+
 				</div>
-			</div>
-			
+
+				<!-- chart section -->
+				<div class="row">
+					<div class="col-lg-12">
+						<section class="panel panel-info">
+							<header class="panel-heading" style="font-size: 20px;"
+								align="center"> Asset Analysis </header>
+							<div class="panel-body">
+								<div class="tab-pane" id="chartjs">
+									<div class="row">
+										<div class="col-lg-6">
+											<header class="panel-heading" align="center"> Stock
+												Quantity Chart </header>
+											<div class="panel-body text-center" ng-controller="BarCtrl">
+												<canvas id="bar" class="chart chart-bar" chart-data="data"
+													chart-labels="labels" chart-series="series">
+												</canvas>
+											</div>
+
+										</div>
+										<div class="col-lg-6">
+											<section class="panel">
+												<header class="panel-heading" align="center"> Asset Doughnut Chart </header>
+												<div class="panel-body text-center" ng-controller="PieCtrl">
+													<canvas id="doughnut" class="chart chart-doughnut"
+														chart-data="data" chart-labels="labels"
+														chart-legend="true">
+												</canvas>
+												</div>
+											</section>
+										</div>
+									</div>
+								</div>
+							</div>
+						</section>
+					</div>
+				</div>
+
+			</section>
 		</section>
-	</section> 
-	
-	<%-- <c:import url="page_component/header.jsp"/>	
+
+		<%-- <c:import url="page_component/header.jsp"/>	
 	
 	<section id="main-content">
           <section class="wrapper" ng-controller="mainController">
@@ -766,8 +787,8 @@ need attention here -->
 	</section>
 	 --%>
 
-<div>
-	<script type="text/ng-template" id="addContent.html">
+		<div>
+			<script type="text/ng-template" id="addContent.html">
         <div class="modal-header">
             <h3 class="modal-title" style="font-family:'Sonsie One', cursive;">Add Balance</h3>
         </div>
@@ -789,7 +810,10 @@ need attention here -->
         <button type="button" class="btn btn-danger" ng-click="cancel()">Close</button>
         </div>
     </script>
-</div>
+		</div>
+
+	</div>
+	
 	
 	<!-- <!-- javascripts
     <script src="js/jquery.js"></script>
@@ -805,6 +829,6 @@ need attention here -->
     custome script for all page
     <script src="js/scripts.js"></script> --> 
 	
-	
+	<c:import url="page_component/footer.jsp"/>
 </body>
 </html>

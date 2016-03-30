@@ -21,7 +21,7 @@ import com.mercury.dtos.OwnStock;
 import com.mercury.dtos.StockInfo;
 import com.mercury.dtos.TransactionInfo;
 import com.mercury.services.TransService;
-//import com.mercury.services.StockService;
+import com.mercury.services.StockService;
 import com.mercury.services.UserService;
 
 /**
@@ -37,8 +37,8 @@ public class UserController {
 	UserService us;
 	@Autowired
 	TransService ts;
-//	@Autowired
-//	StockService ss;
+	@Autowired
+	StockService ss;
 	
 	
 	@RequestMapping(value="/validUser", method = RequestMethod.GET)
@@ -176,5 +176,21 @@ public class UserController {
 	}
 	
 	
+	
+	/**
+	 * REST API: get all stock info that administration added
+	 * @return
+	 * @author Yi
+	 */
+	@RequestMapping(value="/getAllStocks", method=RequestMethod.GET)
+	@ResponseBody
+	public List<StockInfo> getAllStock(){
+		List<Stock> list = ss.getAllStock();
+		List<StockInfo> res = new ArrayList<>();
+		for(Stock s: list){
+			res.add(us.getStockInfo(s));
+		}
+		return res;
+	}
 	
 }
