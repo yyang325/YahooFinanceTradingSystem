@@ -24,13 +24,15 @@
     <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
     <script src="bower_component/assets/js/ie-emulation-modes-warning.js"></script>
     
+    
+    
   </head>
 
-  <body>
+  <body ng-app="mainApp">
   
   	<c:import url="page_component/header.jsp"/>
 	    <!-- Begin page content -->
-	    <div class="container" id="watchlist_section">
+	    <div class="container" id="watchlist_section" ng-controller="watchlistCtrl">
 	      <div class="row-fluid">
 	        <div class="col-md-12">
 	          <div class="page-header">
@@ -74,11 +76,11 @@
 	                  <th>Price</th>
 	                  <th></th>
 	                </tr>
-	                <tr>
-	                  <td></td>
-	                  <td></td>
-	                  <td></td>
-	                  <td></td>
+	                <tr ng-repeat="stock in stocks">
+	                  <td>{{ stock.symbol }}</td>
+	                  <td>Company Name</td>
+	                  <td>{{ stock.change }}</td>
+	                  <td>{{ stock.price }}</td>
 	                  <td></td>
 	                </tr>
 	              </table>
@@ -96,7 +98,27 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
     <script>window.jQuery || document.write('<script src="bower_component/assets/js/vendor/jquery.min.js"><\/script>')</script>
     <script src="bower_component/dist/js/bootstrap.min.js"></script>
+    <script src="bower_component/angular/angular.min.js"></script>
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src="bower_component/assets/js/ie10-viewport-bug-workaround.js"></script>
+    
+    <!-- Customize Javascript -->
+    <script>
+    	var app = angular.module("mainApp", []);
+    	app.controller("watchlistCtrl", function($scope, $interval, $http){
+    		$scope.stocks = [];
+    		$interval(function(){
+    			$http({
+    				method: 'GET',
+    				url: 'getWatchList'
+    			}).then(function(response){
+    				$scope.stocks = response.data;
+    				console.log("response:", response);
+    				console.log($scope.stocks);
+    			});
+    		}, 3000);
+    	});
+    </script>
+    
   </body>
 </html>
