@@ -30,59 +30,152 @@
 <!--     <script>window.jQuery || document.write('<script src="bower_component/assets/js/vendor/jquery.min.js"><\/script>')</script> -->
     <script src="bower_component/bootstrap/dist/js/bootstrap.min.js"></script>
     <script src="bower_component/angular/angular.min.js"></script>
+    <script src = "http://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular-route.min.js"></script>
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
 <!--     <script src="bower_component/assets/js/ie10-viewport-bug-workaround.js"></script> -->
     
     <!-- Customize Javascript -->
-    <script>
-    	var app = angular.module("mainApp", []);
-    	app.controller("watchlistCtrl", function($scope, $interval, $http){
-    		$scope.stocks = [];
-    		$scope.stockPool = [];
-    		
-    		var updateWatchlist = function(){
-    			console.log("updating watch list");
-    			$http({
-    				method: 'GET',
-    				url: 'getWatchList'
-    			}).then(function(response){
-    				$scope.stocks = response.data;
-    				console.log("response:", response);
-    				console.log($scope.stocks);
-    			});
-    		};
-    		
-    		var updateAllStock = function(){
-    			console.log("checking all stock");
-    			$http({
-    				method: 'GET',
-    				url: 'getAllStocks'
-    			}).then(function(response){
-    				$scope.stockPool = response.data;
-    				console.log("response:", response);
-    				console.log($scope.stockPool);
-    			});
-    		};
-    		
-    		/* updating stock detail data in user watch list */
-    		updateWatchlist();
-    		$interval(updateWatchlist, 1000);
-    		
-    		/* updating all stock infomation that exist in db */
-    		updateAllStock();
-    		$interval(updateAllStock, 60000);
-    	});
-    </script>
+    
     
   </head>
 
   <body ng-app="mainApp">
   
   	<c:import url="page_component/header.jsp"/>
-    <c:import url="watchlist.jsp"/>
-    <c:import url="page_component/footer.jsp"/>
-
-
     
+
+    <div ng-view class="container"></div>
+         
+    <script type = "text/ng-template" id = "watchlist.html">
+        <div id="watchlist_section" ng-controller="watchlistCtrl">
+            <div class="row-fluid">
+                <div class="col-md-12">
+                    <div class="page-header">
+                        <h2>Watch List</h2>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="col-md-4">
+                            <div class="row-fluid">
+                                <div class="col-md-12">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" placeholder="Stock Symbol" ng-model="searchText">
+                                        <span class="input-group-btn">
+                                            <button class="btn btn-default" type="button">Search</button>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row-fluid">
+                                <div class="col-md-12">
+                                    <table class="table">
+                                        <tr ng-repeat="searchStock in stockPool | filter:searchText">
+                                            <td>{{ searchStock.companyName }}</td>
+                                            <td>{{ searchStock.stockSymbol }}</td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-8">
+                            <table class="table table-bordered table-striped">
+                                <tr>
+                                    <th class="col-md-3">Stock Symbol</th>
+                                    <th class="col-md-3">Company Name</th>
+                                    <th class="col-md-2">Change</th>
+                                    <th class="col-md-2">Price</th>
+                                    <th class="col-md-2">Operation</th>
+                                </tr>
+                                <tr ng-repeat="stock in stocks | orderBy: 'stockSymbol'">
+                                    <td>{{ stock.stockSymbol }}</td>
+                                    <td>{{ stock.companyName }}</td>
+                                    <td>{{ stock.change }}</td>
+                                    <td>{{ stock.price }}</td>
+                                    <td>
+                                        <button type="button" class="btn btn-primary-outline btn-sm">Buy</button>
+                                        <button type="button" class="btn btn-primary-outline btn-sm">Sell</button>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </script>
+
+    <script type = "text/ng-template" id = "viewStudents.html">
+        <h2> View Students </h2>
+        {{message}}
+    </script>
+      
+    <script>
+        var mainApp = angular.module("mainApp", ['ngRoute']);
+        mainApp.config(['$routeProvider', function($routeProvider) {
+            $routeProvider.
+
+            when('/watchlist', {
+                templateUrl: 'watchlist.html',
+                controller: 'watchlistCtrl'
+            }).
+
+            when('/viewStudents', {
+                templateUrl: 'viewStudents.html',
+                controller: 'ViewStudentsController'
+            }).
+
+            otherwise({
+                redirectTo: '/'
+            });
+        }]);
+
+
+        mainApp.controller("watchlistCtrl", function($scope, $interval, $http){
+            $scope.stocks = [];
+            $scope.stockPool = [];
+
+            var updateWatchlist = function(){
+                console.log("updating watch list");
+                $http({
+                    method: 'GET',
+                    url: 'getWatchList'
+                }).then(function(response){
+                    $scope.stocks = response.data;
+                    console.log("response:", response);
+                    console.log($scope.stocks);
+                });
+            };
+
+            var updateAllStock = function(){
+                console.log("checking all stock");
+                $http({
+                    method: 'GET',
+                    url: 'getAllStocks'
+                }).then(function(response){
+                    $scope.stockPool = response.data;
+                    console.log("response:", response);
+                    console.log($scope.stockPool);
+                });
+            };
+
+            /* updating stock detail data in user watch list */
+            updateWatchlist();
+            $interval(updateWatchlist, 1000);
+
+            /* updating all stock infomation that exist in db */
+            updateAllStock();
+            $interval(updateAllStock, 60000);
+        });
+
+        mainApp.controller('ViewStudentsController', function($scope) {
+            $scope.message = "This page will be used to display all the students";
+        });
+
+    </script>
+
+      
+     
+    <c:import url="page_component/footer.jsp"/>
   </body>
 </html>
