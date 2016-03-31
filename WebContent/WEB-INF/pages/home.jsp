@@ -49,11 +49,6 @@
     <script type = "text/ng-template" id = "watchlist.html">
         <c:import url="watchlist.jsp"/>
     </script>
-
-    <script type = "text/ng-template" id = "viewStudents.html">
-        <h2> View Students </h2>
-        {{message}}
-    </script>
       
     <script>
         var mainApp = angular.module("mainApp", ['ngRoute']);
@@ -65,6 +60,16 @@
             when('/watchlist', {
                 templateUrl: 'watchlist.html',
                 controller: 'watchlistCtrl'
+            }).
+            
+            when('/portfolio', {
+            	templateUrl: 'portfolio.html',
+            	controller: 'portfolioCtrl'
+            }).
+            
+            when('/history', {
+            	templateUrl: 'history.html',
+            	controller: 'historyCtrl'
             }).
 
             otherwise({
