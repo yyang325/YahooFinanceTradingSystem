@@ -161,7 +161,7 @@
 
             /* updating stock detail data in user watch list */
             updateWatchlist();
-            $interval(updateWatchlist, 1000);
+            $interval(updateWatchlist, 3000);
 
             /* updating all stock infomation that exist in db */
             updateAllStock();
