@@ -30,59 +30,95 @@
 <!--     <script>window.jQuery || document.write('<script src="bower_component/assets/js/vendor/jquery.min.js"><\/script>')</script> -->
     <script src="bower_component/bootstrap/dist/js/bootstrap.min.js"></script>
     <script src="bower_component/angular/angular.min.js"></script>
+    <script src = "http://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular-route.min.js"></script>
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
 <!--     <script src="bower_component/assets/js/ie10-viewport-bug-workaround.js"></script> -->
     
     <!-- Customize Javascript -->
-    <script>
-    	var app = angular.module("mainApp", []);
-    	app.controller("watchlistCtrl", function($scope, $interval, $http){
-    		$scope.stocks = [];
-    		$scope.stockPool = [];
-    		
-    		var updateWatchlist = function(){
-    			console.log("updating watch list");
-    			$http({
-    				method: 'GET',
-    				url: 'getWatchList'
-    			}).then(function(response){
-    				$scope.stocks = response.data;
-    				console.log("response:", response);
-    				console.log($scope.stocks);
-    			});
-    		};
-    		
-    		var updateAllStock = function(){
-    			console.log("checking all stock");
-    			$http({
-    				method: 'GET',
-    				url: 'getAllStocks'
-    			}).then(function(response){
-    				$scope.stockPool = response.data;
-    				console.log("response:", response);
-    				console.log($scope.stockPool);
-    			});
-    		};
-    		
-    		/* updating stock detail data in user watch list */
-    		updateWatchlist();
-    		$interval(updateWatchlist, 1000);
-    		
-    		/* updating all stock infomation that exist in db */
-    		updateAllStock();
-    		$interval(updateAllStock, 60000);
-    	});
-    </script>
+    
     
   </head>
 
   <body ng-app="mainApp">
   
   	<c:import url="page_component/header.jsp"/>
-    <c:import url="watchlist.jsp"/>
-    <c:import url="page_component/footer.jsp"/>
-
-
     
+
+    <div ng-view class="container"></div>
+         
+    <script type = "text/ng-template" id = "watchlist.html">
+        <c:import url="watchlist.jsp"/>
+    </script>
+      
+    <script>
+        var mainApp = angular.module("mainApp", ['ngRoute']);
+        
+        /* ng routing configuration */
+        mainApp.config(['$routeProvider', function($routeProvider) {
+            $routeProvider.
+
+            when('/watchlist', {
+                templateUrl: 'watchlist.html',
+                controller: 'watchlistCtrl'
+            }).
+            
+            when('/portfolio', {
+            	templateUrl: 'portfolio.html',
+            	controller: 'portfolioCtrl'
+            }).
+            
+            when('/history', {
+            	templateUrl: 'history.html',
+            	controller: 'historyCtrl'
+            }).
+
+            otherwise({
+                redirectTo: '/'
+            });
+        }]);
+
+		/* watch list controller */
+        mainApp.controller("watchlistCtrl", function($scope, $interval, $http){
+            $scope.stocks = [];
+            $scope.stockPool = [];
+
+            var updateWatchlist = function(){
+                console.log("updating watch list");
+                $http({
+                    method: 'GET',
+                    url: 'getWatchList'
+                }).then(function(response){
+                    $scope.stocks = response.data;
+                    console.log("response:", response);
+                    console.log($scope.stocks);
+                });
+            };
+
+            var updateAllStock = function(){
+                console.log("checking all stock");
+                $http({
+                    method: 'GET',
+                    url: 'getAllStocks'
+                }).then(function(response){
+                    $scope.stockPool = response.data;
+                    console.log("response:", response);
+                    console.log($scope.stockPool);
+                });
+            };
+
+            /* updating stock detail data in user watch list */
+            updateWatchlist();
+            $interval(updateWatchlist, 3000);
+
+            /* updating all stock infomation that exist in db */
+            updateAllStock();
+            $interval(updateAllStock, 60000);
+        });
+		
+    </script>
+
+      
+     
+    <c:import url="page_component/footer.jsp"/>
   </body>
 </html>
