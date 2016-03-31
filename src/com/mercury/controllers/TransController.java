@@ -60,6 +60,7 @@ public class TransController {
 	public String addPending(@RequestBody UserStockTransaction tran, 
 			HttpServletRequest request) throws Exception{
 		if (tran != null){
+			System.out.println("in add pending!");
 			System.out.println(tran);
 			//ServletContext context = request.getServletContext();
 			ts.addPending(tran);

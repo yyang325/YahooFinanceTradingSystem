@@ -128,52 +128,6 @@ need attention here -->
 	 <link href='https://fonts.googleapis.com/css?family=Sonsie+One' rel='stylesheet' type='text/css'>
 	 <link href='https://fonts.googleapis.com/css?family=Indie+Flower|Montserrat' rel='stylesheet' type='text/css'> -->
 
-<style>
-
-	#chartdiv {
-		width		: 100%;
-		height		: 435px;
-		font-size	: 11px;
-	}
-	
-	#username{
-		font-size: 32px;
-	    line-height: 40px;
-	    padding-top: 20px;
-	    font-weight: 700;
-	    font-family: Open Sans;
-	    text-align: center;
-	    letter-spacing: 1px;
-	}	
-	
-	.alert {
-		display: none;
-	}
-	th, td {
-		text-align:center;
-	}
-	input[type="range"] {
-    display:inline;
-	padding-top:6px;
-    width: 200px;
-    height:20px;
-	}
-	input[type="range"]::-webkit-slider-thumb {
-    	background-color: #666;
-    	padding-top:10px;
-    	width: 10px;
-    	height: 20px;
-	}
-	
-		.highlight{
-    background: lightgreen;
-    transition: background 200ms;
-    }
-    .highlight2{
-    background: #ff8080;
-    transition: background 200ms;
-    }
-</style>
 
 <script>
 	/* var app = angular.module('ui.bootstrap.demo', [ 'ngAnimate', 'ui.bootstrap', 'ngResource','chart.js']);
@@ -187,6 +141,49 @@ need attention here -->
 	app.config(['$httpProvider', function ($httpProvider) {    
 		$httpProvider.defaults.headers.post['Content-Type'] = 'application/json; charset=UTF-8';
 	}]);
+	
+	app.directive('highlighter', ['$timeout', function($timeout) {
+		  return {
+		    restrict: 'A',
+		    scope: {
+		      model: '=highlighter'
+		    },
+		    link: function(scope, element) {
+		      scope.$watch('model', function (nv, ov) {
+		        if (nv !== ov) {
+		          // apply class
+		          element.addClass('highlight');
+
+		          // auto remove after some delay
+		          $timeout(function () {
+		            element.removeClass('highlight');
+		          }, 500);
+		        }
+		      });
+		    }
+		  };
+		}]);
+	app.directive('highlighter2', ['$timeout', function($timeout) {
+		  return {
+		    restrict: 'A',
+		    scope: {
+		      model: '=highlighter2'
+		    },
+		    link: function(scope, element) {
+		      scope.$watch('model', function (nv, ov) {
+		        if (nv !== ov) {
+		          // apply class
+		          element.addClass('highlight2');
+
+		          // auto remove after some delay
+		          $timeout(function () {
+		            element.removeClass('highlight2');
+		          }, 500);
+		        }
+		      });
+		    }
+		  };
+		}]);
 	
 	app.service("shared", function() {
 		var _stock = null;
@@ -289,7 +286,7 @@ need attention here -->
 		
 		$scope.openSell = function () {		
 			$scope.user = shared.getUser();
-			$scope.buyItem = shared.getStock();
+			$scope.sellItem = shared.getStock();
 			var modalInstance = $modal.open({
 				animation: $scope.animationsEnabled,
 				templateUrl: 'sellContent.html',
@@ -305,7 +302,7 @@ need attention here -->
 				$scope.sellSuccess=true;
 				$scope.buySuccess=false;
 				$scope.addSuccess=false;
-				$scope.user.balance = Math.round($scope.user.balance + $scope.buyItem.price * quan);
+				$scope.user.cash = Math.round($scope.user.cash + $scope.sellItem.stockInfo.price * quan);
 			}, function () {
 				$log.info('Modal dismissed at: ' + new Date());
 			});
@@ -329,7 +326,7 @@ need attention here -->
 				$scope.buySuccess = true;
 				$scope.sellSuccess=false;
 				$scope.addSuccess=false;
-				$scope.user.balance = Math.round($scope.user.balance - $scope.buyItem.price * quan);
+				$scope.user.cash = Math.round($scope.user.cash - $scope.buyItem.stockInfo.price * quan);
 			}, function () {
 				$log.info('Modal dismissed at: ' + new Date());
 			});
@@ -396,12 +393,12 @@ need attention here -->
 	
 	app.controller('ModalInstanceCtrlSell', function ($scope, $modalInstance, $http, items, shared) {
 		
-		console.log("In Modal Instance Ctrl Sell");
+		//console.log("In Modal Instance Ctrl Sell");
 		$scope.user = shared.getUser();
-		console.log($scope.user);
+		//console.log($scope.user);
 		$scope.Math = window.Math;
 		$scope.sellItem = shared.getStock();
-		console.log($scope.sellItem);
+		//console.log($scope.sellItem);
 		$scope.quan = 1;
 		$scope.newTran;
 		$scope.$watch("quan",function(val,old){
@@ -427,24 +424,19 @@ need attention here -->
 				data: $scope.newTran = {
 						tid: 0,
 						user: $scope.user,
-						stock: $scope.sellItem,
+						stock: {
+							sid: $scope.sellItem.stockId,
+							symbol: $scope.sellItem.stockSymbol,
+							stockDesc: $scope.sellItem.stockInfo.companyName
+						},
 						price: $scope.sellItem.stockInfo.price,
-						/* own: {
-							user: $scope.user,
-							stock: {
-								sid: $scope.sellItem.stock.sid,
-								symbol: $scope.sellItem.stock.symbol,
-								stockDesc: $scope.sellItem.stockName
-							},
-						}, */
 						quantity: -$scope.quan,
-						/* price: $scope.sellItem.price, */
 						ts: new Date()
 				}
 			}).success(function (response) {
 				console.log(response);
 			}).error(function (data) {
-				console.log(data);
+				//console.log(data);
 			}); 
 		};
 		
@@ -462,6 +454,7 @@ need attention here -->
 		$scope.user = shared.getUser();	
 		$scope.Math = window.Math;
 		$scope.buyItem = shared.getStock();
+		console.log($scope.buyItem);
 		$scope.upper = Math.floor($scope.user.cash / $scope.buyItem.stockInfo.price);
 		$scope.quan = 1;
 		$scope.newTran;
@@ -477,16 +470,20 @@ need attention here -->
 				data: $scope.newTran = {
 						tid: 0,
 						user: $scope.user,
-						stock: $scope.buyItem,
-						price: $scope.sellItem.stockInfo.price,
-						quantity: -$scope.quan,
+						stock: {
+							sid: $scope.buyItem.stockId,
+							symbol: $scope.buyItem.stockSymbol,
+							stockDesc: $scope.buyItem.stockInfo.companyName
+						},
+						price: $scope.buyItem.stockInfo.price,
+						quantity: $scope.quan,
 						/* price: $scope.sellItem.price, */
 						ts: new Date()
 				}
 			}).success(function (response) {
 				console.log(response);
 			}).error(function (data) {
-				console.log(data);
+				//console.log(data);
 			}); 
 		};
 		
@@ -558,10 +555,65 @@ need attention here -->
 	
 </script>
 
+<style>
+
+	#chartdiv {
+		width		: 100%;
+		height		: 435px;
+		font-size	: 11px;
+	}
+	
+	#username{
+		font-size: 32px;
+	    line-height: 40px;
+	    padding-top: 20px;
+	    font-weight: 700;
+	    font-family: Open Sans;
+	    text-align: center;
+	    letter-spacing: 1px;
+	}	
+	
+	td{
+		font-size: 14px;
+    	line-height: 30px;
+	}
+	
+	.alert {
+		display: none;
+	}
+	th, td {
+		text-align:center;
+	}
+	input[type="range"] {
+    display:inline;
+	padding-top:6px;
+    width: 200px;
+    height:20px;
+	}
+	input[type="range"]::-webkit-slider-thumb {
+    	background-color: #666;
+    	padding-top:10px;
+    	width: 10px;
+    	height: 20px;
+	}
+	
+	.highlight{
+    background: lightgreen;
+    transition: background 200ms;
+    }
+    
+    .highlight2{
+    background: #ff8080;
+    transition: background 200ms;
+    }
+</style>
+
 </head>
 <body ng-app="mainApp">
 	<%-- <c:import url="page_component/header.jsp"/> --%>
 	<c:import url="page_component/header.jsp"/>
+	
+	
 	<div class="container">
 		<section id="main-content">
 			<section class="wrapper" ng-controller="mainController">
@@ -640,9 +692,12 @@ need attention here -->
 											<!--  <th>Stock Name</th> -->
 											<th>Quantity</th>
 											<th>Average Cost</th>
+											<th>Cost</th>
 											<th>Market Price</th>
 											<th>Daily Change</th>
 											<th>Daily Change(%)</th>
+											<th>Gain/Loss</th>
+											<th>Gain/Loss(%)</th>
 											<th>Action</th>
 											<!-- <th>Change</th>
 		                                 <th>Change%</th> -->
@@ -650,12 +705,57 @@ need attention here -->
 										</tr>
 										<tr ng-repeat="stock in ownStocks">
 											
-											<td>{{stock.stockSymbol}}</td>
+											<td style="font-weight: bold;">{{stock.stockSymbol}}</td>
 											<td>{{stock.quantity}}</td>
 											<td>{{stock.avgCost | number:2}}</td>
+											<td>{{stock.avgCost * stock.quantity | number:2}}</td>
 											<td>{{stock.stockInfo.price}}</td>
-											<td>{{stock.stockInfo.change}}</td>
-											<td>{{stock.stockInfo.pchange}}</td>
+											<%-- <td ng-if="stock.stockInfo.change>0" highlighter="stock.stockInfo.price">
+												&#36{{stock.stockInfo.change | number:2}}
+											</td>
+											<td ng-if="stock.stockInfo.change<0" highlighter2="stock.stockInfo.price">
+												&#36{{stock.stockInfo.change | number:2}}
+											</td>
+											<td ng-if="stock.stockInfo.change==0" style="color:black">
+												&#36{{stock.stockInfo.change | number:2}}
+											</td>
+											<td ng-if="stock.stockInfo.change>0" highlighter="stock.stockInfo.price">
+												{{stock.stockInfo.pchange }}
+											</td>
+											<td ng-if="stock.stockInfo.change<0" highlighter2="stock.stockInfo.price">
+												{{stock.stockInfo.pchange }}
+											</td>
+											<td ng-if="stock.stockInfo.change==0" style="color:black">
+												{{stock.stockInfo.pchange }}
+											</td> --%>
+											<td >
+									<b ng-if="stock.stockInfo.change>0" style="color:green">&#36{{stock.stockInfo.change| number:2}} <span class="glyphicon glyphicon-arrow-up"></span></b>
+									<b ng-if="stock.stockInfo.change<0"  style="color:red">&#36{{stock.stockInfo.change| number:2}} <span class="glyphicon glyphicon-arrow-down"></span></b>
+									<b ng-if="stock.stockInfo.change==0"  style="color:black">&#36{{stock.stockInfo.change| number:2}}</b>
+								</td>
+								<td >
+									<b ng-if="stock.stockInfo.pchange.indexOf('-')>-1" style="color:red">{{stock.stockInfo.pchange}} <span class="glyphicon glyphicon-arrow-down"></span></b>
+									<b ng-if="stock.stockInfo.pchange.indexOf('+')>-1"  style="color:green">{{stock.stockInfo.pchange}} <span class="glyphicon glyphicon-arrow-up"></span></b>
+									<b ng-if="stock.stockInfo.pchange.indexOf('0')==0" style="color:black">{{stock.stockInfo.pchange}}</b>
+								</td>
+											<td ng-if="stock.stockInfo.price*stock.quantity - stock.avgCost * stock.quantity> 0" style="color: #093; font-weight: bold;">
+												&#36{{stock.stockInfo.price*stock.quantity - stock.avgCost * stock.quantity | number:2}}
+											</td>
+											<td ng-if="stock.stockInfo.price*stock.quantity - stock.avgCost * stock.quantity< 0" style="color: #d14836; font-weight: bold;">
+												&#36{{stock.stockInfo.price*stock.quantity - stock.avgCost * stock.quantity | number:2}}
+											</td>
+											<td ng-if="stock.stockInfo.price*stock.quantity - stock.avgCost * stock.quantity==0" style="color:black; font-weight: bold;">
+												&#36{{stock.stockInfo.price*stock.quantity - stock.avgCost * stock.quantity | number:2}}
+											</td>
+											<td ng-if="stock.stockInfo.price*stock.quantity - stock.avgCost * stock.quantity> 0" style="color: #093; font-weight: bold;">
+												{{(stock.stockInfo.price*stock.quantity - stock.avgCost * stock.quantity)/ stock.stockInfo.price*stock.quantity | number:2}}&#37
+											</td>
+											<td ng-if="stock.stockInfo.price*stock.quantity - stock.avgCost * stock.quantity< 0" style="color: #d14836; font-weight: bold;">
+												{{(stock.stockInfo.price*stock.quantity - stock.avgCost * stock.quantity)/ stock.stockInfo.price*stock.quantity | number:2}}&#37
+											</td>
+											<td ng-if="stock.stockInfo.price*stock.quantity - stock.avgCost * stock.quantity==0" style="color:black; font-weight: bold;">
+												{{(stock.stockInfo.price*stock.quantity - stock.avgCost * stock.quantity)/ stock.stockInfo.price*stock.quantity | number:2}}&#37
+											</td>
 											<sec:authorize access="hasAnyRole('ADMIN', 'USER')">
 												<td>
 													<div class="btn-group">
@@ -671,9 +771,7 @@ need attention here -->
 												</td>
 										
 											</sec:authorize>
-											<%-- <td ng-if="stock.change>0" highlighter="stock.price">&#36{{stock.price| number:2}}</td>
-										<td ng-if="stock.change<0" highlighter2="stock.price" >  &#36{{stock.price| number:2}}</td>
-										<td  ng-if="stock.change==0" style="color:black">&#36{{stock.price| number:2}}</td> --%>
+											
 										</tr>
 
 
@@ -681,7 +779,9 @@ need attention here -->
 								</table>
 
 							</form>
-
+						
+							<div id="buySuccess" ng-show="buySuccess&&!sellSuccess&&!addSuccess">Buying Transaction Success!</div>
+		          			<div id="sellSuccess" ng-show="sellSuccess&&!buySuccess&&!addSuccess">Selling Transaction Success!</div>
 						</div>
 					</section>
 
@@ -876,13 +976,13 @@ need attention here -->
         </div>
         <div class="modal-body" style="font-size:15px;">
             <label>Stock Symbol:  </label>
-			<b style=" font-family: 'Indie Flower', cursive; font-size:25px;"> {{buyItem.stock.symbol}}</b>
+			<b style=" font-family: 'Helvetica', cursive; font-size:25px;"> {{buyItem.stockSymbol}}</b>
 			<br/>
-			<label>Stock Name:  </label>
-			<b style=" font-family: 'Indie Flower', cursive; font-size:25px;"> {{buyItem.stockName}}</b>
+			<label>Company Name:  </label>
+			<b style=" font-family: 'Helvetica', cursive; font-size:25px;"> {{buyItem.stockInfo.companyName}}</b>
 			<br/>
 			<label>Unit Price:  </label>
-			<b style="font-family: 'Indie Flower', cursive; font-size:25px;"> {{buyItem.price}}</b>
+			<b style="font-family: 'Helvetica', cursive; font-size:25px;"> {{buyItem.stockInfo.price}}</b>
 			<br/>
 			<label>Quantity:  </label>
 			<input type="number" min="1" max={{upper}} value={{quan}} ng-model="quan"/>
@@ -891,9 +991,9 @@ need attention here -->
         <div class="modal-footer">
 		<div>		
 			<h5 style="margin-right:50px"><strong>Ready to buy <span style="color:red">{{quan}}</span>
-			shares of <span style="color:red">{{buyItem.stock.symbol}}</span> ? <strong></h5>
-			<h5><strong>Balance after transaction: <span style="color:red">
-			{{Math.round(user.balance - buyItem.price * quan) |currency}}</span><strong> </h5>
+			shares of <span style="color:red">{{buyItem.stockSymbol}}</span> ? <strong></h5>
+			<h5><strong>Cash after transaction: <span style="color:red">
+			{{Math.round(user.cash - buyItem.stockInfo.price * quan) |currency}}</span><strong> </h5>
 		</div>
             <button class="btn btn-success" type="button" ng-click="ok()">OK</button>
             <button class="btn btn-default" type="button" ng-click="cancel()">Cancel</button>
@@ -908,7 +1008,7 @@ need attention here -->
         <div class="modal-body" style="font-size:15px;">
             <label>Stock Symbol: </label>
 			<b style=" font-family: 'Helvetica'; font-size:25px;">{{sellItem.stockSymbol}}</b><br/>
-			<label>Stock Name: </label>
+			<label>Company Name: </label>
 			<b style=" font-family: 'Helvetica'; font-size:25px;">{{sellItem.stockInfo.companyName}}</b><br/>
 			<label>Unit Price: </label>
 			<b style=" font-family: 'Helvetica'; font-size:25px;">{{sellItem.stockInfo.price}}</b><br/>
@@ -922,8 +1022,8 @@ need attention here -->
 		<div>		
 			<h5 style="margin-right:50px"><strong>Ready to sell <span style="color:red">{{quan}}</span>
 			shares of <span style="color:red">{{sellItem.stock.symbol}}</span>? </strong></h5>
-			<h5><strong>Balance after transaction: <span style="color:red">$
-			{{Math.round(user.balance + sellItem.price * quan) | currency}}</span></strong></h5>
+			<h5><strong>Cash after transaction: <span style="color:red">
+			{{Math.round(user.cash + sellItem.stockInfo.price * quan) | currency}}</span></strong></h5>
 		</div><br/>
             <button class="btn btn-danger" type="button" ng-click="ok()">Sell</button>
             <button class="btn btn-default" type="button" ng-click="cancel()">Cancel</button>
@@ -955,21 +1055,6 @@ need attention here -->
 		</div>
 
 	</div>
-	
-	
-	<!-- <!-- javascripts
-    <script src="js/jquery.js"></script>
-    <script src="js/jquery-1.8.3.min.js"></script>
-        nice scroll
-    <script src="js/jquery.scrollTo.min.js"></script>
-    <script src="js/jquery.nicescroll.js" type="text/javascript"></script>
-    chartjs
-    <script src="assets/chart-master/Chart.js"></script>
-    custom chart script for this page only
-	<script src="js/angular-chart.js"></script>
-
-    custome script for all page
-    <script src="js/scripts.js"></script> --> 
 	
 	<c:import url="page_component/footer.jsp"/>
 </body>
