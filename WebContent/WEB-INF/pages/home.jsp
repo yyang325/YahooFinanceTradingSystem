@@ -57,6 +57,8 @@
       
     <script>
         var mainApp = angular.module("mainApp", ['ngRoute']);
+        
+        /* ng routing configuration */
         mainApp.config(['$routeProvider', function($routeProvider) {
             $routeProvider.
 
@@ -65,17 +67,12 @@
                 controller: 'watchlistCtrl'
             }).
 
-            when('/viewStudents', {
-                templateUrl: 'viewStudents.html',
-                controller: 'ViewStudentsController'
-            }).
-
             otherwise({
                 redirectTo: '/'
             });
         }]);
 
-
+		/* watch list controller */
         mainApp.controller("watchlistCtrl", function($scope, $interval, $http){
             $scope.stocks = [];
             $scope.stockPool = [];
@@ -112,11 +109,7 @@
             updateAllStock();
             $interval(updateAllStock, 60000);
         });
-
-        mainApp.controller('ViewStudentsController', function($scope) {
-            $scope.message = "This page will be used to display all the students";
-        });
-
+		
     </script>
 
       
