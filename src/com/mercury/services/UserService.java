@@ -158,6 +158,8 @@ public class UserService {
 		ownstock.setUserName(tran.getUser().getUsername());
 		ownstock.setStockId(tran.getStock().getSid());
 		ownstock.setStockSymbol(tran.getStock().getSymbol());
+		//System.out.println(this.getStockInfo(tran.getStock()));
+		ownstock.setStockInfo(this.getStockInfo(tran.getStock()));
 		
 		BigDecimal avgCost;
 		double totalCost = 0.0;
@@ -171,7 +173,7 @@ public class UserService {
 			totalCost += cost;
 		}
 		
-		System.out.println("total amount is "+ quantity);
+		//System.out.println("total amount is "+ quantity);
 		
 		//if the quantity after several transactions is 0, then return a null value;
 		if (quantity == 0){
@@ -264,8 +266,10 @@ public class UserService {
 	//@Transactional
 	public void addCash(String username, double addMoney) {
 		User user =ud.findByUserName(username);
-		double newBalance =user.getBalance() + addMoney;
+		double newCash =user.getCash() + addMoney;
+		double newBalance = user.getBalance() + addMoney;
 		//need to modify here
+		user.setCash(newCash <= 2147483647 ? newCash : 2147483647);
 		user.setBalance(newBalance <= 2147483647 ? newBalance : 2147483647);
 		ud.update(user);
 	}
@@ -358,6 +362,7 @@ public class UserService {
 		si.setPrice(price);
 		si.setChange(change);
 		si.setCompanyName(companyName);
+		//System.out.println(si.getCompanyName() + " " + si.getStockSymbol());
 		return si;	
 	}
 

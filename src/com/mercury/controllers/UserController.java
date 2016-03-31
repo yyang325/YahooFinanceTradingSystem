@@ -74,7 +74,7 @@ public class UserController {
 			return null;
 		}
 		String userName = principal.getName();
-		System.out.println(userName);
+		//System.out.println(userName);
 		List<OwnStock> ownedStock = us.getOwnedStocks(userName);
 		
 		return ownedStock;
