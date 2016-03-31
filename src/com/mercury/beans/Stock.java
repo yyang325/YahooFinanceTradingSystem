@@ -12,6 +12,8 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import org.hibernate.annotations.GenericGenerator;
 
 @Entity
@@ -29,9 +31,11 @@ public class Stock {
 	@Column(name="stockdesc")
 	private String stockDesc;
 	
+	@JsonIgnore
 	@ManyToMany(fetch = FetchType.EAGER, mappedBy = "watchedStocks")
 	private Set<User> watchingUsers = new HashSet<>();
 	
+	@JsonIgnore
 	@OneToMany(mappedBy = "stock", fetch = FetchType.EAGER)
 	private Set<UserStockTransaction> trans = new HashSet<>();
 	

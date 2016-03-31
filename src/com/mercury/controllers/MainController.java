@@ -76,7 +76,7 @@ public class MainController {
 	
 	@RequestMapping("/main1")
 	public String mainPage2() {
-		return "main";
+		return "main1";
 	}
 	
 	@RequestMapping(value="rest/finduser", method=RequestMethod.GET)

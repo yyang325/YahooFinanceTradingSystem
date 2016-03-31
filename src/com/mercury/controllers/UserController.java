@@ -59,8 +59,8 @@ public class UserController {
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("portfolio1");
 		mav.addObject("username", username);
-		System.out.println(username);
-		System.out.println(us.getCash(username));
+		//System.out.println(username);
+		//System.out.println(us.getCash(username));
 		mav.addObject("balance", us.getBalance(username));
 		mav.addObject("cash", us.getCash(username));
 		return mav;
@@ -74,7 +74,7 @@ public class UserController {
 			return null;
 		}
 		String userName = principal.getName();
-		System.out.println(userName);
+		//System.out.println(userName);
 		List<OwnStock> ownedStock = us.getOwnedStocks(userName);
 		
 		return ownedStock;

@@ -57,6 +57,7 @@ public class TransService {
 	 * @param trans
 	 */
 	public void addPending(UserStockTransaction trans){
+		System.out.println("in addpending in trans service");
 		User user = trans.getUser();
 		double cash = user.getCash();
 		int amount = trans.getQuantity();

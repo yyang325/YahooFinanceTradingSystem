@@ -14,6 +14,7 @@ public class OwnStock {
 	private String stockSymbol;
 	private BigDecimal avgCost;
 	private int quantity;
+	private StockInfo stockInfo;
 	public String getUserName() {
 		return userName;
 	}
@@ -43,6 +44,12 @@ public class OwnStock {
 	}
 	public void setQuantity(int quantity) {
 		this.quantity = quantity;
+	}
+	public StockInfo getStockInfo() {
+		return stockInfo;
+	}
+	public void setStockInfo(StockInfo stockInfo) {
+		this.stockInfo = stockInfo;
 	}
 	
 	

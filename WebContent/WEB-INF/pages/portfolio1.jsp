@@ -128,42 +128,6 @@ need attention here -->
 	 <link href='https://fonts.googleapis.com/css?family=Sonsie+One' rel='stylesheet' type='text/css'>
 	 <link href='https://fonts.googleapis.com/css?family=Indie+Flower|Montserrat' rel='stylesheet' type='text/css'> -->
 
-<style>
-
-	#chartdiv {
-		width		: 100%;
-		height		: 435px;
-		font-size	: 11px;
-	}	
-	
-	.alert {
-		display: none;
-	}
-	th, td {
-		text-align:center;
-	}
-	input[type="range"] {
-    display:inline;
-	padding-top:6px;
-    width: 200px;
-    height:20px;
-	}
-	input[type="range"]::-webkit-slider-thumb {
-    	background-color: #666;
-    	padding-top:10px;
-    	width: 10px;
-    	height: 20px;
-	}
-	
-		.highlight{
-    background: lightgreen;
-    transition: background 200ms;
-    }
-    .highlight2{
-    background: #ff8080;
-    transition: background 200ms;
-    }
-</style>
 
 <script>
 	/* var app = angular.module('ui.bootstrap.demo', [ 'ngAnimate', 'ui.bootstrap', 'ngResource','chart.js']);
@@ -177,6 +141,49 @@ need attention here -->
 	app.config(['$httpProvider', function ($httpProvider) {    
 		$httpProvider.defaults.headers.post['Content-Type'] = 'application/json; charset=UTF-8';
 	}]);
+	
+	app.directive('highlighter', ['$timeout', function($timeout) {
+		  return {
+		    restrict: 'A',
+		    scope: {
+		      model: '=highlighter'
+		    },
+		    link: function(scope, element) {
+		      scope.$watch('model', function (nv, ov) {
+		        if (nv !== ov) {
+		          // apply class
+		          element.addClass('highlight');
+
+		          // auto remove after some delay
+		          $timeout(function () {
+		            element.removeClass('highlight');
+		          }, 500);
+		        }
+		      });
+		    }
+		  };
+		}]);
+	app.directive('highlighter2', ['$timeout', function($timeout) {
+		  return {
+		    restrict: 'A',
+		    scope: {
+		      model: '=highlighter2'
+		    },
+		    link: function(scope, element) {
+		      scope.$watch('model', function (nv, ov) {
+		        if (nv !== ov) {
+		          // apply class
+		          element.addClass('highlight2');
+
+		          // auto remove after some delay
+		          $timeout(function () {
+		            element.removeClass('highlight2');
+		          }, 500);
+		        }
+		      });
+		    }
+		  };
+		}]);
 	
 	app.service("shared", function() {
 		var _stock = null;
@@ -208,12 +215,6 @@ need attention here -->
 			},
 			setMessage : function(message){
 				_message = message;
-			},
-			getVals : function(){
-				return _vals;
-			},
-			setVals : function(vals){
-				_vals = vals;
 			}
 		};
 		$scope.message = shared.getMessage();
@@ -226,7 +227,7 @@ need attention here -->
 		//console.log("in main controller");
 		$http.get("validUser")
 		.success(function(data) {
-			console.log(data);
+			//console.log(data);
 			$scope.user = data;
 			shared.setUser($scope.user);
 			
@@ -240,13 +241,35 @@ need attention here -->
 		$interval(function() {
 			console.log("in interval");
 			$http.get("getPortfolio").
-			then(function(resp) {
+			success(function(data) {
 				//console.log(resp);
+				$scope.ownStocks=data;
 				shared.setStockInfo($scope.ownStocks);
-				$scope.ownStocks=resp.data;
-			})
+				$scope.percent = "100%";
+				window.setTimeout(function() {
+				     $scope.$apply(function() {
+				        $scope.loading = true;
+				     });
+				 }, 600);
+			}).error(function(data) {
+				console.log("Ajax Error");
+			});
 		}, 2000);
 		
+		$scope.pass = function(stock) {
+			//console.log("In pass");
+			//console.log(stock);
+			shared.setStock(stock);
+		};
+		
+		$scope.hasStock = function(stock) {
+			for (var i=0; i<$scope.stockInfo.length; i++){
+				if (stock.stock.sid == $scope.stockInfo[i].stock.sid){
+					return true;
+				}
+			}
+			return false;
+		};
 		
 	}]);
 	
@@ -254,17 +277,65 @@ need attention here -->
 	
 	 app.controller("ModalCtrl", ["$scope", "$modal", "$log", "shared", function ($scope, $modal, $log, shared) {
 		//console.log("in open Add");
-		$scope.item;
 		$scope.message = shared.getMessage();
+		$scope.item;
 		$scope.animationsEnabled = true;
 		$scope.buySuccess=false;
 		$scope.sellSuccess=false;
 		$scope.addSuccess=false;
 		
-		$scope.openAdd = function () {
-			console.log("in open Add");
+		$scope.openSell = function () {		
 			$scope.user = shared.getUser();
-			console.log($scope.user);
+			$scope.sellItem = shared.getStock();
+			var modalInstance = $modal.open({
+				animation: $scope.animationsEnabled,
+				templateUrl: 'sellContent.html',
+				controller: 'ModalInstanceCtrlSell',
+				resolve: {
+					items: function () {
+						return $scope.user;
+					}
+				}
+			});
+
+			modalInstance.result.then(function (quan) {
+				$scope.sellSuccess=true;
+				$scope.buySuccess=false;
+				$scope.addSuccess=false;
+				$scope.user.cash = Math.round($scope.user.cash + $scope.sellItem.stockInfo.price * quan);
+			}, function () {
+				$log.info('Modal dismissed at: ' + new Date());
+			});
+		};
+		
+		$scope.openBuy = function () {		
+			$scope.user = shared.getUser();
+			$scope.buyItem = shared.getStock();
+			var modalInstance = $modal.open({
+				animation: $scope.animationsEnabled,
+				templateUrl: 'buyContent.html',
+				controller: 'ModalInstanceCtrlBuy',
+				resolve: {
+					items: function () {
+						return $scope.user;
+					}
+				}
+			});
+
+			modalInstance.result.then(function (quan) {
+				$scope.buySuccess = true;
+				$scope.sellSuccess=false;
+				$scope.addSuccess=false;
+				$scope.user.cash = Math.round($scope.user.cash - $scope.buyItem.stockInfo.price * quan);
+			}, function () {
+				$log.info('Modal dismissed at: ' + new Date());
+			});
+		};
+		
+		$scope.openAdd = function () {
+			//console.log("in open Add");
+			$scope.user = shared.getUser();
+			//console.log($scope.user);
 			var modalInstance = $modal.open({
 				animation: $scope.animationsEnabled,
 				templateUrl: 'addContent.html',
@@ -279,8 +350,8 @@ need attention here -->
 				$scope.addSuccess=true;
 				$scope.buySuccess=false;
 				$scope.sellSuccess=false;
+				$scope.user.cash = $scope.user.cash + quan;
 				$scope.user.balance = $scope.user.balance + quan;
-				
 			}, function () {
 				$log.info('Modal dismissed at: ' + new Date());
 			});
@@ -290,7 +361,7 @@ need attention here -->
 	
 	app.controller("ModalInstanceCtrlAdd", ["$scope", "$modalInstance", "$http", "items", "shared",
 	                                         function($scope, $modalInstance, $http, items, shared) {
-		$scope.balance = items.balance;
+		$scope.balance = items.cash;
 		$scope.quan = 1;
 		$scope.$watch("quan",function(val,old){
 		    val = isNaN(val)?"1":val;
@@ -300,12 +371,12 @@ need attention here -->
 		$scope.add = function (){
 			$http({
 				method: "POST",
-				url: "addBalance",
+				url: "addCash",
 				data: $scope.quan
 			}).success(function(data){
 				console.log(data);
 			}).error(function(data){
-				console.log(data);
+				//console.log(data);
 			});
 		};
 		
@@ -319,6 +390,112 @@ need attention here -->
 		};
 
 	}]); 
+	
+	app.controller('ModalInstanceCtrlSell', function ($scope, $modalInstance, $http, items, shared) {
+		
+		//console.log("In Modal Instance Ctrl Sell");
+		$scope.user = shared.getUser();
+		//console.log($scope.user);
+		$scope.Math = window.Math;
+		$scope.sellItem = shared.getStock();
+		//console.log($scope.sellItem);
+		$scope.quan = 1;
+		$scope.newTran;
+		$scope.$watch("quan",function(val,old){
+			val = isNaN(val)?"1":val;
+			$scope.quan = parseInt(val); 
+		});
+		
+		$scope.getAmount = function(sellItem){
+			$scope.stockInfo = shared.getStockInfo();
+			console.log($scope.stockInfo);
+			for (var i=0; i< $scope.stockInfo.length; i++){
+				if (sellItem.stockId == $scope.stockInfo[i].stockId){
+					return $scope.stockInfo[i].quantity;
+				}
+			}
+			return 0;
+		};
+		
+		$scope.send = function(){
+			$http({
+				method: "POST",
+				url: "addPending",
+				data: $scope.newTran = {
+						tid: 0,
+						user: $scope.user,
+						stock: {
+							sid: $scope.sellItem.stockId,
+							symbol: $scope.sellItem.stockSymbol,
+							stockDesc: $scope.sellItem.stockInfo.companyName
+						},
+						price: $scope.sellItem.stockInfo.price,
+						quantity: -$scope.quan,
+						ts: new Date()
+				}
+			}).success(function (response) {
+				console.log(response);
+			}).error(function (data) {
+				//console.log(data);
+			}); 
+		};
+		
+		$scope.ok = function () {
+			$scope.send();
+			$modalInstance.close($scope.quan);
+		};
+
+		$scope.cancel = function () {
+			$modalInstance.dismiss('cancel');
+		};
+	});
+	
+	app.controller('ModalInstanceCtrlBuy', function ($scope, $modalInstance, $http, items, shared) {
+		$scope.user = shared.getUser();	
+		$scope.Math = window.Math;
+		$scope.buyItem = shared.getStock();
+		console.log($scope.buyItem);
+		$scope.upper = Math.floor($scope.user.cash / $scope.buyItem.stockInfo.price);
+		$scope.quan = 1;
+		$scope.newTran;
+		$scope.$watch("quan",function(val,old){
+			val = isNaN(val)?"1":val;
+		    $scope.quan = parseInt(val); 
+		});
+			
+		$scope.send = function(){
+			$http({
+				method: "POST",
+				url: "addPending",
+				data: $scope.newTran = {
+						tid: 0,
+						user: $scope.user,
+						stock: {
+							sid: $scope.buyItem.stockId,
+							symbol: $scope.buyItem.stockSymbol,
+							stockDesc: $scope.buyItem.stockInfo.companyName
+						},
+						price: $scope.buyItem.stockInfo.price,
+						quantity: $scope.quan,
+						/* price: $scope.sellItem.price, */
+						ts: new Date()
+				}
+			}).success(function (response) {
+				console.log(response);
+			}).error(function (data) {
+				//console.log(data);
+			}); 
+		};
+		
+		$scope.ok = function () {
+			$scope.send();
+			$modalInstance.close($scope.quan);
+		};
+
+		$scope.cancel = function () {
+			$modalInstance.dismiss('cancel');
+		};
+	});
 	
 	app.controller("BarCtrl", ["$scope", "shared", "$interval", 
 	                           function($scope, shared, $interval) {
@@ -361,7 +538,7 @@ need attention here -->
 				var vals = $scope.user.cash;
 				for(var i = 0;i<$scope.stockInfo.length;i++){
 					vals = $scope.stockInfo[i].quantity*$scope.stockInfo[i].avgCost + vals;
-					console.log($scope.stockInfo[i].stockSymbol);
+					//console.log($scope.stockInfo[i].stockSymbol);
 				}
 				$scope.data.push($scope.user.cash);
 				$scope.labels.push("Cash" + "("+Math.round($scope.user.cash/vals*100*10)/10+"%)");
@@ -378,10 +555,65 @@ need attention here -->
 	
 </script>
 
+<style>
+
+	#chartdiv {
+		width		: 100%;
+		height		: 435px;
+		font-size	: 11px;
+	}
+	
+	#username{
+		font-size: 32px;
+	    line-height: 40px;
+	    padding-top: 20px;
+	    font-weight: 700;
+	    font-family: Open Sans;
+	    text-align: center;
+	    letter-spacing: 1px;
+	}	
+	
+	td{
+		font-size: 14px;
+    	line-height: 30px;
+	}
+	
+	.alert {
+		display: none;
+	}
+	th, td {
+		text-align:center;
+	}
+	input[type="range"] {
+    display:inline;
+	padding-top:6px;
+    width: 200px;
+    height:20px;
+	}
+	input[type="range"]::-webkit-slider-thumb {
+    	background-color: #666;
+    	padding-top:10px;
+    	width: 10px;
+    	height: 20px;
+	}
+	
+	.highlight{
+    background: lightgreen;
+    transition: background 200ms;
+    }
+    
+    .highlight2{
+    background: #ff8080;
+    transition: background 200ms;
+    }
+</style>
+
 </head>
 <body ng-app="mainApp">
 	<%-- <c:import url="page_component/header.jsp"/> --%>
 	<c:import url="page_component/header.jsp"/>
+	
+	
 	<div class="container">
 		<section id="main-content">
 			<section class="wrapper" ng-controller="mainController">
@@ -394,26 +626,33 @@ need attention here -->
 							</header>
 							<div class="panel-body">
 								<div style="text-align: center">
-									<span><c:out value="${username}" /></span>
+									<span id="username">{{user.username}}</span>
 								</div>
 							</div>
 						</section>
 					</div>
 
-					<div class="col-lg-4">
+					<div class="col-lg-4" ng-controller="ModalCtrl">
 						<section class="panel panel-info">
 							<header class="panel-heading" align="center">
 								<p style="font-size: 20px">Balance:</p>
+								
 							</header>
 							<div class="panel-body">
-								<div ng-controller="ModalCtrl" style="text-align: center">
-									<span><c:out value="${cash}" /></span>
+								<div class="row">
+									<div  style="text-align: center" class="col-lg-7">
+									<span><b style="color: #27B63F;vertical-align: sub;font-size: 28px;margin-left: 5px;">
+										{{user.cash | currency}}
+									</b></span>
+									
 									<div id="addSuccess"
 										ng-show="addSuccess&&!sellSuccess&&!sellSuccess">Add
 										Credit Success!</div>
-									<br>
-									<button id="addBalance" class="btn btn-primary btn-sm"
-										ng-click="openAdd()">Add Balance</button>
+									</div>
+									<div class="col-lg-3">
+										<button id="addBalance" class="btn btn-primary btn-sm"
+											ng-click="openAdd()">Add Balance</button>
+									</div>
 								</div>
 							</div>
 						</section>
@@ -426,7 +665,9 @@ need attention here -->
 							</header>
 							<div class="panel-body">
 								<div style="text-align: center">
-									<span><c:out value="${balance}" /></span>
+									<span><b style="color: #27B63F;vertical-align: sub;font-size: 28px;margin-left: 5px;">
+										{{user.balance | currency}}
+									</b></span>
 								</div>
 							</div>
 						</section>
@@ -434,7 +675,7 @@ need attention here -->
 
 				</div>
 
-				<div class="col-lg-12">
+				<div class="col-lg-12" ng-controller="ModalCtrl">
 					<section class="panel panel-info">
 						<header class="panel-heading" align="center">
 							<p style="font-size: 20px">Open Positions</p>
@@ -451,6 +692,12 @@ need attention here -->
 											<!--  <th>Stock Name</th> -->
 											<th>Quantity</th>
 											<th>Average Cost</th>
+											<th>Cost</th>
+											<th>Market Price</th>
+											<th>Daily Change</th>
+											<th>Daily Change(%)</th>
+											<th>Gain/Loss</th>
+											<th>Gain/Loss(%)</th>
 											<th>Action</th>
 											<!-- <th>Change</th>
 		                                 <th>Change%</th> -->
@@ -458,9 +705,57 @@ need attention here -->
 										</tr>
 										<tr ng-repeat="stock in ownStocks">
 											
-											<td>{{stock.stockSymbol}}</td>
+											<td style="font-weight: bold;">{{stock.stockSymbol}}</td>
 											<td>{{stock.quantity}}</td>
-											<td>{{stock.avgCost}}</td>
+											<td>{{stock.avgCost | number:2}}</td>
+											<td>{{stock.avgCost * stock.quantity | number:2}}</td>
+											<td>{{stock.stockInfo.price}}</td>
+											<%-- <td ng-if="stock.stockInfo.change>0" highlighter="stock.stockInfo.price">
+												&#36{{stock.stockInfo.change | number:2}}
+											</td>
+											<td ng-if="stock.stockInfo.change<0" highlighter2="stock.stockInfo.price">
+												&#36{{stock.stockInfo.change | number:2}}
+											</td>
+											<td ng-if="stock.stockInfo.change==0" style="color:black">
+												&#36{{stock.stockInfo.change | number:2}}
+											</td>
+											<td ng-if="stock.stockInfo.change>0" highlighter="stock.stockInfo.price">
+												{{stock.stockInfo.pchange }}
+											</td>
+											<td ng-if="stock.stockInfo.change<0" highlighter2="stock.stockInfo.price">
+												{{stock.stockInfo.pchange }}
+											</td>
+											<td ng-if="stock.stockInfo.change==0" style="color:black">
+												{{stock.stockInfo.pchange }}
+											</td> --%>
+											<td >
+									<b ng-if="stock.stockInfo.change>0" style="color:green">&#36{{stock.stockInfo.change| number:2}} <span class="glyphicon glyphicon-arrow-up"></span></b>
+									<b ng-if="stock.stockInfo.change<0"  style="color:red">&#36{{stock.stockInfo.change| number:2}} <span class="glyphicon glyphicon-arrow-down"></span></b>
+									<b ng-if="stock.stockInfo.change==0"  style="color:black">&#36{{stock.stockInfo.change| number:2}}</b>
+								</td>
+								<td >
+									<b ng-if="stock.stockInfo.pchange.indexOf('-')>-1" style="color:red">{{stock.stockInfo.pchange}} <span class="glyphicon glyphicon-arrow-down"></span></b>
+									<b ng-if="stock.stockInfo.pchange.indexOf('+')>-1"  style="color:green">{{stock.stockInfo.pchange}} <span class="glyphicon glyphicon-arrow-up"></span></b>
+									<b ng-if="stock.stockInfo.pchange.indexOf('0')==0" style="color:black">{{stock.stockInfo.pchange}}</b>
+								</td>
+											<td ng-if="stock.stockInfo.price*stock.quantity - stock.avgCost * stock.quantity> 0" style="color: #093; font-weight: bold;">
+												&#36{{stock.stockInfo.price*stock.quantity - stock.avgCost * stock.quantity | number:2}}
+											</td>
+											<td ng-if="stock.stockInfo.price*stock.quantity - stock.avgCost * stock.quantity< 0" style="color: #d14836; font-weight: bold;">
+												&#36{{stock.stockInfo.price*stock.quantity - stock.avgCost * stock.quantity | number:2}}
+											</td>
+											<td ng-if="stock.stockInfo.price*stock.quantity - stock.avgCost * stock.quantity==0" style="color:black; font-weight: bold;">
+												&#36{{stock.stockInfo.price*stock.quantity - stock.avgCost * stock.quantity | number:2}}
+											</td>
+											<td ng-if="stock.stockInfo.price*stock.quantity - stock.avgCost * stock.quantity> 0" style="color: #093; font-weight: bold;">
+												{{(stock.stockInfo.price*stock.quantity - stock.avgCost * stock.quantity)/ stock.stockInfo.price*stock.quantity | number:2}}&#37
+											</td>
+											<td ng-if="stock.stockInfo.price*stock.quantity - stock.avgCost * stock.quantity< 0" style="color: #d14836; font-weight: bold;">
+												{{(stock.stockInfo.price*stock.quantity - stock.avgCost * stock.quantity)/ stock.stockInfo.price*stock.quantity | number:2}}&#37
+											</td>
+											<td ng-if="stock.stockInfo.price*stock.quantity - stock.avgCost * stock.quantity==0" style="color:black; font-weight: bold;">
+												{{(stock.stockInfo.price*stock.quantity - stock.avgCost * stock.quantity)/ stock.stockInfo.price*stock.quantity | number:2}}&#37
+											</td>
 											<sec:authorize access="hasAnyRole('ADMIN', 'USER')">
 												<td>
 													<div class="btn-group">
@@ -468,11 +763,15 @@ need attention here -->
 														<a class="btn btn-success" href="#"
 															ng-click="pass(stock); openSell()">Sell</a>
 													</div>
+													<div class="btn-group">
+														<!--   <a class="btn btn-primary" href="#" ng-click="pass(stock); openBuy()">Buy</a> -->
+														<a class="btn btn-success" href="#"
+															ng-click="pass(stock); openBuy()">Buy</a>
+													</div>
 												</td>
+										
 											</sec:authorize>
-											<%-- <td ng-if="stock.change>0" highlighter="stock.price">&#36{{stock.price| number:2}}</td>
-										<td ng-if="stock.change<0" highlighter2="stock.price" >  &#36{{stock.price| number:2}}</td>
-										<td  ng-if="stock.change==0" style="color:black">&#36{{stock.price| number:2}}</td> --%>
+											
 										</tr>
 
 
@@ -480,7 +779,9 @@ need attention here -->
 								</table>
 
 							</form>
-
+						
+							<div id="buySuccess" ng-show="buySuccess&&!sellSuccess&&!addSuccess">Buying Transaction Success!</div>
+		          			<div id="sellSuccess" ng-show="sellSuccess&&!buySuccess&&!addSuccess">Selling Transaction Success!</div>
 						</div>
 					</section>
 
@@ -495,7 +796,9 @@ need attention here -->
 							<div class="panel-body">
 								<div class="tab-pane" id="chartjs">
 									<div class="row">
-										<div class="col-lg-6">
+										<div class="col-lg-1"></div>
+										
+										<div class="col-lg-5">
 											<header class="panel-heading" align="center"> Stock
 												Quantity Chart </header>
 											<div class="panel-body text-center" ng-controller="BarCtrl">
@@ -505,7 +808,7 @@ need attention here -->
 											</div>
 
 										</div>
-										<div class="col-lg-6">
+										<div class="col-lg-5">
 											<section class="panel">
 												<header class="panel-heading" align="center"> Asset Doughnut Chart </header>
 												<div class="panel-body text-center" ng-controller="PieCtrl">
@@ -516,6 +819,7 @@ need attention here -->
 												</div>
 											</section>
 										</div>
+										<div class="col-lg-1"></div>
 									</div>
 								</div>
 							</div>
@@ -656,21 +960,29 @@ need attention here -->
 		
 	</div> -->
 	
-	<div>
-	    <script type="text/ng-template" id="buyContent.html">
+	
+
+          
+			
+		</section>
+	</section>
+	 --%>
+
+		<div>
+			<script type="text/ng-template" id="buyContent.html">
         <div class="modal-header">
 			 <button type="button" class="close" ng-click="cancel()">&times;</button>
             <h3 class="modal-title">Buy Stock</h3>
         </div>
         <div class="modal-body" style="font-size:15px;">
             <label>Stock Symbol:  </label>
-			<b style=" font-family: 'Indie Flower', cursive; font-size:25px;"> {{buyItem.stock.symbol}}</b>
+			<b style=" font-family: 'Helvetica', cursive; font-size:25px;"> {{buyItem.stockSymbol}}</b>
 			<br/>
-			<label>Stock Name:  </label>
-			<b style=" font-family: 'Indie Flower', cursive; font-size:25px;"> {{buyItem.stockName}}</b>
+			<label>Company Name:  </label>
+			<b style=" font-family: 'Helvetica', cursive; font-size:25px;"> {{buyItem.stockInfo.companyName}}</b>
 			<br/>
 			<label>Unit Price:  </label>
-			<b style="font-family: 'Indie Flower', cursive; font-size:25px;"> {{buyItem.price}}</b>
+			<b style="font-family: 'Helvetica', cursive; font-size:25px;"> {{buyItem.stockInfo.price}}</b>
 			<br/>
 			<label>Quantity:  </label>
 			<input type="number" min="1" max={{upper}} value={{quan}} ng-model="quan"/>
@@ -679,28 +991,29 @@ need attention here -->
         <div class="modal-footer">
 		<div>		
 			<h5 style="margin-right:50px"><strong>Ready to buy <span style="color:red">{{quan}}</span>
-			shares of <span style="color:red">{{buyItem.stock.symbol}}</span> ? <strong></h5>
-			<h5><strong>Balance after transaction: <span style="color:red">
-			{{Math.round(user.balance - buyItem.price * quan) |currency}}</span><strong> </h5>
+			shares of <span style="color:red">{{buyItem.stockSymbol}}</span> ? <strong></h5>
+			<h5><strong>Cash after transaction: <span style="color:red">
+			{{Math.round(user.cash - buyItem.stockInfo.price * quan) |currency}}</span><strong> </h5>
 		</div>
             <button class="btn btn-success" type="button" ng-click="ok()">OK</button>
             <button class="btn btn-default" type="button" ng-click="cancel()">Cancel</button>
         </div>
-    </script>
-	    <script type="text/ng-template" id="sellContent.html">
+    	</script>
+		
+			<script type="text/ng-template" id="sellContent.html">
         <div class="modal-header">
  		<button type="button" class="close" ng-click="cancel()">&times;</button>
             <h3 class="modal-title">Sell Stocks </h3> 
         </div>
         <div class="modal-body" style="font-size:15px;">
             <label>Stock Symbol: </label>
-			<b style=" font-family: 'Indie Flower', cursive; font-size:25px;">{{sellItem.stock.symbol}}</b><br/>
-			<label>Stock Name: </label>
-			<b style=" font-family: 'Indie Flower', cursive; font-size:25px;">{{sellItem.stockName}}</b><br/>
+			<b style=" font-family: 'Helvetica'; font-size:25px;">{{sellItem.stockSymbol}}</b><br/>
+			<label>Company Name: </label>
+			<b style=" font-family: 'Helvetica'; font-size:25px;">{{sellItem.stockInfo.companyName}}</b><br/>
 			<label>Unit Price: </label>
-			<b style=" font-family: 'Indie Flower', cursive; font-size:25px;">{{sellItem.price}}</b><br/>
-			<label>Currently Own: </label>
-			<b style=" font-family: 'Indie Flower', cursive; font-size:25px;">{{getAmount(sellItem)}}</b><br/>
+			<b style=" font-family: 'Helvetica'; font-size:25px;">{{sellItem.stockInfo.price}}</b><br/>
+			<label>Open Position: </label>
+			<b style=" font-family: 'Helvetica'; font-size:25px;">{{getAmount(sellItem)}}</b><br/>
 			<label>Quantity: </label>
 			<input type="number" min="1" max={{getAmount(sellItem)}} value={{quan}} ng-model="quan"/>
 			<br/>	
@@ -709,85 +1022,14 @@ need attention here -->
 		<div>		
 			<h5 style="margin-right:50px"><strong>Ready to sell <span style="color:red">{{quan}}</span>
 			shares of <span style="color:red">{{sellItem.stock.symbol}}</span>? </strong></h5>
-			<h5><strong>Balance after transaction: <span style="color:red">$
-			{{Math.round(user.balance + sellItem.price * quan) | currency}}</span></strong></h5>
+			<h5><strong>Cash after transaction: <span style="color:red">
+			{{Math.round(user.cash + sellItem.stockInfo.price * quan) | currency}}</span></strong></h5>
 		</div><br/>
             <button class="btn btn-danger" type="button" ng-click="ok()">Sell</button>
             <button class="btn btn-default" type="button" ng-click="cancel()">Cancel</button>
         </div>
-    </script>
-	    <script type="text/ng-template" id="addContent.html">
-        <div class="modal-header">
-            <h3 class="modal-title" style="font-family:'Sonsie One', cursive;">Add Balance</h3>
-        </div>
-        <div class="modal-body">
-			<div class="modal-inner" style="text-align:center;padding:10px">
-				<label style="text-center;font-family:'Sonsie One',cursive;font-size: 25px;color: #184636;">Amount: </label>
-				<input type="number" min="1" max={{2147483647-balance}} value={{quan}} ng-model="quan"/>
-				<br><br>
-				<p style="text-center;font-family: 'Montserrat', sans-serif; font-size: medium;color: #184636;">You will have <span style="color:red">$ {{balance + quan}}</span> in your account,
-				<br>after adding <span style="color:red">$ {{quan}}</span></p>
-				<br>
-
-				<button class="btn btn-primary" type="button" ng-click="ok()">  Add  </button>
-            	<button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
-			</div>
-        </div>		
-        <div class="modal-footer">
-		<div>		
-        <button type="button" class="btn btn-danger" ng-click="cancel()">Close</button>
-        </div>
-    </script>
-	</div>	
-
-            <div class="row">
-              <!-- chart morris start -->
-              	<div class="col-lg-12">
-                	<section class="panel panel-info">
-                    	<header class="panel-heading" style="font-size:20px;" align="center">
-                        	Ownership Summary
-                      	</header>
-                      	<div class="panel-body">
-                        	<div class="tab-pane" id="chartjs">
-                      			<div class="row">
-                          		<!-- Line -->
-                          		<div class="col-lg-6">
-                              			<section class="panel">
-                                  			<header class="panel-heading" align="center">
-                                      			Stock Quantity Bar Chart
-                                  			</header>
-                                  			<div class="panel-body text-center" ng-controller="BarCtrl">
-												<canvas id="bar" class="chart chart-bar"
-												 		chart-data="data" chart-labels="labels" chart-series="series">
-												</canvas>
-                                  			</div>
-                              			</section>
-                          			</div>     
-                          			<div class="col-lg-6">
-                              			<section class="panel">
-                                  			<header class="panel-heading" align="center">
-                                      			Stock Value Doughnut Chart
-                                  			</header>
-                                  			<div class="panel-body text-center" ng-controller="PieCtrl">
-												<canvas id="doughnut" class="chart chart-doughnut" chart-data="data" chart-labels="labels" chart-legend="true">
-												</canvas> 
-                                  			</div>
-                              			</section>
-                          			</div>   
-                          			                       
-                      			</div>
-                      		</div>
-						</div>
-                    </section>
-              	</div>
-              <!-- chart morris start -->
-            </div>		
-			
-		</section>
-	</section>
-	 --%>
-
-		<div>
+    	</script>
+		
 			<script type="text/ng-template" id="addContent.html">
         <div class="modal-header">
             <h3 class="modal-title" style="font-family:'Sonsie One', cursive;">Add Balance</h3>
@@ -809,25 +1051,10 @@ need attention here -->
 		<div>		
         <button type="button" class="btn btn-danger" ng-click="cancel()">Close</button>
         </div>
-    </script>
+    		</script>
 		</div>
 
 	</div>
-	
-	
-	<!-- <!-- javascripts
-    <script src="js/jquery.js"></script>
-    <script src="js/jquery-1.8.3.min.js"></script>
-        nice scroll
-    <script src="js/jquery.scrollTo.min.js"></script>
-    <script src="js/jquery.nicescroll.js" type="text/javascript"></script>
-    chartjs
-    <script src="assets/chart-master/Chart.js"></script>
-    custom chart script for this page only
-	<script src="js/angular-chart.js"></script>
-
-    custome script for all page
-    <script src="js/scripts.js"></script> --> 
 	
 	<c:import url="page_component/footer.jsp"/>
 </body>
