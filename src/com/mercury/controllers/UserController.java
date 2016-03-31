@@ -16,7 +16,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.mercury.beans.Stock;
 import com.mercury.beans.User;
-import com.mercury.daos.UserStockTransactionDao;
 import com.mercury.dtos.OwnStock;
 import com.mercury.dtos.StockInfo;
 import com.mercury.dtos.TransactionInfo;
@@ -44,7 +43,6 @@ public class UserController {
 	@RequestMapping(value="/validUser", method = RequestMethod.GET)
 	@ResponseBody
 	public User getValidUser(Principal principal){
-		//System.out.println("In valid user");
 		String userName = null;		
 		if (principal == null || principal.getName() == null){
 			return null;
@@ -59,8 +57,6 @@ public class UserController {
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("portfolio1");
 		mav.addObject("username", username);
-		//System.out.println(username);
-		//System.out.println(us.getCash(username));
 		mav.addObject("balance", us.getBalance(username));
 		mav.addObject("cash", us.getCash(username));
 		return mav;
@@ -74,7 +70,6 @@ public class UserController {
 			return null;
 		}
 		String userName = principal.getName();
-		//System.out.println(userName);
 		List<OwnStock> ownedStock = us.getOwnedStocks(userName);
 		
 		return ownedStock;
@@ -84,14 +79,11 @@ public class UserController {
 	@RequestMapping(value = "/addCash", method = RequestMethod.POST)
 	@ResponseBody
 	public String addBalance(@RequestBody Integer amount, Principal principal) {
-		//String userName = SecurityContextHolder.getContext().getAuthentication().getName();
 		String userName = principal.getName();
-		//System.out.println(amount);
 		
 		//need to code to verify the amount is acceptable
 		if(amount==null) amount=0;
 		
-		// if()
 		us.addCash(userName, amount);
 		return "success";
 	}
@@ -109,7 +101,6 @@ public class UserController {
 			return null;
 		}
 		String userName = principal.getName();
-		System.out.println("In UserController, username:" + userName);
 		List<StockInfo> watchedStocks = us.getWatchListInfo(userName);
 		
 		return watchedStocks;
@@ -129,7 +120,6 @@ public class UserController {
 			return null;
 		}
 		String userName = principal.getName();
-		System.out.println(userName);
 		us.addWatchList(userName, symbol);
 		return us.getWatchListInfo(userName);
 	}
@@ -149,7 +139,6 @@ public class UserController {
 			return null;
 		}
 		String userName = principal.getName();
-		System.out.println(userName);
 		us.deleteWatchList(userName, symbol);
 		return us.getWatchListInfo(userName);
 	}
@@ -169,7 +158,6 @@ public class UserController {
 			return null;
 		}
 		String userName = principal.getName();
-		System.out.println(userName);
 		List<TransactionInfo> tranHistory = ts.getTranHistory(userName);
 		
 		return tranHistory;
