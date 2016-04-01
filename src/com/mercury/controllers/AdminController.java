@@ -48,7 +48,7 @@ public class AdminController {
 	 * admin query all stock in stock pool
 	 * @author Yi
 	 */
-	@RequestMapping(value="admin/allStock/", method=RequestMethod.GET)
+	@RequestMapping(value="admin/allStock", method=RequestMethod.GET)
 	@ResponseBody
 	public List<Stock> allStock(){
 		return ss.getAllStock();
@@ -61,7 +61,7 @@ public class AdminController {
 	 * @return
 	 * @author Yi
 	 */
-	@RequestMapping(value="admin/allCommittedHistory/", method=RequestMethod.GET)
+	@RequestMapping(value="admin/allCommittedHistory", method=RequestMethod.GET)
 	@ResponseBody
 	public List<TransactionInfo> allCommittedHistory(){
 		return ts.getAllCommitTranHistory();
@@ -75,7 +75,7 @@ public class AdminController {
 	 * @return
 	 * @author Yi
 	 */
-	@RequestMapping(value="admin/allPendingHistory/", method=RequestMethod.GET)
+	@RequestMapping(value="admin/allPendingHistory", method=RequestMethod.GET)
 	@ResponseBody
 	public List<TransactionInfo> allPendingHistory(){
 		return ts.getAllPendingTranHistory();
