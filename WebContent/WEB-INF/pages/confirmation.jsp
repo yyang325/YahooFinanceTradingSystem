@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@taglib uri="http://www.springframework.org/security/tags" prefix="sec"%>
@@ -6,28 +5,32 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Confirmation page</title>
+
+<!-- Bootstrap core JavaScript
+    ================================================== -->
+    <script src="bower_component/jquery/dist/jquery.min.js"></script>
+<!--     <script>window.jQuery || document.write('<script src="bower_component/assets/js/vendor/jquery.min.js"><\/script>')</script> -->
+    <link href="bower_component/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="bower_component/bootstrap/dist/js/bootstrap.min.js"></script>
+    <link href="bower_component/bootstrap/dist/css/bootstrap-theme.min.css" rel="stylesheet">
+    <script src="bower_component/angular/angular.min.js"></script>
+
 <!-- for header and footer -->
+<!-- Customize Javascript -->
+   <script type="text/javascript" src="bower_component/app.js"></script>
  <link href="css/landing-page.css" rel="stylesheet"> 
 <link href="css/stylesheet.css" rel="stylesheet">
 <script src="js/header.js"></script>
 
-<!-- Custom Fonts -->
-<link rel="stylesheet" type="text/css" href="css/bootstrap.css">
-<link rel="stylesheet" type="text/css"
-	href="fonts/font-awesome/css/font-awesome.css">
-	
+<!-- Bootstrap core CSS -->
+<link href="bower_component/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+
 <!-- Custom styles for this template -->
 <link href="bower_component/sticky-footer-navbar.css" rel="stylesheet">
 
-<!-- Slider
-    ================================================== -->
-<link href="css/owl.carousel.css" rel="stylesheet" media="screen">
-<link href="css/owl.theme.css" rel="stylesheet" media="screen">
 
-<!-- Stylesheet
-    ================================================== -->
-<link rel="stylesheet" type="text/css" href="css/style.css">
-<link rel="stylesheet" type="text/css" href="css/responsive.css">
+	
+
 
 <link
 	href='http://fonts.googleapis.com/css?family=Lato:100,300,400,700,900,100italic,300italic,400italic,700italic,900italic'
@@ -36,13 +39,8 @@
 	href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,700,300,600,800,400'
 	rel='stylesheet' type='text/css'>
 
-<link href="css/extra/style.css" rel="stylesheet">
-<link href="css/stylesheet.css" rel="stylesheet">
-<script src="js/angular.min.js"></script>
-<script src="js/jquery.min.js"></script>
-<script src="js/bootstrap.min.js"></script>
-<link href="css/stylesheet.css" rel="stylesheet">
-<link rel="stylesheet" href="css/bootstrap.min.css">
+
+
 <link href='https://fonts.googleapis.com/css?family=Dosis'
 	rel='stylesheet' type='text/css'>
 </head>
@@ -65,7 +63,7 @@
 			<div class="collapse navbar-collapse"
 				id="bs-example-navbar-collapse-1">
 
-				<sec:authorize>
+				<sec:authorize access="hasAnyRole('ADMIN', 'USER')">
 					<ul class="nav navbar-nav navbar-right col-md-2">
 						<li style="float: right;"><a href="login.html"> <span
 								class="glyphicon glyphicon-log-in"></span> Sign in
@@ -83,9 +81,9 @@
 				<div class="col-lg-12">
 					<div class="intro-message">
 						<h2 style="font-family: 'Dosis', sans-serif; font-size: 75px">
-							${userInfo.message}</h2>
+							${username}</h2>
 						<p style="font-size: 38px">Please check your email.
-						</h2>
+					
 					</div>
 				</div>
 			</div>

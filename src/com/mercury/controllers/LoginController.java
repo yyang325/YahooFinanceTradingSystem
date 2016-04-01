@@ -126,17 +126,18 @@ public class LoginController {
 			User user, BindingResult result) throws Exception {
 		
 		//save the user to db
-		System.out.println(user.getUsername());
-		System.out.println(user.getPassword());
-		System.out.println(user.getEmail());
+		//System.out.println(user.getUsername());
+		//System.out.println(user.getPassword());
+		//System.out.println(user.getEmail());
 		if (user != null){
 			us.saveNewUser(user);
 		}
 		
+		String username = user.getUsername();
 		mu.sendMail(user.getUsername(), user.getEmail());
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("confirmation");
-		//mav.addObject("userInfo", userInfo);
+		mav.addObject("username", username);
 		return mav;
 	}
 	
