@@ -117,11 +117,10 @@
         <c:import url="watchlist.jsp"/>
     </script>
     
-    <%-- 
-     <script type = "text/ng-template" id = "portfolio.html">
-        <c:import url="portfolio1.jsp"/>
+    
+     <script type = "text/ng-template" id = "history.html">
+        <c:import url="history.jsp"/>
     </script>
-    --%>
    
     
       

@@ -18,6 +18,7 @@ import org.hibernate.annotations.GenericGenerator;
 
 @Entity
 @Table(name="yfts_stock")
+@JsonIgnoreProperties(value={"watchingUsers", "trans"})
 public class Stock {
 	@GenericGenerator(name="generator", strategy="increment")
 	@Id
@@ -31,11 +32,11 @@ public class Stock {
 	@Column(name="stockdesc")
 	private String stockDesc;
 	
-	@JsonIgnore
+//	@JsonIgnore
 	@ManyToMany(fetch = FetchType.EAGER, mappedBy = "watchedStocks")
 	private Set<User> watchingUsers = new HashSet<>();
 	
-	@JsonIgnore
+//	@JsonIgnore
 	@OneToMany(mappedBy = "stock", fetch = FetchType.EAGER)
 	private Set<UserStockTransaction> trans = new HashSet<>();
 	

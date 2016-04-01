@@ -18,6 +18,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import org.hibernate.annotations.GenericGenerator;
 
 /**
@@ -30,6 +31,7 @@ import org.hibernate.annotations.GenericGenerator;
 
 @Entity
 @Table(name="yfts_user")
+@JsonIgnoreProperties(value={"watchedStocks", "trans"})
 public class User implements Serializable{
 	/**
 	 * 
@@ -69,7 +71,7 @@ public class User implements Serializable{
 	@Column(name="enable")
 	private int enable;
 	
-	@JsonIgnore
+//	@JsonIgnore
 	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinTable(
 		name = "yfts_watchlist", 
@@ -78,7 +80,7 @@ public class User implements Serializable{
 	)
 	private Set<Stock> watchedStocks = new HashSet<>();
 	
-	@JsonIgnore
+//	@JsonIgnore
 	@OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
 	private Set<UserStockTransaction> trans = new HashSet<>();
 	

@@ -104,6 +104,26 @@ var mainApp = angular.module("mainApp", ["ngRoute","ngAnimate", "ui.bootstrap", 
             updateAllStock();
             $interval(updateAllStock, 60000);
         });
+
+
+        mainApp.controller("historyCtrl", function($scope, $http, $interval){
+            $scope.message = "this is history page -- testing message.";
+            $scope.historyRecords = [];
+
+            var updateHistory = function(){
+                console.log("checking all history");
+                $http({
+                    method: 'GET',
+                    url: 'getTranHistory'
+                }).then(function(response){
+                    $scope.historyRecords = response.data;
+                    console.log("response:", response);
+                });
+            };
+
+            updateHistory();
+            $interval(updateHistory, 2000);
+        });
         
         
         

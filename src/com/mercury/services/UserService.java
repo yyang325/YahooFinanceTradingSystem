@@ -343,6 +343,7 @@ public class UserService {
 			BufferedReader in = new BufferedReader(new InputStreamReader(urlconn.getInputStream()));
 			String content = in.readLine();
 			content = content.replace((char)34, (char)32);//' ' replace '"'
+			System.out.println(content);
 			String[] token_info = content.split(",");
 			if (token_info.length <4) return null;
 			if(!token_info[token_info.length-4].trim().equals("N/A")){
