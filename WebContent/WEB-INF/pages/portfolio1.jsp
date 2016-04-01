@@ -118,22 +118,21 @@
 												&#36{{stock.stockInfo.price*stock.quantity - stock.avgCost * stock.quantity | number:2}}
 											</td>
 											<td ng-if="stock.stockInfo.price*stock.quantity - stock.avgCost * stock.quantity> 0" style="color: #093; font-weight: bold;">
-												{{(stock.stockInfo.price*stock.quantity - stock.avgCost * stock.quantity)/ stock.stockInfo.price*stock.quantity | number:2}}&#37
+												{{(stock.stockInfo.price*stock.quantity - stock.avgCost * stock.quantity)*100/ (stock.avgCost * stock.quantity)| number:2}}&#37
 											</td>
 											<td ng-if="stock.stockInfo.price*stock.quantity - stock.avgCost * stock.quantity< 0" style="color: #d14836; font-weight: bold;">
-												{{(stock.stockInfo.price*stock.quantity - stock.avgCost * stock.quantity)/ stock.stockInfo.price*stock.quantity | number:2}}&#37
+												{{(stock.stockInfo.price*stock.quantity - stock.avgCost * stock.quantity)*100/ (stock.avgCost * stock.quantity) | number:2}}&#37
 											</td>
 											<td ng-if="stock.stockInfo.price*stock.quantity - stock.avgCost * stock.quantity==0" style="color:black; font-weight: bold;">
-												{{(stock.stockInfo.price*stock.quantity - stock.avgCost * stock.quantity)/ stock.stockInfo.price*stock.quantity | number:2}}&#37
+												{{(stock.stockInfo.price*stock.quantity - stock.avgCost * stock.quantity)*100 / (stock.avgCost * stock.quantity) | number:2}}&#37
 											</td>
 											<sec:authorize access="hasAnyRole('ADMIN', 'USER')">
 												<td>
+												
 													<div class="btn-group">
 														<!--   <a class="btn btn-primary" href="#" ng-click="pass(stock); openBuy()">Buy</a> -->
 														<a class="btn btn-success" href="#portfolio"
 															ng-click="pass(stock); openSell()">Sell</a>
-													</div>
-													<div class="btn-group">
 														<!--   <a class="btn btn-primary" href="#" ng-click="pass(stock); openBuy()">Buy</a> -->
 														<a class="btn btn-success" href="#portfolio"
 															ng-click="pass(stock); openBuy()">Buy</a>

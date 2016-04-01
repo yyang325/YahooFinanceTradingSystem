@@ -109,7 +109,7 @@ public class UserController {
 			return null;
 		}
 		String userName = principal.getName();
-		System.out.println("In UserController, username:" + userName);
+		//System.out.println("In UserController, username:" + userName);
 		List<StockInfo> watchedStocks = us.getWatchListInfo(userName);
 		
 		return watchedStocks;
@@ -129,7 +129,7 @@ public class UserController {
 			return null;
 		}
 		String userName = principal.getName();
-		System.out.println(userName);
+		//System.out.println(userName);
 		us.addWatchList(userName, symbol);
 		return us.getWatchListInfo(userName);
 	}
@@ -149,7 +149,7 @@ public class UserController {
 			return null;
 		}
 		String userName = principal.getName();
-		System.out.println(userName);
+		//System.out.println(userName);
 		us.deleteWatchList(userName, symbol);
 		return us.getWatchListInfo(userName);
 	}
@@ -169,7 +169,7 @@ public class UserController {
 			return null;
 		}
 		String userName = principal.getName();
-		System.out.println(userName);
+		//System.out.println(userName);
 		List<TransactionInfo> tranHistory = ts.getTranHistory(userName);
 		
 		return tranHistory;
