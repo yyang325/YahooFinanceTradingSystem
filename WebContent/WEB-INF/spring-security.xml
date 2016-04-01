@@ -15,7 +15,7 @@
     	<sec:intercept-url pattern="/stock*" access="hasRole('ADMIN')"/>
     	<sec:intercept-url pattern="/portfolio*" access="hasRole('USER')"/>
     	<sec:intercept-url pattern="/history*" access="hasRole('USER')"/>
-    	<sec:intercept-url pattern="/login_auto*" access="isAnonymous()"/>
+    	<sec:intercept-url pattern="/login_auto*" access="hasRole('USER')"/>
     	<sec:form-login 
         	login-page="/login"
         	default-target-url="/home"
