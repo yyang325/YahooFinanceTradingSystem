@@ -60,8 +60,8 @@ public class UserService {
 	 */
 	public void saveNewUser(User user) throws Exception{
 		user.setAuthority("USER");
-		user.setBalance(0.0);
 		user.setCash(100000.0);
+		user.setBalance(100000.0);
 		System.out.println(user.getPassword());
 		user.setPassword(user.MD5Hashing(user.getPassword()));
 		//user account is not activated yet
@@ -305,7 +305,7 @@ public class UserService {
 		List<StockInfo> res = new ArrayList<>();
 		List<Stock> stocks = getAllStock(username);
 		for(Stock s: stocks){
-			System.out.println(s.getSymbol());
+			//System.out.println(s.getSymbol());
 			res.add(getStockInfo(s));
 		}
 		return res;
@@ -343,6 +343,7 @@ public class UserService {
 			BufferedReader in = new BufferedReader(new InputStreamReader(urlconn.getInputStream()));
 			String content = in.readLine();
 			content = content.replace((char)34, (char)32);//' ' replace '"'
+			System.out.println(content);
 			String[] token_info = content.split(",");
 			if (token_info.length <4) return null;
 			if(!token_info[token_info.length-4].trim().equals("N/A")){
