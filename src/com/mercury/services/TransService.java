@@ -219,7 +219,7 @@ public class TransService {
 	
 	/**
 	 * get user transaction history
-	 * @param stock
+	 * @param username
 	 * @return
 	 * @author Yi
 	 */
@@ -263,5 +263,56 @@ public class TransService {
 	}
 	
 	
+	
+	/**
+	 * admin get all user's committed transaction history
+	 * @return
+	 * @author Yi
+	 */
+	public List<TransactionInfo> getAllCommitTranHistory(){
+		List<TransactionInfo> res = new ArrayList<>();
+		List<UserStockTransaction> list = td.queryAll();
+		for(UserStockTransaction t: list){
+			String type = (t.getQuantity() >= 0) ? "BUY" : "SELL";
+			res.add(
+				new TransactionInfo(t.getUser().getUsername(),
+									t.getStock().getSymbol(),
+									t.getPrice(),
+									t.getQuantity(),
+									t.getTs(),
+									type,
+									"COMMITTED")
+			);
+		}
+		
+		return res;
+	}
+	
+	
+	
+	
+	/**
+	 * admin get all user's pending transaction history
+	 * @return
+	 * @author Yi
+	 */
+	public List<TransactionInfo> getAllPendingTranHistory(){
+		List<TransactionInfo> res = new ArrayList<>();
+		List<UserStockTransaction> list = getAllPendings();
+		for(UserStockTransaction t: list){
+			String type = (t.getQuantity() >= 0) ? "BUY" : "SELL";
+			res.add(
+				new TransactionInfo(t.getUser().getUsername(),
+									t.getStock().getSymbol(),
+									t.getPrice(),
+									t.getQuantity(),
+									t.getTs(),
+									type,
+									"PENDING")
+			);
+		}
+		
+		return res;
+	}
 	
 }
