@@ -1,7 +1,9 @@
- mainApp.controller("mainController", ["$scope", "$http", "$interval", "$rootScope","shared", 
-    	                                  function($scope, $http, $interval, $rootScope, shared) {
+ mainApp.controller("transController", ["$scope", "$http", "$interval", "$timeout", "$rootScope","shared", 
+    	                                  function($scope, $http, $interval, $timeout, $rootScope, shared) {
     		$scope.user;
-    		console.log("in main controller");
+    		//console.log("in main controller");
+    		//user's total value
+    		
     		$http.get("validUser")
     		.success(function(data) {
     			//console.log(data);
@@ -16,7 +18,7 @@
     		
     		// refresh portofoli every 2 secnods
     		$interval(function() {
-    			console.log("in interval");
+    			//console.log("in interval");
     			$http.get("getPortfolio").
     			success(function(data) {
     				//console.log(resp);
@@ -34,8 +36,8 @@
     		}, 2000);
     		
     		$scope.pass = function(stock) {
-    			//console.log("In pass");
-    			//console.log(stock);
+    			console.log("In pass");
+    			console.log(stock);
     			shared.setStock(stock);
     		};
     		
@@ -47,6 +49,28 @@
     			}
     			return false;
     		};
+    		
+    		/*$scope.asset;
+    		$interval(function() {
+    			$scope.asset = $scope.user.cash;
+    			for (var i=0; i<$scope.ownStocks.length; i++){
+    				//console.log($scope.ownStocks[i]);
+    				$scope.asset = $scope.asset + $scope.ownStocks[i].stockInfo.price * $scope.ownStocks[i].quantity;
+    			}
+    			console.log($scope.asset);
+    		}, 2000);*/
+    		
+    		$timeout(function () {
+    			$scope.asset;
+        		$interval(function() {
+        			$scope.asset = $scope.user.cash;
+        			for (var i=0; i<$scope.ownStocks.length; i++){
+        				//console.log($scope.ownStocks[i]);
+        				$scope.asset = $scope.asset + $scope.ownStocks[i].stockInfo.price * $scope.ownStocks[i].quantity;
+        			}
+        			//console.log($scope.asset);
+        		}, 2000);
+	        }, 1000);
     		
     	}]);
     	
@@ -88,6 +112,7 @@
     		$scope.openBuy = function () {		
     			$scope.user = shared.getUser();
     			$scope.buyItem = shared.getStock();
+    			console.log($scope.buyItem);
     			var modalInstance = $modal.open({
     				animation: $scope.animationsEnabled,
     				templateUrl: 'buyContent.html',

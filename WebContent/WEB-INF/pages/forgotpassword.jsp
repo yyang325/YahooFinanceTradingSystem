@@ -34,7 +34,7 @@
 <link rel="stylesheet" type="text/css" href="bower_component/fontawesome/css/font-awesome.min.css">
 
 <!-- a customerized js -->
-<script src="js/app2.js"></script>
+<!-- <script src="js/app2.js"></script> -->
 
 <!-- modernizr -->
 <!-- need attention here -->
@@ -47,6 +47,27 @@
 
 <!-- animate -->
 <link rel="stylesheet" href="bower_component/animate-css/animate.min.css" type="text/css">
+
+<!-- Stylesheet ================================================== -->
+<link rel="stylesheet" type="text/css" href="css/style.css">
+<link rel="stylesheet" type="text/css" href="css/responsive.css">
+<link href='http://fonts.googleapis.com/css?family=Lato:100,300,400,700,900,100italic,300italic,400italic,700italic,900italic' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,700,300,600,800,400' rel='stylesheet' type='text/css'>
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+<!-- Bootstrap Core CSS -->
+<link href="css/bootstrap.min.css" rel="stylesheet">
+<!-- Custom CSS -->
+<link href="css/stylesheet.css" rel="stylesheet">
+<link href="css/landing-page.css" rel="stylesheet">
+<link rel="stylesheet" href="css/animate.min.css" type="text/css">
+<link rel="stylesheet" href="css/creative.css" type="text/css">
+<!-- Custom Fonts -->
+<link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+<link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+
+<script type="text/javascript" src="js/modernizr.custom.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 
 <script>
 	var app = angular.module("mainApp", ["ngRoute","ngMessages"]);
@@ -109,10 +130,10 @@
 																	tabindex="1" class="form-control"
 																	placeholder="Enter your email address" ng-model="email"
 																	>
-																<!-- <div class="help-block" ng-messages="registerform.email.$error" ng-messages-multiple ng-if="registerform.email.$dirty">
+																 <div class="help-block" ng-messages="registerform.email.$error" ng-messages-multiple ng-if="registerform.email.$dirty">
 																	<p ng-message="required" style="color: #f05f40;">This field is required</p>
 																	<p ng-message="email" style="color: #f05f40;">This needs to be a valid email</p>	
-																</div> -->
+																</div>
 														<a href="#page1" ng-click="sendEmail()">Recover Account</a>
 														<div ng-view></div>
 													</div>

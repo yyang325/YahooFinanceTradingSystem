@@ -29,9 +29,9 @@ import com.mercury.services.UserService;
 public class TransController {
 	
 	@Autowired
-	private TransService ts;
+	TransService ts;
 	@Autowired
-	private UserService us;
+	UserService us;
 	
 	@RequestMapping(value="/getPending", method=RequestMethod.GET)
 	@ResponseBody
