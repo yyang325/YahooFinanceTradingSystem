@@ -45,6 +45,17 @@
 <!-- animate -->
 <link rel="stylesheet" href="bower_component/animate-css/animate.min.css" type="text/css">
 
+<!-- Custom CSS -->
+<link href="css/stylesheet.css" rel="stylesheet">
+<link href="css/landing-page.css" rel="stylesheet">
+<link rel="stylesheet" href="css/animate.min.css" type="text/css">
+<link rel="stylesheet" href="css/creative.css" type="text/css">
+<!-- Custom Fonts -->
+<link href="font-awesome/css/font-awesome.min.css" rel="stylesheet"
+	type="text/css">
+<link href="https://fonts.googleapis.com/css?family=Montserrat:400,700"
+	rel="stylesheet" type="text/css">
+
 <script>
 	
 		var app = angular.module("changePasswordApp", [ "ngMessages" ]);

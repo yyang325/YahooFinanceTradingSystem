@@ -58,7 +58,8 @@ public class TransService {
 	 */
 	public void addPending(UserStockTransaction trans){
 		System.out.println("in addpending in trans service");
-		User user = trans.getUser();
+		String username = trans.getUser().getUsername();
+		User user = ud.findByUserName(username);
 		double cash = user.getCash();
 		int amount = trans.getQuantity();
 		double price = trans.getPrice();
@@ -120,7 +121,9 @@ public class TransService {
 		//List<UserStockTransaction> transList = getAllPendings();
 		List<UserStockTransaction> allpendings = getAllPendings();
 		UserStockTransaction tx = allpendings.get(index);
-		User user = tx.getUser();
+		String username = tx.getUser().getUsername();
+		User user = ud.findByUserName(username);
+		
 		
 		//Calculate and update balance after transaction
 		double cash = user.getCash();
@@ -166,7 +169,9 @@ public class TransService {
 		List<UserStockTransaction> list = getAllPendings();
 		
 		UserStockTransaction tran = list.get(index);
-		User user = tran.getUser();
+		String username = tran.getUser().getUsername();
+		User user = ud.findByUserName(username);
+		
 		
 		//credit back user's cash
 		double cash = user.getCash();
@@ -199,7 +204,9 @@ public class TransService {
 		}
 		
 		for(UserStockTransaction tran: restore){
-			User user = tran.getUser();
+			String username = tran.getUser().getUsername();
+			User user = ud.findByUserName(username);
+			//User user = tran.getUser();
 			
 			//credit back user's cash
 			double cash = user.getCash();
@@ -261,8 +268,6 @@ public class TransService {
 		
 		return tranHistory;
 	}
-	
-	
 	
 	/**
 	 * admin get all user's committed transaction history

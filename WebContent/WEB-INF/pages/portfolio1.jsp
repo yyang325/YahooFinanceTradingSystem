@@ -4,7 +4,7 @@
 	
 	<div class="container">
 		<section id="main-content">
-			<section class="wrapper" ng-controller="mainController">
+			<section class="wrapper" ng-controller="transController">
 				<!-- page starts -->
 				<div class="row">
 					<div class="col-lg-4">
@@ -23,7 +23,7 @@
 					<div class="col-lg-4" ng-controller="ModalCtrl">
 						<section class="panel panel-info">
 							<header class="panel-heading" align="center">
-								<p style="font-size: 20px">Balance:</p>
+								<p style="font-size: 20px">Cash:</p>
 								
 							</header>
 							<div class="panel-body">
@@ -54,7 +54,7 @@
 							<div class="panel-body">
 								<div style="text-align: center">
 									<span><b style="color: #27B63F;vertical-align: sub;font-size: 28px;margin-left: 5px;">
-										{{user.balance | currency}}
+										{{asset | currency}}
 									</b></span>
 								</div>
 							</div>
@@ -165,9 +165,8 @@
 							<div class="panel-body">
 								<div class="tab-pane" id="chartjs">
 									<div class="row">
-										<div class="col-lg-1"></div>
 										
-										<div class="col-lg-5">
+										<div class="col-lg-6">
 											<header class="panel-heading" align="center"> Stock
 												Quantity Chart </header>
 											<div class="panel-body text-center" ng-controller="BarCtrl">
@@ -177,7 +176,7 @@
 											</div>
 
 										</div>
-										<div class="col-lg-5">
+										<div class="col-lg-6">
 											<section class="panel">
 												<header class="panel-heading" align="center"> Asset Doughnut Chart </header>
 												<div class="panel-body text-center" ng-controller="PieCtrl">
@@ -188,7 +187,6 @@
 												</div>
 											</section>
 										</div>
-										<div class="col-lg-1"></div>
 									</div>
 								</div>
 							</div>
