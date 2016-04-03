@@ -8,7 +8,8 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   
     <meta name="description" content="">
     <meta name="author" content="">
 
@@ -27,7 +28,38 @@
 
     <!-- Custom CSS -->
     <link rel="stylesheet" href="bower_component/css/creative.css" type="text/css">
+    
+     <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Oxygen:400,300,700">
 
+	<style>
+		body {
+  			height: 100%;
+		}
+		
+		.video {
+			margin: 0;
+  			padding: 0;
+  			position: fixed;
+  			top: 50%; left: 50%;
+  			z-index: 1;
+  			min-width: 100%;
+			  min-height: 100%;
+			  width: auto;
+			  height: auto;
+  			transform: translate(-50%, -50%);
+		}
+		
+		.header-content-inner {
+			position: relative;
+			  top: 30%;
+			  z-index: 2;
+			  margin: 0 auto;
+			  max-width: 720px;
+			  text-align: center;
+		}
+		
+	</style>
+	
 </head>
 
 <body id="page-top" ng-app="mainApp" ng-controller="mainCtrl">
@@ -42,7 +74,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand page-scroll" href="#page-top">Start Bootstrap</a>
+                <a class="navbar-brand page-scroll" href="#page-top"> <span style="font-size: 36px">YFTS</span></a>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
@@ -68,15 +100,22 @@
     </nav>
 
     <header>
+   		
         <div class="header-content">
+        	<video id="my-video" class="video" autoplay muted loop>
+    			<source src="media/demo.mp4" type="video/mp4">
+    	</video>	
             <div class="header-content-inner">
-                <h1>Your Favorite Source of Free Bootstrap Themes</h1>
+                <h1>Investing Streamlined</h1>
                 <hr>
-                <p>Start Bootstrap can help you build better websites using the Bootstrap CSS framework! Just download your template and start going, no strings attached!</p>
+                <p>Simplify your financial life with <b>YFTS</b> -- offering the investment insights plus the convenience of banking. Get
+					access to a full range of investments, easy-to-use tools and independent research</p>
                 <a href="#about" class="btn btn-primary btn-xl page-scroll">Find Out More</a>
             </div>
         </div>
     </header>
+    
+    
 
     <section class="bg-primary" id="about">
         <div class="container">
@@ -85,7 +124,7 @@
                     <h2 class="section-heading">We've got what you need!</h2>
                     <hr class="light">
                     <p class="text-faded">Start Bootstrap has everything you need to get your new website up and running in no time! All of the templates and themes on Start Bootstrap are open source, free to download, and easy to use. No strings attached!</p>
-                    <a href="#" class="btn btn-default btn-xl">Get Started!</a>
+                    <a href="#login" class="btn btn-default btn-xl">Get Started!</a>
                 </div>
             </div>
         </div>
@@ -133,9 +172,63 @@
             </div>
         </div>
     </section>
+    
+    <section>
+    	<div>
+    		<!-- TradingView Widget BEGIN -->
+			<script type="text/javascript" src="https://d33t3vvu2t2yu5.cloudfront.net/tv.js"></script>
+			<script type="text/javascript">
+			new TradingView.widget({
+			  "autosize": true,
+			  "symbol": "FX:SPX500",
+			  "interval": "D",
+			  "timezone": "America/New_York",
+			  "theme": "White",
+			  "style": "3",
+			  "locale": "en",
+			  "toolbar_bg": "#f1f3f6",
+			  "allow_symbol_change": true,
+			  "hideideas": true,
+			  "show_popup_button": true,
+			  "popup_width": "1000",
+			  "popup_height": "650",
+			  "no_referral_id": true
+			});
+			</script>
+			<!-- TradingView Widget END -->
+    	</div>
+    </section>
+    
+    <section>
+    	<div id="tv-miniwidget-dfa0f" class="markets_chart">
+			<!-- <div id="tf-market" class="markets_chart">-->
+			<div id="tradingview_690a3-wrapper"
+				style="position: relative; box-sizing: content-box; width: 100%; height: 530px; margin: 0 !important; padding: 0 !important; font-family: Arial, sans-serif;">
+				<div
+					style="width: 100%; height: 530px; background: #fff; padding: 0 !important;">
+					<iframe id="tradingview_690a3"
+						src="https://dwq4do82y8xi7.cloudfront.net/miniwidgetembed/?Equities=BABA,DIA,SPY,TWITTER,FACEBOOK,GOOGLE,MICROSOFT,ORACLE&amp;Commodities=GOLD,SILVER,OIL,GAS,BASE%20METALS,URANIUM,LITHIUM,WHEAT&amp;Bonds=1-3%20YEAR,3-7%20YEAR,7-10%20YEAR,20%20YEAR,SHORT%20TERM%20US,EURO%20DEBT,GERMANY%20BOND,ASIA%20LOCAL%20DEBT&amp;Forex=FX%3AEURUSD,FX%3AGBPUSD,FX%3AUSDJPY,FX%3AUSDCHF,FX%3AAUDUSD,FX%3AUSDCAD,FX%3ANZDUSD,FX%3AEURJPY&amp;tabs=Equities%2CCommodities%2CBonds%2CForex&amp;QQQ=NASDAQ%3AQQQ&amp;DIA=AMEX%3ADIA&amp;SPY=AMEX%3ASPY&amp;TWITTER=NYSE%3ATWTR&amp;FACEBOOK=NASDAQ%3AFB&amp;GOOGLE=NASDAQ%3AGOOG&amp;MICROSOFT=NASDAQ%3AMSFT&amp;ORACLE=NYSE%3AORCL&amp;GOLD=AMEX%3AGLD&amp;SILVER=AMEX%3ASLV&amp;OIL=AMEX%3AUSO&amp;GAS=AMEX%3AUNG&amp;BASE%20METALS=AMEX%3ADBB&amp;URANIUM=AMEX%3AURA&amp;LITHIUM=AMEX%3ALIT&amp;WHEAT=AMEX%3AWEAT&amp;1-3%20YEAR=AMEX%3ASHY&amp;3-7%20YEAR=AMEX%3AIEI&amp;7-10%20YEAR=AMEX%3AIEF&amp;20%20YEAR=AMEX%3ATLT&amp;SHORT%20TERM%20US=AMEX%3ASCHO&amp;EURO%20DEBT=AMEX%3AEU&amp;GERMANY%20BOND=FX%3ABUND&amp;ASIA%20LOCAL%20DEBT=AMEX%3AALD&amp;timeAxisBackgroundColor=%23F3F2F3&amp;activeTickerBackgroundColor=%23EDF0F3&amp;trendLineColor=%23FF7965&amp;underLineColor=%23F0F0F0&amp;fontColor=%2383888D&amp;gridLineColor=%23E9E9EA&amp;large_chart_url=http%3A%2F%2Fwww.investopedia.com%2Fmarkets%2Fsymbol-redirect.aspx&amp;width=100%25&amp;height=530px&amp;utmsource=www.investopedia.com&amp;utmmedium=www.investopedia.com/"
+						width="100%" height="530px" frameborder="0"
+						allowtransparency="true" scrolling="no"
+						style="margin: 0 !important; padding: 0 !important;"> </iframe>
+				</div>
+				<div
+					style="position: absolute; display: block; box-sizing: content-box; height: 24px; width: 100%; bottom: 0; left: 0; margin: 0; padding: 0; font-family: Arial, sans-serif;">
+					<div
+						style="display: block; margin: 0 1px 1px 1px; line-height: 7px; box-sizing: content-box; height: 11px; padding: 6px 10px; text-align: right; background: #fff;">
+						<a
+							href="https://www.tradingview.com/?utmsource=www.investopedia.com&amp;utmmedium=www.investopedia.com/"
+							target="_blank"
+							style="color: #0099d4; text-decoration: none; font-size: 11px;">
+						</a>
+					</div>
+				</div>
+			</div>
+		</div>
+    </section>
 
     <a name="login_up"></a>
-	<div id="tf-login" class="banner">
+	<div id="login" class="banner">
 		<div class="content-section-c">
 			<div class="container">
 				<div class="row">
