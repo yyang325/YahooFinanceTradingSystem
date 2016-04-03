@@ -25,11 +25,11 @@ public class UserStockTransaction {
 	@Column(name="tran_id")
 	private int tid;
 	
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne(cascade = CascadeType.MERGE)
 	@JoinColumn(name = "USER_ID")	
 	private User user;
 	
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne(cascade = CascadeType.MERGE)
 	@JoinColumn(name = "STOCK_ID")	
 	private Stock stock;
 	
