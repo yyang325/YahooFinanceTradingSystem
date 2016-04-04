@@ -89,5 +89,31 @@ public class AdminController {
 	
 	
 	
+	/**
+	 * admin commit a pending transaction
+	 * @param index
+	 * @author Yi
+	 */
+	@RequestMapping(value="admin/commitTran/{index}", method=RequestMethod.GET)
+	@ResponseBody
+	public void commitOnePending(@PathVariable int index){
+		ts.commitPending(index);
+	}
+	
+	
+	
+	/**
+	 * admin drop a pending transaction
+	 * @param index
+	 * @author Yi
+	 */
+	@RequestMapping(value="admin/dropTran/{index}", method=RequestMethod.GET)
+	@ResponseBody
+	public void dropOnePending(@PathVariable int index){
+		ts.dropPending(index);
+	}
+	
+	
+	
 
 }
