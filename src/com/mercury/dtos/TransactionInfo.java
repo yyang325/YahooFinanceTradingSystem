@@ -16,6 +16,7 @@ public class TransactionInfo {
 		this.username = username;
 		this.stockSymbol = stockSymbol;
 		this.quantity = quantity;
+		this.price = price;
 		this.date = date;
 		this.type = type;
 		this.status = status;
@@ -62,6 +63,17 @@ public class TransactionInfo {
 	}
 	public void setStatus(String status) {
 		this.status = status;
+	}
+	
+	@Override
+	public String toString(){
+		return "TransactionInfo: " + this.username + ", " +
+				this.stockSymbol + ", " +
+				this.price + ", " + 
+				this.quantity + ", " + 
+				this.type + ", " + 
+				this.type + ", " + 
+				this.date;
 	}
 	
 }

@@ -1,6 +1,5 @@
 package com.mercury.controllers;
 
-import java.security.Principal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +24,13 @@ public class AdminController {
 	private StockService ss;
 	@Autowired
 	private TransService ts;
+	
+	
+	@RequestMapping(value="admin", method=RequestMethod.GET)
+	public String adminPage(){
+		return "admin";
+	}
+	
 	
 	/**
 	 * admin add a stock to stock pool, and return all stock
