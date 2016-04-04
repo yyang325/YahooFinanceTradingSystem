@@ -60,6 +60,25 @@ var mainApp = angular.module("adminApp", ["ngRoute"]);
         	
         });
         
+        
+        mainApp.controller("transactionCtrl", function($scope, $http, $interval){
+        	
+        	$scope.pendingTran = [];
+        	$scope.committedTran = [];
+        	
+        	var showPendingTran = function(){
+        		$http.get("admin/allPendingHistory")
+        		.success(function(data){
+        			console.log(data);
+        			$scope.pendingTran = data;
+        		}).error(function(data){
+        			console.log("Ajax Error");
+        		});
+        	}
+        	
+        	showPendingTran();
+        	$interval(showPendingTran, 3000);
+        });
 
 		
         
