@@ -1,5 +1,7 @@
 package com.mercury.beans;
 
+import java.io.Serializable;
+import java.security.MessageDigest;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -15,11 +17,27 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import org.hibernate.annotations.GenericGenerator;
+
+/**
+ *
+ * @version update 03/24/2016
+ * @author Weibo
+ * 
+ * added toString method for testing
+ */
 
 @Entity
 @Table(name="yfts_user")
-public class User {
+@JsonIgnoreProperties(value={"watchedStocks", "trans"})
+public class User implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8128164586418919785L;
+
 	@GenericGenerator(name="generator", strategy="increment")
 	@Id
 	@GeneratedValue(generator="generator")
@@ -53,7 +71,8 @@ public class User {
 	@Column(name="enable")
 	private int enable;
 	
-	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+//	@JsonIgnore
+	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinTable(
 		name = "yfts_watchlist", 
 		joinColumns = {@JoinColumn(name="user_id") }, 
@@ -61,7 +80,8 @@ public class User {
 	)
 	private Set<Stock> watchedStocks = new HashSet<>();
 	
-	@OneToMany(mappedBy = "user")
+//	@JsonIgnore
+	@OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
 	private Set<UserStockTransaction> trans = new HashSet<>();
 	
 	public User(){}
@@ -90,8 +110,33 @@ public class User {
 		}
 	}
 	
+	@Override
+	public String toString() {
+		return uid + "\n" + username + "\n" + password + "\n" + email + "\n" 
+				+ firstName + "\n" + lastName + "\n" + cash + "\n" 
+					+ balance + "\n" + authority + "\n" + enable;
+	}
 	
-	
+	/*
+	 * This part of code is transfer the password encryption using MD5 security method
+	 * Take the password string from the user, and use the MD5 method to encryption password
+	 * In Database, it will store the password which after the MD5 encryption.
+	 * If you want to find the password, You can not find back you password, 
+	 * you have to set the password again. 
+	 */
+	public String MD5Hashing(String password) throws Exception {
+		MessageDigest md = MessageDigest.getInstance("MD5");
+		md.update(password.getBytes());
+		byte byteData[] = md.digest();
+		StringBuffer hexString = new StringBuffer();
+		for (int i = 0; i < byteData.length; i++) {
+			String hex = Integer.toHexString(0xff & byteData[i]);
+			if (hex.length() == 1)
+				hexString.append('0');
+			hexString.append(hex);
+		}
+		return hexString.toString();
+	}
 	
 	public int getUid() {
 		return uid;
