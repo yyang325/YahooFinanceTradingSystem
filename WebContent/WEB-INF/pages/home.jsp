@@ -40,6 +40,10 @@
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
 <!--     <script src="bower_component/assets/js/ie10-viewport-bug-workaround.js"></script> -->
     
+    <!-- for external script -->
+    <!-- <script src="bower_component/postscribe/dist/postscribe.min.js"></script>
+    <script src="bower_component/postscribe/htmlParser/htmlParser.js"></script> -->
+    
     <!-- for charts-->
     <script src="js/Chart.js"></script>
 	<script src="js/angular-chart.js"></script>
@@ -51,6 +55,15 @@
     <!-- Customize Javascript -->
     <script type="text/javascript" src="bower_component/app.js"></script>
     <script type="text/javascript" src="bower_component/transaction.js"></script>
+    <script type="text/javascript" src="bower_component/home.js"></script>
+    
+    <script>
+								var nof_headlines = 11; 
+								var author_id = '';				</script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.9.1/jquery-ui.min.js"></script>
+	<script src="http://static.amigobulls.com/js/news_widgets.min.js.gz"></script>
+	<link rel="stylesheet" type="text/css" href="http://static.amigobulls.com/css/news_widgets.min.css.gz" />
     
     <style>
     		#chartdiv {
@@ -112,6 +125,10 @@
     
 
     <div ng-view class="container"></div>
+    
+    <script type = "text/ng-template" id = "home.html">
+        <c:import url="home1.jsp"/>
+    </script>
          
     <script type = "text/ng-template" id = "watchlist.html">
         <c:import url="watchlist.jsp"/>

@@ -248,7 +248,7 @@
 						<h3 class='border'><a rel='nofollow' href='http://amigobulls.com/video/' title='Stock Analysis Videographs'>Stock Market News & Analysis</a></h3>
 						<ul id='listcontainer'>
 							<li class='colorgrey border'><a rel='nofollow' href='http://amigobulls.com/video/netflix-stock-analysis'  title= "Netflix Video - Analysis and Valuation">Netflix Video - Analysis and Valuation</a></li>
-							<li id='bulls_logo'><a rel='nofollow' href='http://amigobulls.com/' title='amigobulls.com - stock analysis videos'> <img  class='amigo_logo' src='http://static.amigobulls.com/v2images/amigobulls_logo.png' alt='amigobulls logo'/><span class='pow_text '>powered by</span></a></li>
+							<li id='bulls_logo'><a rel='nofollow' href='http://amigobulls.com/' title='amigobulls.com - stock analysis videos'> </li>
 						</ul>
 					</div>
 				</div>
@@ -288,10 +288,10 @@
 												style="height: 60px; text-align: center; font-size: 18px; color: #666; font-weight: bold;">
 												<div class="row">
 													<div class="col-xs-6">
-														<a href="#login" id="login-form-link" ng-click="switchForm(true)">Login</a>
+														<a href="#login" id="login-form-link" ng-click="switchForm(true)" class="page scroll">Login</a>
 													</div>
 													<div class="col-xs-6">
-														<a href="#login" id="register-form-link" ng-click="switchForm(false)">Register</a>
+														<a href="#login" id="register-form-link" ng-click="switchForm(false)" class="page scroll">Register</a>
 													</div>
 												</div>
 												<hr>
