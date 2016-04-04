@@ -21,7 +21,7 @@
     <!-- Custom Fonts -->
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
     <link href='http://fonts.googleapis.com/css?family=Merriweather:400,300,300italic,400italic,700,700italic,900,900italic' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" href="bower_component/font-awesome/css/font-awesome.min.css" type="text/css">
+    <link rel="stylesheet" href="bower_component/fontawesome/css/font-awesome.min.css" type="text/css">
 
     <!-- Plugin CSS -->
     <link rel="stylesheet" href="bower_component/css/animate.min.css" type="text/css">
@@ -43,7 +43,7 @@
   			top: 50%; left: 50%;
   			z-index: 1;
   			min-width: 100%;
-			  min-height: 100%;
+			min-height: 100%;
 			  width: auto;
 			  height: auto;
   			transform: translate(-50%, -50%);
@@ -56,6 +56,15 @@
 			  margin: 0 auto;
 			  max-width: 720px;
 			  text-align: center;
+		}
+		
+		#form{
+  			background: url('img/login_bg.jpg') no-repeat center center;
+  			-webkit-background-size: cover;
+  			-moz-background-size: cover;
+  			-o-background-size: cover;
+  			background-size: cover;
+  			min-height: 100%; 
 		}
 		
 	</style>
@@ -87,6 +96,9 @@
                         <a class="page-scroll" href="#services">Services</a>
                     </li>
                     <li>
+                        <a class="page-scroll" href="#services">Market</a>
+                    </li>
+                    <li>
                         <a class="page-scroll" href="#login">Login</a>
                     </li>
                     <li>
@@ -100,11 +112,11 @@
     </nav>
 
     <header>
-   		
+   			
         <div class="header-content">
         	<video id="my-video" class="video" autoplay muted loop>
     			<source src="media/demo.mp4" type="video/mp4">
-    	</video>	
+    	</video>
             <div class="header-content-inner">
                 <h1>Investing Streamlined</h1>
                 <hr>
@@ -118,135 +130,164 @@
     
 
     <section class="bg-primary" id="about">
+    	
+    
         <div class="container">
             <div class="row">
                 <div class="col-lg-8 col-lg-offset-2 text-center">
-                    <h2 class="section-heading">We've got what you need!</h2>
+                    <h2 class="section-heading">YFTS Streamlines Investing</h2>
                     <hr class="light">
-                    <p class="text-faded">Start Bootstrap has everything you need to get your new website up and running in no time! All of the templates and themes on Start Bootstrap are open source, free to download, and easy to use. No strings attached!</p>
-                    <a href="#login" class="btn btn-default btn-xl">Get Started!</a>
+                    <p class="text-faded">We believe investors deserve a better way. Trade with YFTS the way you want!</p>
+                    <a href="#login" class="btn btn-default btn-xl page-scroll">Start Trading</a>
                 </div>
             </div>
         </div>
     </section>
 
-    <section id="services">
+    <section id="services" style="padding: 100px 0px 200px 0px">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 text-center">
-                    <h2 class="section-heading">At Your Service</h2>
+                    <h2 class="section-heading">Streamlined Service</h2>
                     <hr class="primary">
                 </div>
             </div>
         </div>
-        <div class="container">
+        <div class="container" style="padding: 100px 0px 0px 0px">
             <div class="row">
                 <div class="col-lg-3 col-md-6 text-center">
                     <div class="service-box">
-                        <i class="fa fa-4x fa-diamond wow bounceIn text-primary"></i>
-                        <h3>Sturdy Templates</h3>
-                        <p class="text-muted">Our templates are updated regularly so they don't break.</p>
+                        <i class="fa fa-3x fa-usd wow bounceIn text-primary"></i>
+                        <h3>Simple flat-rate pricing</h3>
+                        <p class="text-muted">$5 unlimited online equity & ETF trades</p>
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-6 text-center">
                     <div class="service-box">
-                        <i class="fa fa-4x fa-paper-plane wow bounceIn text-primary" data-wow-delay=".1s"></i>
-                        <h3>Ready to Ship</h3>
-                        <p class="text-muted">You can use this theme as is, or you can make changes!</p>
+                        <i class="fa fa-3x fa-flash wow bounceIn text-primary" data-wow-delay=".1s"></i>
+                        <h3>Real time market-data</h3>
+                        <p class="text-muted">Real time data get you ahead of time</p>
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-6 text-center">
                     <div class="service-box">
-                        <i class="fa fa-4x fa-newspaper-o wow bounceIn text-primary" data-wow-delay=".2s"></i>
-                        <h3>Up to Date</h3>
-                        <p class="text-muted">We update dependencies to keep things fresh.</p>
+                        <i class="fa fa-3x fa-globe wow bounceIn text-primary" data-wow-delay=".2s"></i>
+                        <h3>Full range of investment choices</h3>
+                        <p class="text-muted">Stocks, ETFs, bonds and thousands of well-known mutual funds</p>
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-6 text-center">
                     <div class="service-box">
-                        <i class="fa fa-4x fa-heart wow bounceIn text-primary" data-wow-delay=".3s"></i>
-                        <h3>Made with Love</h3>
-                        <p class="text-muted">You have to make your websites with love these days!</p>
+                        <i class="fa fa-3x fa-heart wow bounceIn text-primary" data-wow-delay=".3s"></i>
+                        <h3>Analytic tools</h3>
+                        <p class="text-muted">Powerful analytic tools help you make the smart trades</p>
                     </div>
                 </div>
             </div>
         </div>
     </section>
     
-    <section>
-    	<div>
-    		<!-- TradingView Widget BEGIN -->
-			<script type="text/javascript" src="https://d33t3vvu2t2yu5.cloudfront.net/tv.js"></script>
-			<script type="text/javascript">
-			new TradingView.widget({
-			  "autosize": true,
-			  "symbol": "FX:SPX500",
-			  "interval": "D",
-			  "timezone": "America/New_York",
-			  "theme": "White",
-			  "style": "3",
-			  "locale": "en",
-			  "toolbar_bg": "#f1f3f6",
-			  "allow_symbol_change": true,
-			  "hideideas": true,
-			  "show_popup_button": true,
-			  "popup_width": "1000",
-			  "popup_height": "650",
-			  "no_referral_id": true
-			});
-			</script>
-			<!-- TradingView Widget END -->
-    	</div>
-    </section>
+   
     
-    <section>
-    	<div id="tv-miniwidget-dfa0f" class="markets_chart">
-			<!-- <div id="tf-market" class="markets_chart">-->
-			<div id="tradingview_690a3-wrapper"
-				style="position: relative; box-sizing: content-box; width: 100%; height: 530px; margin: 0 !important; padding: 0 !important; font-family: Arial, sans-serif;">
-				<div
-					style="width: 100%; height: 530px; background: #fff; padding: 0 !important;">
-					<iframe id="tradingview_690a3"
-						src="https://dwq4do82y8xi7.cloudfront.net/miniwidgetembed/?Equities=BABA,DIA,SPY,TWITTER,FACEBOOK,GOOGLE,MICROSOFT,ORACLE&amp;Commodities=GOLD,SILVER,OIL,GAS,BASE%20METALS,URANIUM,LITHIUM,WHEAT&amp;Bonds=1-3%20YEAR,3-7%20YEAR,7-10%20YEAR,20%20YEAR,SHORT%20TERM%20US,EURO%20DEBT,GERMANY%20BOND,ASIA%20LOCAL%20DEBT&amp;Forex=FX%3AEURUSD,FX%3AGBPUSD,FX%3AUSDJPY,FX%3AUSDCHF,FX%3AAUDUSD,FX%3AUSDCAD,FX%3ANZDUSD,FX%3AEURJPY&amp;tabs=Equities%2CCommodities%2CBonds%2CForex&amp;QQQ=NASDAQ%3AQQQ&amp;DIA=AMEX%3ADIA&amp;SPY=AMEX%3ASPY&amp;TWITTER=NYSE%3ATWTR&amp;FACEBOOK=NASDAQ%3AFB&amp;GOOGLE=NASDAQ%3AGOOG&amp;MICROSOFT=NASDAQ%3AMSFT&amp;ORACLE=NYSE%3AORCL&amp;GOLD=AMEX%3AGLD&amp;SILVER=AMEX%3ASLV&amp;OIL=AMEX%3AUSO&amp;GAS=AMEX%3AUNG&amp;BASE%20METALS=AMEX%3ADBB&amp;URANIUM=AMEX%3AURA&amp;LITHIUM=AMEX%3ALIT&amp;WHEAT=AMEX%3AWEAT&amp;1-3%20YEAR=AMEX%3ASHY&amp;3-7%20YEAR=AMEX%3AIEI&amp;7-10%20YEAR=AMEX%3AIEF&amp;20%20YEAR=AMEX%3ATLT&amp;SHORT%20TERM%20US=AMEX%3ASCHO&amp;EURO%20DEBT=AMEX%3AEU&amp;GERMANY%20BOND=FX%3ABUND&amp;ASIA%20LOCAL%20DEBT=AMEX%3AALD&amp;timeAxisBackgroundColor=%23F3F2F3&amp;activeTickerBackgroundColor=%23EDF0F3&amp;trendLineColor=%23FF7965&amp;underLineColor=%23F0F0F0&amp;fontColor=%2383888D&amp;gridLineColor=%23E9E9EA&amp;large_chart_url=http%3A%2F%2Fwww.investopedia.com%2Fmarkets%2Fsymbol-redirect.aspx&amp;width=100%25&amp;height=530px&amp;utmsource=www.investopedia.com&amp;utmmedium=www.investopedia.com/"
-						width="100%" height="530px" frameborder="0"
-						allowtransparency="true" scrolling="no"
-						style="margin: 0 !important; padding: 0 !important;"> </iframe>
-				</div>
-				<div
-					style="position: absolute; display: block; box-sizing: content-box; height: 24px; width: 100%; bottom: 0; left: 0; margin: 0; padding: 0; font-family: Arial, sans-serif;">
-					<div
-						style="display: block; margin: 0 1px 1px 1px; line-height: 7px; box-sizing: content-box; height: 11px; padding: 6px 10px; text-align: right; background: #fff;">
-						<a
-							href="https://www.tradingview.com/?utmsource=www.investopedia.com&amp;utmmedium=www.investopedia.com/"
-							target="_blank"
-							style="color: #0099d4; text-decoration: none; font-size: 11px;">
-						</a>
+    <section  id="market" style="padding: 0px 0px">
+    	<div class="bg-primary" style="padding: 50px">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <h2 class="section-heading">Streamlined Market</h2>
+                    <hr class="primary">
+                </div>
+            </div>
+        </div>
+    	
+            <div class="row" style="padding: 50px;">
+                <div class="col-lg-12 text-center">
+                	<div class="col-lg-1 col-md-11">
+                	</div>
+                    <div id="tv-miniwidget-dfa0f" class="col-lg-5 col-md-10 text-center markets_chart">
+						<div id="tf-market" class="markets_chart">
+							<div id="tradingview_690a3-wrapper"
+								style="position: relative; box-sizing: content-box; width: 100%; height: 530px; margin: 0 !important; padding: 0 !important; font-family: Arial, sans-serif;">
+								<div
+									style="width: 100%; height: 530px; background: #fff; padding: 0 !important;">
+									<iframe id="tradingview_690a3"
+										src="https://dwq4do82y8xi7.cloudfront.net/miniwidgetembed/?Equities=SPX500, NAS100, DOWI, JPN225,SPY, FTSE, DAX&amp;Commodities=GOLD,SILVER,OIL,GAS,BASE%20METALS,URANIUM,LITHIUM,WHEAT&amp;Bonds=1-3%20YEAR,3-7%20YEAR,7-10%20YEAR,20%20YEAR,SHORT%20TERM%20US,EURO%20DEBT,GERMANY%20BOND,ASIA%20LOCAL%20DEBT&amp;Forex=FX%3AEURUSD,FX%3AGBPUSD,FX%3AUSDJPY,FX%3AUSDCHF,FX%3AAUDUSD,FX%3AUSDCAD,FX%3ANZDUSD,FX%3AEURJPY&amp;tabs=Equities%2CCommodities%2CBonds%2CForex&amp;QQQ=NASDAQ%3AQQQ&amp;DIA=AMEX%3ADIA&amp;SPY=AMEX%3ASPY&amp;TWITTER=NYSE%3ATWTR&amp;FACEBOOK=NASDAQ%3AFB&amp;GOOGLE=NASDAQ%3AGOOG&amp;MICROSOFT=NASDAQ%3AMSFT&amp;ORACLE=NYSE%3AORCL&amp;GOLD=AMEX%3AGLD&amp;SILVER=AMEX%3ASLV&amp;OIL=AMEX%3AUSO&amp;GAS=AMEX%3AUNG&amp;BASE%20METALS=AMEX%3ADBB&amp;URANIUM=AMEX%3AURA&amp;LITHIUM=AMEX%3ALIT&amp;WHEAT=AMEX%3AWEAT&amp;1-3%20YEAR=AMEX%3ASHY&amp;3-7%20YEAR=AMEX%3AIEI&amp;7-10%20YEAR=AMEX%3AIEF&amp;20%20YEAR=AMEX%3ATLT&amp;SHORT%20TERM%20US=AMEX%3ASCHO&amp;EURO%20DEBT=AMEX%3AEU&amp;GERMANY%20BOND=FX%3ABUND&amp;ASIA%20LOCAL%20DEBT=AMEX%3AALD&amp;timeAxisBackgroundColor=%23F3F2F3&amp;activeTickerBackgroundColor=%23EDF0F3&amp;trendLineColor=%23FF7965&amp;underLineColor=%23F0F0F0&amp;fontColor=%2383888D&amp;gridLineColor=%23E9E9EA&amp;large_chart_url=http%3A%2F%2Fwww.investopedia.com%2Fmarkets%2Fsymbol-redirect.aspx&amp;width=100%25&amp;height=530px&amp;utmsource=www.investopedia.com&amp;utmmedium=www.investopedia.com/"
+										width="100%" height="530px" frameborder="0"
+										allowtransparency="true" scrolling="no"
+										style="margin: 0 !important; padding: 0 !important;">
+									</iframe>
+								</div>
+								<div
+									style="position: absolute; display: block; box-sizing: content-box; height: 24px; width: 100%; bottom: 0; left: 0; margin: 0; padding: 0; font-family: Arial, sans-serif;">
+									<div
+										style="display: block; margin: 0 1px 1px 1px; line-height: 7px; box-sizing: content-box; height: 11px; padding: 6px 10px; text-align: right; background: #fff;">
+										<a
+											href="https://www.tradingview.com/?utmsource=www.investopedia.com&amp;utmmedium=www.investopedia.com/"
+											target="_blank"
+											style="color: #0099d4; text-decoration: none; font-size: 11px;">
+										</a>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+                <div class="col-lg-5 col-md-10 text-center">
+                    <div id="marketnews">
+                    	<script>
+					var nof_headlines = 8; 
+					var author_id = '';				</script>
+				<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+				<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.9.1/jquery-ui.min.js"></script>
+				<script src="http://static.amigobulls.com/js/news_widgets.min.js.gz"></script>
+				<link rel="stylesheet" type="text/css" href="http://static.amigobulls.com/css/news_widgets.min.css.gz" />
+				<div id="container" style="width: auto;" >
+					<div class='output_data'>
+						<h3 class='border'><a rel='nofollow' href='http://amigobulls.com/video/' title='Stock Analysis Videographs'>Stock Market News & Analysis</a></h3>
+						<ul id='listcontainer'>
+							<li class='colorgrey border'><a rel='nofollow' href='http://amigobulls.com/video/netflix-stock-analysis'  title= "Netflix Video - Analysis and Valuation">Netflix Video - Analysis and Valuation</a></li>
+							<li id='bulls_logo'><a rel='nofollow' href='http://amigobulls.com/' title='amigobulls.com - stock analysis videos'> <img  class='amigo_logo' src='http://static.amigobulls.com/v2images/amigobulls_logo.png' alt='amigobulls logo'/><span class='pow_text '>powered by</span></a></li>
+						</ul>
 					</div>
 				</div>
-			</div>
-		</div>
+                    
+                    </div>
+                </div>
+                <div class="col-lg-1 col-md-11">
+                </div>
+            </div>
+        </div>
+    	
     </section>
 
-    <a name="login_up"></a>
-	<div id="login" class="banner">
-		<div class="content-section-c">
-			<div class="container">
+    <section id="login" style="padding: 0px 0px">
+    	
+    	<div class="bg-primary" style="padding: 50px;">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <h2 class="section-heading">Invest Now!</h2>
+                    <hr class="primary">
+                </div>
+            </div>
+        </div>
+    	
+    	<div class="banner">
+		<div class="content-section-c" id="form">	
+			<div class="container" >
 				<div class="row">
 					<section style="margin-top: 30px;">
 						<div class="container">
 							<div class="row">
 								<sec:authorize
-									access="hasAnyRole('ROLE_ADMIN', 'ROLE_USER')?false:true">
+									access="hasAnyRole('ADMIN', 'USER')?false:true">
 									<div class="col-md-6 col-md-offset-3">
 										<div class="panel panel-login">
 											<div class="panel-heading"
 												style="height: 60px; text-align: center; font-size: 18px; color: #666; font-weight: bold;">
 												<div class="row">
 													<div class="col-xs-6">
-														<a href="#login-form" id="login-form-link" ng-click="switchForm(true)">Login</a>
+														<a href="#login" id="login-form-link" ng-click="switchForm(true)">Login</a>
 													</div>
 													<div class="col-xs-6">
-														<a href="#register-form" id="register-form-link" ng-click="switchForm(false)">Register</a>
+														<a href="#login" id="register-form-link" ng-click="switchForm(false)">Register</a>
 													</div>
 												</div>
 												<hr>
@@ -365,17 +406,84 @@
 			</div>
 		</div>
 	</div>
+    </section>
+    
+	<section style="padding: 0px 0px 100px 0px">
+		<div id="tf-team" class="text-center">
+		
+			<div class="bg-primary" style="padding: 50px">
+            	<div class="row">
+                <div class="col-lg-12 text-center">
+                    <h2 class="section-heading">Meet Our Team</h2>
+                    <hr class="primary">
+                </div>
+            	</div>
+        	</div>
 
-    <aside class="bg-dark">
+			<div class="row" style="padding: 150px 0px 150px 0px">
+				<div class="col-sm-4">
+					<div class="team-member">
+						<img src="img/ethan.png" class="img-responsive img-circle" alt=""
+							style="width: 100px; height: 100px; margin-left: auto; margin-right: auto">
+						<h4 style="padding: 20px 0px 20px 0px">Ethan Cheng</h4>
+						<p class="text-muted" style="padding: 20px 0px 20px 0px">Lead Developer</p>
+						<ul class="list-inline social-buttons">
+							<li><a href="https://twitter.com"><i
+									class="fa fa-twitter fa-2x"></i></a></li>
+							<li><a href="https://facebook.com"><i
+									class="fa fa-facebook fa-2x"></i></a></li>
+							<li><a href="https://github.com"><i
+									class="fa fa-github-alt fa-2x"></i></a></li>
+						</ul>
+					</div>
+				</div>
+				<div class="col-sm-4">
+					<div class="team-member ">
+						<img src="img/frank.jpg" class="img-responsive img-circle" alt=""
+							style="width: 100px; height: 100px; margin-left: auto; margin-right: auto">
+						<h4 style="padding: 20px 0px 20px 0px">Frank Yang</h4>
+						<p class="text-muted" style="padding: 20px 0px 20px 0px">Lead Developer</p>
+						<ul class="list-inline social-buttons">
+							<li><a href="https://www.google.com"><i
+									class="fa fa-twitter fa-2x"></i></a></li>
+							<li><a href="https://facebook.com"><i
+									class="fa fa-facebook fa-2x"></i></a></li>
+							<li><a href="https://github.com"><i
+									class="fa fa-github-alt fa-2x"></i></a></li>
+						</ul>
+					</div>
+				</div>
+				<div class="col-sm-4">
+					<div class="team-member">
+						<img src="icon/user.png" class="img-responsive img-circle" alt=""
+							style="width: 100px; height: 100px; margin-left: auto; margin-right: auto">
+						<h4 style="padding: 20px 0px 20px 0px">Yanqing Zhang</h4>
+						<p class="text-muted" style="padding: 20px 0px 20px 0px">Lead Developer</p>
+						<ul class="list-inline social-buttons">
+							<li><a href="https://twitter.com"><i
+									class="fa fa-twitter fa-2x"></i></a></li>
+							<li><a href="https://facebook.com"><i
+									class="fa fa-facebook fa-2x"></i></a></li>
+							<li><a href="https://github.com"><i
+									class="fa fa-github-alt fa-2x"></i></a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		 </div>
+		
+	</section>
+
+    <!-- <aside class="bg-dark">
         <div class="container text-center">
             <div class="call-to-action">
                 <h2>Free Download at Start Bootstrap!</h2>
                 <a href="#" class="btn btn-default btn-xl wow tada">Download Now!</a>
             </div>
         </div>
-    </aside>
+    </aside> -->
 
-    <section id="contact">
+   <%--  <section id="contact">
         <div class="container">
             <div class="row">
                 <div class="col-lg-8 col-lg-offset-2 text-center">
@@ -393,7 +501,43 @@
                 </div>
             </div>
         </div>
-    </section>
+    </section> --%>
+    
+    <footer id="tf-contact" class="container-fluid bg-4 text-center" style="text-align: center; top:0px;">
+		<div class="row bg-primary">
+		<div class="contact-us col-md-4" style="padding: 50px 0px 0px 0px" >
+			<span class="follow" style="font-size: 24px">Follow Us</span>
+			<div class="social-icons" style="padding: 50px 0px 50px 0px">
+				<a href="https://twitter.com"  class="fa fa-twitter fa-4x" target="_blank" style="padding: 30px 20px; color:white"></a>
+				<a href="https://www.facebook.com"  class="fa fa-facebook fa-4x" target="_blank" style="padding: 30px 20px; color:white"></a>
+				<a href="https://www.instagram.com" class="fa fa-instagram fa-4x" target="_blank" style="padding: 30px 20px; color:white"></a>
+			</div>
+		</div>
+		  <div  class="contact-us col-md-4" style="padding: 50px 0px 0px 0px">
+			<span class="contact" style="font-size: 24px">Contact Us</span>
+			<div style="padding: 50px 0px 50px 0px">
+				<p><span class="fa fa-map-marker fa-2x"></span> Princeton, US</p>
+      			<p><span class="fa fa-phone fa-2x"></span> Phone: +01 1234567890</p>
+      			<p><span class="fa fa-envelope fa-2x"></span> Email: mail@mail.com</p>	
+			</div>
+		</div>
+		
+		<div class="contact-us col-md-4" style="padding: 50px 0px 0px 0px">
+			<span class="links" style="font-size: 24px">Useful Links</span>
+			<div style="padding: 50px 0px 50px 0px">
+				<p><span class="fa fa-home fa-2x"></span><a	href="#" style="color:white"> Home</a></p>
+				<p><span class="fa fa-money fa-2x"></span><a href="#marketdata" style="color:white"> Market Data</a></p>
+      			<p><span class="fa fa-glass fa-2x"></span><a href="#login_up" style="color:white">  Join Us</a></p>	
+			</div>
+		</div>
+		</div>
+		<div class="row bg-primary">
+			<div class="text-center">
+  			<h5><strong>Copyright 2016</strong></h5> 
+			</div>	
+		</div>
+		
+	</footer>
 
     <!-- jQuery -->
     <script src="bower_component/js/jquery.js"></script>
