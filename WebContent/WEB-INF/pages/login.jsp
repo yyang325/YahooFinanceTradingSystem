@@ -96,13 +96,17 @@
                         <a class="page-scroll" href="#services">Services</a>
                     </li>
                     <li>
-                        <a class="page-scroll" href="#services">Market</a>
+                        <a class="page-scroll" href="#market">Market</a>
                     </li>
+                    
                     <li>
-                        <a class="page-scroll" href="#login">Login</a>
+                        <a class="page-scroll" href="#team">Team</a>
                     </li>
                     <li>
                         <a class="page-scroll" href="#contact">Contact</a>
+                    </li>
+                    <li>
+                        <a class="page-scroll" href="#login">Login</a>
                     </li>
                 </ul>
             </div>
@@ -258,7 +262,7 @@
     	
     </section>
 
-    <section id="login" style="padding: 0px 0px">
+    <section id="login" style="padding: 50px 0px 0px 0px">
     	
     	<div class="bg-primary" style="padding: 50px;">
             <div class="row">
@@ -408,8 +412,8 @@
 	</div>
     </section>
     
-	<section style="padding: 0px 0px 100px 0px">
-		<div id="tf-team" class="text-center">
+	<section id="team" style="padding: 0px 0px 100px 0px">
+		<div  class="text-center">
 		
 			<div class="bg-primary" style="padding: 50px">
             	<div class="row">
@@ -420,7 +424,7 @@
             	</div>
         	</div>
 
-			<div class="row" style="padding: 150px 0px 150px 0px">
+			<div class="row" style="padding: 120px 0px 120px 0px">
 				<div class="col-sm-4">
 					<div class="team-member">
 						<img src="img/ethan.png" class="img-responsive img-circle" alt=""
@@ -503,7 +507,7 @@
         </div>
     </section> --%>
     
-    <footer id="tf-contact" class="container-fluid bg-4 text-center" style="text-align: center; top:0px;">
+    <footer id="contact" class="container-fluid bg-4 text-center" style="text-align: center; top:0px;">
 		<div class="row bg-primary">
 		<div class="contact-us col-md-4" style="padding: 50px 0px 0px 0px" >
 			<span class="follow" style="font-size: 24px">Follow Us</span>
