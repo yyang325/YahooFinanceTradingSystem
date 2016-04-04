@@ -66,14 +66,28 @@ var mainApp = angular.module("adminApp", ["ngRoute"]);
         	
         	$scope.pendingTran = [];
         	$scope.committedTran = [];
-        	$scope.active = ["checked", null]
         	
+        	/* formate unix time into date time */
+        	var format = function(old){
+        		var d = new Date(old);
+        		var formattedDate = d.getDate() + "-" + (d.getMonth() + 1) + "-" + d.getFullYear();
+        		var hours = (d.getHours() < 10) ? "0" + d.getHours() : d.getHours();
+        		var minutes = (d.getMinutes() < 10) ? "0" + d.getMinutes() : d.getMinutes();
+        		var formattedTime = hours + ":" + minutes;
+
+        		formattedDate = formattedDate + " " + formattedTime;
+        		console.log(formattedDate);
+        		return formattedDate;
+        	}
         	
         	/* Show Pending Transaction Table */
         	var showPendingTran = function(){
         		$http.get("admin/allPendingHistory")
         		.success(function(data){
         			console.log(data);
+        			for(var i = 0; i < data.length; i++){
+        				data[i].date = format(data[i].date);
+        			}
         			$scope.pendingTran = data;
         		}).error(function(data){
         			console.log("Ajax Error");
