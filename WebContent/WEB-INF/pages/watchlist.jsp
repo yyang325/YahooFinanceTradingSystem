@@ -122,9 +122,22 @@
 							</div>
 					</section>
                 
-                <div>
+                </div>
                 
-			<script type="text/ng-template" id="buyContentInWatch.html">
+                <!-- <div class="col-md-8">
+                	<section class="panel panel-info">
+							<header class="panel-heading" align="center">
+								<p style="font-size: 20px">Watched Stocks Details</p>
+							</header>
+							<div class="panel-body" class="col-md-12">
+								<script type="text/javascript" src="https://www.barchart.com/widget.js?uid=d7c38104351e865a59119d959e5df883&widgetType=sectors&widgetWidth=400&type=stacked&pctField=pctchange&fontColor%5Blinks%5D=004376&font=1&symbox=1"></script>
+								
+							</div>
+					</section>
+                
+                </div> -->
+                
+		<script type="text/ng-template" id="buyContentInWatch.html">
         	<div class="modal-header">
 			 <button type="button" class="close" ng-click="cancel()">&times;</button>
             <h3 class="modal-title">Buy Stock</h3>
@@ -155,7 +168,7 @@
        		 </div>
     	</script>
                     
-                </div>
+                
             </div>
         </div>
     </div>

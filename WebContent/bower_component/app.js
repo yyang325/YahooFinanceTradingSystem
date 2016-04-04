@@ -11,6 +11,11 @@ var mainApp = angular.module("mainApp", ["ngRoute","ngAnimate", "ui.bootstrap", 
         mainApp.config(['$routeProvider', function($routeProvider) {
             $routeProvider.
 
+            when('/home', {
+            	templateUrl: 'home.html',
+            	//
+            }).
+            
             when('/watchlist', {
                 templateUrl: 'watchlist.html',
                 controller: 'watchlistCtrl'
@@ -27,7 +32,7 @@ var mainApp = angular.module("mainApp", ["ngRoute","ngAnimate", "ui.bootstrap", 
             }).
 
             otherwise({
-                redirectTo: '/'
+                redirectTo: '/home'
             });
         }]);
         
