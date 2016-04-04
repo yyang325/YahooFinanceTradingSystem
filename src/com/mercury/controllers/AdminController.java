@@ -1,6 +1,5 @@
 package com.mercury.controllers;
 
-import java.security.Principal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +24,13 @@ public class AdminController {
 	private StockService ss;
 	@Autowired
 	private TransService ts;
+	
+	
+	@RequestMapping(value="admin", method=RequestMethod.GET)
+	public String adminPage(){
+		return "admin";
+	}
+	
 	
 	/**
 	 * admin add a stock to stock pool, and return all stock
@@ -79,6 +85,32 @@ public class AdminController {
 	@ResponseBody
 	public List<TransactionInfo> allPendingHistory(){
 		return ts.getAllPendingTranHistory();
+	}
+	
+	
+	
+	/**
+	 * admin commit a pending transaction
+	 * @param index
+	 * @author Yi
+	 */
+	@RequestMapping(value="admin/commitTran/{index}", method=RequestMethod.GET)
+	@ResponseBody
+	public void commitOnePending(@PathVariable int index){
+		ts.commitPending(index);
+	}
+	
+	
+	
+	/**
+	 * admin drop a pending transaction
+	 * @param index
+	 * @author Yi
+	 */
+	@RequestMapping(value="admin/dropTran/{index}", method=RequestMethod.GET)
+	@ResponseBody
+	public void dropOnePending(@PathVariable int index){
+		ts.dropPending(index);
 	}
 	
 	
