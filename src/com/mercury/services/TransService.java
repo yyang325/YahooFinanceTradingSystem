@@ -159,6 +159,23 @@ public class TransService {
 	}
 	
 	/**
+	 * commitall pendings
+	 * @author Yi
+	 */
+	public void commitAllPendings(){
+		int size = getAllPendings().size();
+		List<Integer> indexs = new ArrayList<>();
+		for(int i = 0; i < size; i++){
+			indexs.add(i);
+		}
+		commitPendings(indexs);
+	}
+	
+	
+	
+	
+	
+	/**
 	 * drop a pending transaction and credit the user's cash
 	 * @param index -- index of the pending transaction
 	 * @param reimberse
