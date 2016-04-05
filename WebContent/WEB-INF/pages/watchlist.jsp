@@ -68,7 +68,7 @@
                                 <tr ng-repeat="searchStock in stockPool | filter:searchText">
                                     <td class="col-md-6">{{ searchStock.companyName }}</td>
                                     <td class="col-md-3">{{ searchStock.stockSymbol }}</td>
-                                    <td class="col-md-3"><button class="btn btn-success btn-sm" type="button">Watch</button></td>
+                                    <td class="col-md-3"><button class="btn btn-success btn-sm" type="button" ng-click="addWatchList(searchStock)">Watch</button></td>
                                 </tr>
                             </table>
 							</div>
