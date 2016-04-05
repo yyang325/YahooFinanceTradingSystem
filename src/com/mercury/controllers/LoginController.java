@@ -93,22 +93,24 @@ public class LoginController {
 	 */
 	@RequestMapping(value="/registervalidation", method=RequestMethod.POST)
 	@ResponseBody
-	public int isUserExist(@RequestParam(value = "user") String username){
+	public int isUserExist(HttpServletRequest request){
 		//get the front-end input of the user-name and then to check if database has this user-name!!
-		//String username = request.getParameter("userName"); 
-		//System.out.println(username);
+		String username = request.getParameter("username");
+		//String email = request.getParameter("email");
+		/*System.out.println(username);
+		System.out.println(email);*/
 		if(us.isUserExist(username)) {
 			System.out.println("name existeddd...........................");
 			return 1;
 		}
-//		if(request.getParameter("email")!=null){ 
-//			String email = request.getParameter("email");
-//			System.out.println(email);
-//			if(us.isEmailExist(email)){
-//				System.out.println("email existedd...........................");
-//				return 1;
-//			}
-//		}
+		if(request.getParameter("email")!=null){ 
+			String email = request.getParameter("email");
+			//System.out.println(email);
+			if(us.isEmailExist(email)){
+				System.out.println("email existedd...........................");
+				return 1;
+			}
+		}
 		return 0;
 	}
 	
