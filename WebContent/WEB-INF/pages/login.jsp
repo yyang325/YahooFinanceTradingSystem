@@ -15,6 +15,20 @@
 
     <title>Creative - Start Bootstrap Theme</title>
 
+	<!-- Bootstrap core JavaScript
+    ================================================== -->
+    <script src="bower_component/jquery/dist/jquery.min.js"></script>
+    <link href="bower_component/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="bower_component/bootstrap/dist/js/bootstrap.min.js"></script>
+    <link href="bower_component/bootstrap/dist/css/bootstrap-theme.min.css" rel="stylesheet">
+    <script src="bower_component/angular/angular.min.js"></script>
+    <script src = "http://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular-route.min.js"></script>
+    <script type="text/javascript" src="bower_component/angular-resource/angular-resource.min.js"></script>
+    <script type="text/javascript" src="bower_component/angular-messages/angular-messages.min.js"></script>
+	<script type="text/javascript" src="bower_component/angular-route/angular-route.min.js"></script>
+	<script type="text/javascript" src="bower_component/angular-animate/angular-animate.min.js"></script>
+	<script type="text/javascript" src="bower_component/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="bower_component/css/bootstrap.min.css" type="text/css">
 
@@ -29,11 +43,142 @@
     <!-- Custom CSS -->
     <link rel="stylesheet" href="bower_component/css/creative.css" type="text/css">
     
-     <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Oxygen:400,300,700">
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Oxygen:400,300,700">
+    
+    <script src="bower_component/loginvalidation.js"></script>
+
+	<script>
+	$(document).ready(function() {
+		// Show or hide the sticky footer button
+		$(window).scroll(function() {
+			if ($(this).scrollTop() > 200) {
+				$('#rtop_btn').fadeIn();
+			} else {
+				$('#rtop_btn').fadeOut();
+			}
+		});
+
+		// Animate the scroll to top
+		$('#rtop_btn').click(function(event) {
+			event.preventDefault();
+
+			$('html, body').animate({
+				scrollTop : 0
+			}, 300);
+		});
+
+		if ("<c:out value='${param.login_error}'/>" != "") {
+			$('#wrongCredentials').show();
+		}
+		$("#j_userName").on("click", function() {
+			$("#usernameExist").hide();
+		});
+		$("#j_email").on("click", function() {
+			$("#emailExist").hide();
+		});
+		$("#signin").on("click", loginValidation);
+		$("#clear2").on("click", function() {
+			$("#usernameExist").hide();
+			$("#emailExist").hide();
+		});
+		/* $("#j_userName").on("blur",function(){
+		if($("#j_userName").val()){
+			$.ajax({
+				url: "registervalidation",
+				type: "post",
+				dataType: "text",
+				data: {userName: $("#j_userName").val()},
+				//async:false,//disable async
+				success: function(response) {
+					if(response=="true"){
+						$("#usernameExist").show();
+					}
+				},
+				error: function (e) {
+			        alert(e);
+			    }
+			});
+		}
+		});  */
+		/* $("#j_email").on("blur",function(){
+			if($("#j_email").val()&&$("#j_userName").val()){
+				$.ajax({
+					url: "registervalidation",
+					type: "post",
+					dataType: "text",
+					data: {email: $("#j_email").val()},
+					//async:false,//disable async
+					success: function(response) {
+						if(response=="true"){
+							$("#emailExist").show();
+						}
+					},
+					error: function (e) {
+				        alert(e);
+				    }
+				});
+			}
+		});	 */
+
+		$("#login-form-link").click(function(e) {
+			$("#login-form").delay(100).fadeIn(100);
+			$("#register-form").fadeOut(100);
+			$('#register-form-link').removeClass('active');
+			$(this).addClass('active');
+			e.preventDefault();
+		});
+		$("#register-form-link").click(function(e) {
+			$("#usernameAndPasswordReq").hide();
+			$("#usernameReq").hide();
+			$("#passwordReq").hide();
+			$("#wrongCredentials").hide();
+			$("#register-form").delay(100).fadeIn(100);
+			$("#login-form").fadeOut(100);
+			$('#login-form-link').removeClass('active');
+			$(this).addClass('active');
+			e.preventDefault();
+		});
+
+	});
+
+	function loginValidation() {
+		$("#usernameAndPasswordReq").hide();
+		$("#usernameReq").hide();
+		$("#passwordReq").hide();
+		$("#wrongCredentials").hide();
+		if ($("#j_username").val().length == 0
+				&& $("#j_password").val().length == 0) {
+			$("#usernameAndPasswordReq").show();
+			return false;
+		} else if ($("#j_username").val().length == 0) {
+			$('#usernameReq').show();
+			return false;
+		} else if ($("#j_password").val().length == 0) {
+			$("#passwordReq").show();
+			return false;
+		} else {
+			return true;
+		}
+	}
+</script>
 
 	<style>
 		body {
   			height: 100%;
+		}
+		
+		.alert {
+			color: red;
+			background: #fdf1e5;
+			font-size: 10px;
+			line-height: 16px;
+			margin: 10;
+			position: relative;
+		}
+		
+		.error {
+			color: #FF6600;
+			font-weight: 400;
 		}
 		
 		.video {
@@ -71,10 +216,10 @@
 	
 </head>
 
-<body id="page-top" ng-app="mainApp" ng-controller="mainCtrl">
+<body id="page-top">
 
-    <nav id="mainNav" class="navbar navbar-default navbar-fixed-top">
-        <div class="container-fluid">
+    <nav id="mainNav" class="navbar navbar-default navbar-fixed-top" >
+        <div class="container-fluid" >
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
@@ -105,9 +250,16 @@
                     <li>
                         <a class="page-scroll" href="#contact">Contact</a>
                     </li>
-                    <li>
-                        <a class="page-scroll" href="#login">Login</a>
+                    <sec:authorize access="hasAnyRole('ADMIN', 'USER')?false:true">
+						<li>
+                        	<a class="page-scroll" href="#login">Login</a>
+                    	</li>
+      				</sec:authorize>
+             		<sec:authorize access="hasAnyRole('ADMIN', 'USER')">
+						<li>
+                        <a href="<c:url value='/j_spring_security_logout'/>"><i class="icon_key_alt"></i>Logout</a>
                     </li>
+      				</sec:authorize>
                 </ul>
             </div>
             <!-- /.navbar-collapse -->
@@ -262,7 +414,7 @@
     	
     </section>
 
-    <section id="login" style="padding: 50px 0px 0px 0px">
+    <section id="login" style="padding: 50px 0px 0px 0px" ng-app="validation">
     	
     	<div class="bg-primary" style="padding: 50px;">
             <div class="row">
@@ -274,24 +426,24 @@
         </div>
     	
     	<div class="banner">
-		<div class="content-section-c" id="form">	
+		<div class="content-section-c" id="form" ng-controller="RegistrationController as registration">	
 			<div class="container" >
 				<div class="row">
 					<section style="margin-top: 30px;">
 						<div class="container">
 							<div class="row">
-								<sec:authorize
-									access="hasAnyRole('ADMIN', 'USER')?false:true">
-									<div class="col-md-6 col-md-offset-3">
-										<div class="panel panel-login">
+								<%-- <sec:authorize
+									access="hasAnyRole('ADMIN', 'USER')?false:true"> --%>
+									<div class="col-md-6 col-md-offset-3" >
+										<div class="panel panel-login" style="outline: 4px solid orange;">
 											<div class="panel-heading"
 												style="height: 60px; text-align: center; font-size: 18px; color: #666; font-weight: bold;">
 												<div class="row">
 													<div class="col-xs-6">
-														<a href="#login" id="login-form-link" ng-click="switchForm(true)" class="page scroll">Login</a>
+														<a href="#login" id="login-form-link" class="page scroll">Login</a>
 													</div>
 													<div class="col-xs-6">
-														<a href="#login" id="register-form-link" ng-click="switchForm(false)" class="page scroll">Register</a>
+														<a href="#login" id="register-form-link" class="page scroll">Register</a>
 													</div>
 												</div>
 												<hr>
@@ -299,12 +451,28 @@
 											<div class="panel-body">
 												<div class="row">
 													<div class="col-lg-12">
+														<!-- Alerts for missing form info  -->
+														<div class="alert" style="display: none;"
+															id="usernameAndPasswordReq">
+															<p>Username and password are required</p>
+														</div>
+
+														<div class="alert" style="display: none;" id="usernameReq">
+															<p>Username is required</p>
+														</div>
+														<div class="alert" style="display: none;" id="passwordReq">
+															<p>Password is required</p>
+														</div>
+														<div class="alert" id="wrongCredentials"
+															style="display: none;">
+															<p>The username or password supplied is incorrect</p>
+														</div>
 														
 														<!-- Login Form -->
 														<form id="login-form" name="login-form"
 															class="form-validate"
 															action="<c:url value='j_spring_security_check'/>"
-															method="POST" ng-show="showLogin">
+															method="POST" style="display: block;">
 															<div class="form-group">
 																<label for="uname" style="color: black;">
 																	Username:</label> <input type="text" name="j_username"
@@ -347,49 +515,129 @@
 
 														<!-- Register Form -->
 														<form id="register-form" name="registerform"
-															action="confirmsignup" method="post" ng-show="!showLogin">
-															<div class="form-group">
+															action="confirmsignup" method="post" ng-show="!showLogin"
+															style="display: none;" novalidate
+															ng-submit="registration.submit(registerform.$valid)">
+															<div class="form-group"
+																ng-class="{ 'has-error': registerform.userName.$touched && registerform.username.$invalid }">
 																<label for="uname" style="color: black;">
 																	Username:</label> <input type="text" name="username"
 																	id="j_userName" tabindex="1" class="form-control"
-																	placeholder="Enter your username">
+																	placeholder="Enter your username" ng-model="username"
+																	ng-minlength="3" ng-maxlength="30" username-valid
+																	required>
+																<div class="help-block"
+																	ng-messages="registerform.username.$error"
+																	ng-messages-multiple
+																	ng-if="registerform.username.$dirty">
+																	<p ng-message="minlength" style="color: #f05f40;">Your
+																		username is too short.</p>
+																	<p ng-message="maxlength" style="color: #f05f40;">Your
+																		username is too long.</p>
+																	<p ng-message="required" style="color: #f05f40;">Your
+																		username is required.</p>
+																	<p ng-message="usernameValid" style="color: #f05f40;">Username
+																		Exist!</p>
+																</div>
 															</div>
-															<div class="form-group">
+															<div class="form-group" 
+																ng-class="{ 'has-error': registerform.lastName.$touched && registerform.lastName.$invalid }">
 																<label for="ulname" style="color: black;">
 																	Lastname:</label> <input type="text" name="lastName"
 																	id="j_lastName" tabindex="1" class="form-control"
-																	placeholder="Enter your lastname">
+																	placeholder="Enter your lastname" ng-model="lastName"
+																	ng-pattern="/^[a-zA-Z]+$/" required>
+																<div class="help-block"
+																	ng-messages="registerform.lastName.$error"
+																	ng-messages-multiple
+																	ng-if="registerform.lastName.$dirty">
+																	<p ng-message="required" style="color: #f05f40;">Your
+																		lastname is required.</p>
+																	<p ng-message="pattern" style="color: #f05f40;">This
+																		field only accept alphabet.</p>
+																</div>
 															</div>
-															<div class="form-group">
+															<div class="form-group"
+																ng-class="{ 'has-error': registerform.firstName.$touched && registerform.firstName.$invalid }">
 																<label for="ufname" style="color: black;">
 																	Firstname:</label> <input type="text" name="firstName"
 																	id="j_firstName" tabindex="1" class="form-control"
-																	placeholder="Enter your firstname">
+																	placeholder="Enter your firstname" ng-model="firstName"
+																	ng-pattern="/^[a-zA-Z]+$/" required>
+																<div class="help-block"
+																	ng-messages="registerform.firstName.$error"
+																	ng-messages-multiple
+																	ng-if="registerform.firstName.$dirty">
+																	<p ng-message="required" style="color: #f05f40;">Your
+																		firstname is required.</p>
+																	<p ng-message="pattern" style="color: #f05f40;">This
+																		field only accept alphabet.</p>
+																</div>
 															</div>
-															<div class="form-group">
+															<div class="form-group"
+															ng-class="{ 'has-error': registerform.email.$touched && registerform.email.$invalid }">
 																<label for="uemail" style="color: black;">
 																	Email:</label> <input type="email" name="email" id="j_email"
 																	tabindex="1" class="form-control"
-																	placeholder="Enter your email address">
+																	placeholder="Enter your email address" ng-model="email"
+																	email-valid required>
+																<div class="help-block"
+																	ng-messages="registerform.email.$error"
+																	ng-messages-multiple ng-if="registerform.email.$dirty">
+																	<p ng-message="required" style="color: #f05f40;">This
+																		field is required</p>
+																	<p ng-message="email" style="color: #f05f40;">This
+																		needs to be a valid email</p>
+												
+																	<p ng-message="emailValid" style="color: #f05f40;">Email
+																		Exists!</p>
+																</div>
 															</div>
-															<div class="form-group">
+															<div class="form-group"
+																ng-class="{ 'has-error': registerform.passWord.$touched && registerform.passWord.$invalid }">
 																<label for="upassword" style="color: black;">
 																	Password:</label> <input type="password" name="password"
 																	id="j_passWord" tabindex="2" class="form-control"
-																	placeholder="Enter your password">
+																	placeholder="Enter your password" ng-model="passWord"
+																	ng-pattern="/^[a-zA-Z0-9]+$/" ng-minlength="6"
+																	ng-maxlength="20" required>
+																<div class="help-block"
+																	ng-messages="registerform.passWord.$error"
+																	ng-messages-multiple
+																	ng-if="registerform.passWord.$dirty">
+																	<p ng-message="required" style="color: #f05f40;">This
+																		field is required</p>
+																	<p ng-message="minlength" style="color: #f05f40;">This
+																		field is too short. Minimum: 6.</p>
+																	<p ng-message="maxlength" style="color: #f05f40;">This
+																		field is too long</p>
+																	<p ng-message="pattern" style="color: #f05f40;">This
+																		field only accept alphabet and numbers</p>
+																</div>
 															</div>
 															<div class="form-group">
 																<label for="upassword" style="color: black;">
 																	Confirm your password:</label> <input type="password"
 																	name="confirmPassword" id="confirm-password"
 																	tabindex="2" class="form-control"
-																	placeholder="Confirm your password">
+																	placeholder="Confirm your password" ng-model="confirmPassword" compare-to="passWord"
+																	required>
+																<div class="help-block"
+																	ng-messages="registerform.confirmPassword.$error"
+																	ng-messages-multiple
+																	ng-if="registerform.confirmPassword.$dirty">
+																	<p ng-message="compareTo" style="color: #f05f40;">Must
+																		match the previous entry</p>
+																	<p ng-message="required" style="color: #f05f40;">This
+																		field is required</p>
+																</div>
 															</div>
+															
 															<div class="form-group">
 																<div class="row">
 																	<div class="col-sm-6 col-sm-offset-3"
 																		style="padding-top: 10px;">
-																		<input type="submit" name="submit2" id="register"
+																		<input ng-disabled="registerform.$invalid" type="submit" name="submit2" id="register"
 																			tabindex="4" class="form-control btn btn-register"
 																			value="Register Now">
 																	</div>
@@ -402,7 +650,7 @@
 											</div>
 										</div>
 									</div>
-								</sec:authorize>
+								<%-- </sec:authorize> --%>
 							</div>
 						</div>
 					</section>
@@ -543,14 +791,16 @@
 		
 	</footer>
 
+    
+    
     <!-- jQuery -->
     <script src="bower_component/js/jquery.js"></script>
     
-    <!-- AngularJS -->
-    <script src="bower_component/angular/angular.min.js"></script>
+   
 
     <!-- Bootstrap Core JavaScript -->
     <script src="bower_component/js/bootstrap.min.js"></script>
+
 
     <!-- Plugin JavaScript -->
     <script src="bower_component/js/jquery.easing.min.js"></script>
@@ -559,15 +809,7 @@
 
     <!-- Custom Theme JavaScript -->
     <script src="bower_component/js/creative.js"></script>
-    <script type="text/javascript">
-    	var app = angular.module("mainApp", []);
-    	app.controller("mainCtrl", function($scope){
-    		$scope.showLogin = true;
-    		$scope.switchForm = function(bool){
-    			$scope.showLogin = bool;
-    		};
-    	});
-    </script>
+    
 
 </body>
 
