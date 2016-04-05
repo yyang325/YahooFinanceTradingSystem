@@ -72,6 +72,16 @@ var mainApp = angular.module("mainApp", ["ngRoute","ngAnimate", "ui.bootstrap", 
     		$scope.message = shared.getMessage();
     	});
         
+        mainApp.controller("headerCtrl",function($scope,$http){
+        	$scope.user;
+        		$http.get("header")
+        		.success(function(data) {
+        			$scope.user = data;
+        			console.log(data);
+        		}).error(function(data) {
+        			console.log("AJAX ERROR!");
+        		});
+        });
         
         /* navigation controller */
         mainApp.controller("navCtrl", function($scope, $interval){

@@ -49,7 +49,7 @@
     <script type="text/javascript" src="bower_component/home.js"></script>
     
     <!-- For widget usage -->
-    <script>
+	<script>
 		var nof_headlines = 11; 
 		var author_id = '';				
 	</script>
