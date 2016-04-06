@@ -1,0 +1,35 @@
+<beans  xmlns="http://www.springframework.org/schema/beans"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+    <bean id="myTask" class="com.mercury.jobs.MyJob" />
+
+    <!-- specifing class and method that is going to be called on a specified time basis -->
+    <bean id="myJob" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="myTask" />
+        <property name="targetMethod" value="printCurrentTime" />
+    </bean>
+
+    <!-- simple trigger specify repeat interval and delay time -->
+    <bean id="simpleTrigger" class="org.springframework.scheduling.quartz.SimpleTriggerFactoryBean">
+        <property name="jobDetail" ref="myJob" />
+        <property name="repeatInterval" value="300000" />
+        <property name="startDelay" value="300000" />
+    </bean>
+
+    <!-- scheduler factory bean to bind,the executing code and time intervals together -->
+    <bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+        <property name="jobDetails">
+            <list>
+                <ref bean="myJob" />
+            </list>
+        </property>
+        <property name="triggers">
+            <list>
+                <ref bean="simpleTrigger" />
+            </list>
+        </property>
+    </bean>
+
+</beans>

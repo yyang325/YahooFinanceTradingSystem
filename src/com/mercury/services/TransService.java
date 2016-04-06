@@ -120,6 +120,7 @@ public class TransService {
 		//Parsing pending to transaction
 		//List<UserStockTransaction> transList = getAllPendings();
 		List<UserStockTransaction> allpendings = getAllPendings();
+		if(index < 0 || index >= allpendings.size()) return;
 		UserStockTransaction tx = allpendings.get(index);
 		String username = tx.getUser().getUsername();
 		User user = ud.findByUserName(username);
@@ -157,6 +158,23 @@ public class TransService {
 		
 		cu.rewriteCSV(newList);
 	}
+	
+	/**
+	 * commitall pendings
+	 * @author Yi
+	 */
+	public void commitAllPendings(){
+		int size = getAllPendings().size();
+		List<Integer> indexs = new ArrayList<>();
+		for(int i = 0; i < size; i++){
+			indexs.add(i);
+		}
+		commitPendings(indexs);
+	}
+	
+	
+	
+	
 	
 	/**
 	 * drop a pending transaction and credit the user's cash

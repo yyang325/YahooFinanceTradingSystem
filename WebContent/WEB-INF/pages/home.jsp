@@ -48,9 +48,12 @@
     <script type="text/javascript" src="bower_component/transaction.js"></script>
     <script type="text/javascript" src="bower_component/home.js"></script>
     
-    <script>
-								var nof_headlines = 11; 
-								var author_id = '';				</script>
+    <!-- For widget usage -->
+	<script>
+		var nof_headlines = 11; 
+		var author_id = '';				
+	</script>
+	
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.9.1/jquery-ui.min.js"></script>
 	<script src="http://static.amigobulls.com/js/news_widgets.min.js.gz"></script>
