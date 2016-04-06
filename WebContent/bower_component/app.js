@@ -96,6 +96,7 @@ var mainApp = angular.module("mainApp", ["ngRoute","ngAnimate", "ui.bootstrap", 
         		$scope.datetime.hours = (d.getHours() < 10) ? "0" + d.getHours() : d.getHours();
         		$scope.datetime.minutes = (d.getMinutes() < 10) ? "0" + d.getMinutes() : d.getMinutes();
         		$scope.datetime.seconds = (d.getSeconds() < 10) ? "0" + d.getSeconds() : d.getSeconds();
+
         	}
         	
         	$interval(getCurrentTime, 1000);

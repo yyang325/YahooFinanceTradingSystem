@@ -38,7 +38,11 @@
       </sec:authorize>
       
       <sec:authorize access="hasAnyRole('ADMIN', 'USER')">
-                  <ul class="nav navbar-nav navbar-right">
+                  <ul class="nav navbar-nav navbar-right" ng-controller="navCtrl">
+                  	<li><a>
+      					<span>{{datetime.hours}}</span>:<span>{{datetime.minutes}}</span>:<span>{{datetime.seconds}}</span>
+      					</a>
+      				</li>
                   	<li>
                   		<a class="fa fa-user fa-2x"></a>
                   	</li>
@@ -60,5 +64,6 @@
         <li><a href="#logout"><span class="glyphicon glyphicon-log-out" aria-hidden="true"></span></a></li>
       </ul> 
     </div><!--/.nav-collapse -->
+
   </div>
 </nav>
