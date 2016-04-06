@@ -185,7 +185,7 @@
 			margin: 0;
   			padding: 0;
   			position: fixed;
-  			top: 50%; left: 50%;
+  			left: 50%;
   			z-index: 1;
   			min-width: 100%;
 			min-height: 100%;
@@ -212,6 +212,7 @@
   			min-height: 100%; 
 		}
 		
+		
 	</style>
 	
 </head>
@@ -228,36 +229,36 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand page-scroll" href="#page-top"> <span style="font-size: 36px">YFTS</span></a>
+                <a class="navbar-brand page-scroll" href="#page-top"> <span style="font-size: 36px; color:#F05F40">YFTS</span></a>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right">
                     <li>
-                        <a class="page-scroll" href="#about">About</a>
+                        <a class="page-scroll" href="#about" style="color: black">About</a>
                     </li>
                     <li>
-                        <a class="page-scroll" href="#services">Services</a>
+                        <a class="page-scroll" href="#services" style="color: black">Services</a>
                     </li>
                     <li>
-                        <a class="page-scroll" href="#market">Market</a>
+                        <a class="page-scroll" href="#market" style="color: black">Market</a>
                     </li>
                     
                     <li>
-                        <a class="page-scroll" href="#team">Team</a>
+                        <a class="page-scroll" href="#team" style="color: black">Team</a>
                     </li>
                     <li>
-                        <a class="page-scroll" href="#contact">Contact</a>
+                        <a class="page-scroll" href="#contact" style="color: black">Contact</a>
                     </li>
                     <sec:authorize access="hasAnyRole('ADMIN', 'USER')?false:true">
 						<li>
-                        	<a class="page-scroll" href="#login">Login</a>
+                        	<a class="page-scroll" href="#login" style="color: black">Login</a>
                     	</li>
       				</sec:authorize>
              		<sec:authorize access="hasAnyRole('ADMIN', 'USER')">
 						<li>
-                        <a href="<c:url value='/j_spring_security_logout'/>"><i class="icon_key_alt"></i>Logout</a>
+                        <a href="<c:url value='/j_spring_security_logout'/>" style="color: black"><i class="icon_key_alt"></i>Logout</a>
                     </li>
       				</sec:authorize>
                 </ul>
@@ -271,7 +272,7 @@
    			
         <div class="header-content">
         	<video id="my-video" class="video" autoplay muted loop>
-    			<source src="media/demo.mp4" type="video/mp4">
+    			<source src="media/source.mp4" type="video/mp4">
     	</video>
             <div class="header-content-inner">
                 <h1>Investing Streamlined</h1>
