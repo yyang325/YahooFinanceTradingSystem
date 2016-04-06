@@ -707,9 +707,9 @@
 				</div>
 				<div class="col-sm-4">
 					<div class="team-member">
-						<img src="icon/user.png" class="img-responsive img-circle" alt=""
+						<img src="img/wb.png" class="img-responsive img-circle" alt=""
 							style="width: 100px; height: 100px; margin-left: auto; margin-right: auto">
-						<h4 style="padding: 20px 0px 20px 0px">Yanqing Zhang</h4>
+						<h4 style="padding: 20px 0px 20px 0px">Weibo Feng</h4>
 						<p class="text-muted" style="padding: 20px 0px 20px 0px">Lead Developer</p>
 						<ul class="list-inline social-buttons">
 							<li><a href="https://twitter.com"><i
