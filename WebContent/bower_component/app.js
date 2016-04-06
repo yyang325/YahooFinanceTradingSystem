@@ -93,7 +93,6 @@ var mainApp = angular.module("mainApp", ["ngRoute","ngAnimate", "ui.bootstrap", 
         	
         	var getCurrentTime = function(){
         		var d = new Date();
-        		
         		$scope.datetime.hours = (d.getHours() < 10) ? "0" + d.getHours() : d.getHours();
         		$scope.datetime.minutes = (d.getMinutes() < 10) ? "0" + d.getMinutes() : d.getMinutes();
         		$scope.datetime.seconds = (d.getSeconds() < 10) ? "0" + d.getSeconds() : d.getSeconds();
@@ -162,6 +161,19 @@ var mainApp = angular.module("mainApp", ["ngRoute","ngAnimate", "ui.bootstrap", 
             /* updating all stock infomation that exist in db */
             updateAllStock();
             $interval(updateAllStock, 60000);
+            
+            
+            $scope.addWatchList = function(searchStock){
+            	console.log("about to add ", searchStock);
+            	$http({
+            		url: "addWatchList/"+searchStock.stockSymbol,
+            		method: "GET"
+            	}).success(function(data){
+            		 updateWatchlist();
+            	}).error(function(data){
+            		console.log("Ajax Error");
+            	});
+            }
         });
 
         mainApp.controller("ModalCtrlInWatch", ["$scope", "$modal", "$log", "shared", function ($scope, $modal, $log, shared) {

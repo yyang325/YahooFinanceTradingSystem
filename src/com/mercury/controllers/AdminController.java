@@ -1,5 +1,6 @@
 package com.mercury.controllers;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -97,7 +98,9 @@ public class AdminController {
 	@RequestMapping(value="admin/commitTran/{index}", method=RequestMethod.GET)
 	@ResponseBody
 	public void commitOnePending(@PathVariable int index){
-		ts.commitPending(index);
+		List<Integer> list = new ArrayList<>();
+		list.add(index);
+		ts.commitPendings(list);
 	}
 	
 	

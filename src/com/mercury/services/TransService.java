@@ -120,6 +120,7 @@ public class TransService {
 		//Parsing pending to transaction
 		//List<UserStockTransaction> transList = getAllPendings();
 		List<UserStockTransaction> allpendings = getAllPendings();
+		if(index < 0 || index >= allpendings.size()) return;
 		UserStockTransaction tx = allpendings.get(index);
 		String username = tx.getUser().getUsername();
 		User user = ud.findByUserName(username);
