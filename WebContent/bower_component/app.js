@@ -277,15 +277,31 @@ var mainApp = angular.module("mainApp", ["ngRoute","ngAnimate", "ui.bootstrap", 
     	});
 
         mainApp.controller("historyCtrl", function($scope, $http, $interval){
-            $scope.message = "this is history page -- testing message.";
+//            $scope.message = "this is history page -- testing message.";
             $scope.historyRecords = [];
+            
+            var format = function(old){
+        		var d = new Date(old);
+        		var formattedDate = (d.getMonth() + 1) + "-" + (d.getDate() + 1) + "-" + d.getFullYear();
+        		var hours = (d.getHours() < 10) ? "0" + d.getHours() : d.getHours();
+        		var minutes = (d.getMinutes() < 10) ? "0" + d.getMinutes() : d.getMinutes();
+        		var formattedTime = hours + ":" + minutes;
+
+//        		formattedDate = formattedDate + " " + formattedTime;
+        		console.log(formattedDate);
+        		return formattedDate;
+        	}
 
             var updateHistory = function(){
-                //console.log("checking all history");
+                console.log("checking all history");
                 $http({
                     method: 'GET',
                     url: 'getTranHistory'
                 }).then(function(response){
+                	for(var i = 0; i < response.data.length; i++){
+                		response.data[i].date = format(response.data[i].date);
+                		
+                	}
                     $scope.historyRecords = response.data;
                     //console.log("response:", response);
                 });
@@ -303,7 +319,7 @@ var mainApp = angular.module("mainApp", ["ngRoute","ngAnimate", "ui.bootstrap", 
         	/* formate unix time into date time */
         	var format = function(old){
         		var d = new Date(old);
-        		var formattedDate = d.getDate() + "-" + (d.getMonth() + 1) + "-" + d.getFullYear();
+        		var formattedDate = (d.getMonth() + 1) + "-" + (d.getDate() + 1) + "-" + d.getFullYear();
         		var hours = (d.getHours() < 10) ? "0" + d.getHours() : d.getHours();
         		var minutes = (d.getMinutes() < 10) ? "0" + d.getMinutes() : d.getMinutes();
         		var formattedTime = hours + ":" + minutes;
@@ -312,6 +328,7 @@ var mainApp = angular.module("mainApp", ["ngRoute","ngAnimate", "ui.bootstrap", 
         		console.log(formattedDate);
         		return formattedDate;
         	}
+
         	
         	/* Show Pending Transaction Table */
         	var showPendingTran = function(){
