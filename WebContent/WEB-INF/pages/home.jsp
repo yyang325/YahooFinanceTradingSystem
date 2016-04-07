@@ -129,13 +129,20 @@
     </script>
     
     
-     <script type = "text/ng-template" id = "history.html">
+    <script type = "text/ng-template" id = "history.html">
         <c:import url="history.jsp"/>
+    </script>
+    
+    <script type = "text/ng-template" id = "stockAdmin.html">
+        <c:import url="stockAdmin.jsp"/>
+    </script>
+    
+     <script type = "text/ng-template" id = "transactionAdmin.html">
+        <c:import url="transactionAdmin.jsp"/>
     </script>
    
     
       
-
       
      
     <c:import url="page_component/footer.jsp"/>

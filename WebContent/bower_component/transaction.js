@@ -76,7 +76,8 @@
     	
     	
     	
-    	 mainApp.controller("ModalCtrl", ["$scope", "$modal", "$log", "shared", function ($scope, $modal, $log, shared) {
+    	 mainApp.controller("ModalCtrl", ["$scope", "$modal", "$log", "shared", "$interval", "$timeout", 
+    	                                  function ($scope, $modal, $log, shared, $interval, $timeout) {
     		//console.log("in open Add");
     		$scope.message = shared.getMessage();
     		$scope.item;
@@ -84,6 +85,24 @@
     		$scope.buySuccess=false;
     		$scope.sellSuccess=false;
     		$scope.addSuccess=false;
+    		
+    		$scope.$watch("buySuccess", function(val, old){
+    			$timeout(function() {
+    				$scope.buySuccess = false;
+    			}, 5000);
+    		});
+    		
+    		$scope.$watch("sellSuccess", function(val, old){
+    			$timeout(function() {
+    				$scope.sellSuccess = false;
+    			}, 5000);
+    		});
+    		
+    		$scope.$watch("addSuccess", function(val, old){
+    			$timeout(function() {
+    				$scope.addSuccess = false;
+    			}, 5000);
+    		});
     		
     		$scope.openSell = function () {		
     			$scope.user = shared.getUser();
