@@ -29,11 +29,11 @@
 							<div class="panel-body">
 								<div class="row">
 									<div  style="text-align: center" class="col-lg-7">
-									<span><b style="color: #27B63F;vertical-align: sub;font-size: 28px;margin-left: 5px;">
+									<span style="color: #27B63F;vertical-align: sub;font-size: 28px;margin-left: 5px;">
 										{{user.cash | currency}}
-									</b></span>
+									</span>
 									
-									<div id="addSuccess"
+									<div id="addSuccess" style="vertical-align: sub;font-size: 16px; color: #ff3300"
 										ng-show="addSuccess&&!sellSuccess&&!sellSuccess">Add
 										Credit Success!</div>
 									</div>
@@ -53,9 +53,9 @@
 							</header>
 							<div class="panel-body">
 								<div style="text-align: center">
-									<span><b style="color: #27B63F;vertical-align: sub;font-size: 28px;margin-left: 5px;">
+									<span style="color: #27B63F;vertical-align: sub;font-size: 28px;margin-left: 5px;">
 										{{asset | currency}}
-									</b></span>
+									</span>
 								</div>
 							</div>
 						</section>
@@ -149,8 +149,10 @@
 
 							</form>
 						
-							<div id="buySuccess" ng-show="buySuccess&&!sellSuccess&&!addSuccess">Buying Transaction Success!</div>
-		          			<div id="sellSuccess" ng-show="sellSuccess&&!buySuccess&&!addSuccess">Selling Transaction Success!</div>
+							<div id="buySuccess" ng-show="buySuccess&&!sellSuccess&&!addSuccess" 
+								style="vertical-align: sub;font-size: 16px; color: #ff3300">Buying Transaction Success!</div>
+		          			<div id="sellSuccess" ng-show="sellSuccess&&!buySuccess&&!addSuccess"
+		          				style="vertical-align: sub;font-size: 16px; color: #ff3300">Selling Transaction Success!</div>
 						</div>
 					</section>
 
